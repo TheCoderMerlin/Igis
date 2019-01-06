@@ -18,11 +18,11 @@ html, body {
 }
 
 #trTop {
-    height: 80%;
+    height: 80%; // For debug off value is 100%
 }
 
 #trBottom {
-    height: 20%;
+    height: 20%; // For debug off value is 0%
 }
 
 #canvasMain {

@@ -7,10 +7,31 @@ var context;
 var divRecieved;
 var divTransmitted;
 
+var debugAvailable;
 var debugDisplayMode;
 var debugCollectMode;
 
 function onLoad() {
+    // Log
+    divReceived = document.getElementById("divReceived");
+    divTransmitted = document.getElementById("divTransmitted");
+
+    // Debug mode
+    // We set this before Canvas  because it may alter size of canvas
+    let urlParameters = new URLSearchParams(window.location.search);
+    debugAvailable = urlParameters.get("debug") == 1
+    if (debugAvailable) {
+	setDebugDisplayMode(1);
+	setDebugCollectMode(1);
+    } else {
+	// Disable debugging display
+	setDebugDisplayMode(0);
+	setDebugCollectMode(0);
+
+	document.getElementById("trTop").style.height = "100%";
+	document.getElementById("trBottom").style.height = "0%";
+    }
+    
     // Canvas
     canvas = document.getElementById("canvasMain");
     let canvasContainerRect = canvas.parentElement.getBoundingClientRect();
@@ -22,14 +43,6 @@ function onLoad() {
     window.onkeydown = function (event) {onKeyDown(event)};
     canvas.onclick = function (event) {onClick(event)};
 
-    // Log
-    divReceived = document.getElementById("divReceived");
-    divTransmitted = document.getElementById("divTransmitted");
-
-    // Debug mode
-    setDebugDisplayMode(0);
-    setDebugCollectMode(1);
-    
     // Connection
     webSocket = establishConnection();
 }
@@ -38,6 +51,7 @@ function setDebugDisplayMode(mode) {
     if (mode == 1) {
 	divReceived.style.display = "block";
 	divTransmitted.style.display = "block";
+
 	debugDisplayMode = 1;
     } else {
 	divReceived.style.display = "none";
