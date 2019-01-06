@@ -43,8 +43,12 @@ final class HTTPHandler: ChannelInboundHandler {
         }
 
         // The URI will (should) point to the desired resource, a file located in the "Resources" directory
-        var fileURL = resourceDirectory.appendingPathComponent(head.uri, isDirectory: false)
-        fileURL.standardize()
+        guard let url = URL(string:head.uri) else {
+            print("Specified url is not valid: \(head.uri)")
+            self.respondError(ctx:ctx, status:.notFound)
+            return
+        }
+        let fileURL = resourceDirectory.appendingPathComponent(url.path, isDirectory: false).standardizedFileURL
         let filePath = fileURL.path
         guard FileManager.default.fileExists(atPath:filePath) else {
             print("Requested missing file at \(filePath)")
