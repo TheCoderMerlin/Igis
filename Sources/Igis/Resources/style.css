@@ -1,0 +1,47 @@
+html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+#tableMain {
+    width: 100%;
+    height: 100%;
+}
+
+#tdLeft {
+    width: 50%;
+}
+
+#tdRight {
+    width: 50%;
+}
+
+#trTop {
+    height: 80%;
+}
+
+#trBottom {
+    height: 20%;
+}
+
+#canvasMain {
+    width: 100%;
+    height: 100%;
+}
+
+.divScrolling {
+    font-family:sans-serif;padding:2px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    width: 100%;
+    height: 100%;
+}
+
+#divReceived {
+    background-color: #FFEFD5;
+}
+
+#divTransmitted {
+    background-color: #FFDAB9;
+}
