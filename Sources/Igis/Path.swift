@@ -101,11 +101,11 @@ public class Path : CanvasObject {
         var commands = actionStrings.joined(separator:"||")
         switch fillMode {
             case .stroke:
-                commands += "stroke"
+                commands += "||stroke"
             case .fill, .clear:
-                commands += "fill"
+                commands += "||fill"
             case .fillAndStroke:
-                commands += "fill||stroke"
+                commands += "||fill||stroke"
         }
 
         return commands
