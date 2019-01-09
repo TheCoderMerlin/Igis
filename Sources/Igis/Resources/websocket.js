@@ -190,8 +190,14 @@ function processCommand(commandMessage, commandIndex) {
     case "arc":
 	processArc(arguments);
 	break;
+    case "arcTo":
+	processArcTo(arguments);
+	break;
     case "beginPath":
 	processBeginPath(arguments);
+	break;
+    case "bezierCurveTo":
+	processBezierCurveTo(arguments);
 	break;
     case "closePath":
 	processClosePath(arguments);
@@ -226,6 +232,9 @@ function processCommand(commandMessage, commandIndex) {
     case "moveTo":
 	processMoveTo(arguments);
 	break;
+    case "quadraticCurveTo":
+	processQuadraticCurveTo(arguments);
+	break;
     case "stroke":
 	processStroke(arguments);
 	break;
@@ -258,6 +267,20 @@ function processArc(arguments) {
     context.arc(centerX, centerY, radius, startAngle, endAngle, antiClockwise);
 }
 
+function processArcTo(arguments) {
+    if (arguments.length != 5) {
+	logErrorMessage("processArcTo: Requires five arguments", divReceived);
+	return;
+    }
+    let controlPoint1x = arguments.shift();
+    let controlPoint1y = arguments.shift();
+    let controlPoint2x = arguments.shift();
+    let controlPoint2y = arguments.shift();
+    let radius = arguments.shift();
+    logDebugMessage("arcTo(" + controlPoint1x + "," + controlPoint1y + "," + controlPoint2x + "," + controlPoint2y + "," + radius + ")", divReceived);
+    context.arcTo(controlPoint1x, controlPoint1y, controlPoint2x, controlPoint2y, radius);
+}
+
 function processBeginPath(arguments) {
     if (arguments.length != 0) {
 	logErrorMessage("processBeginPath: Requires zero arguments", divReceived);
@@ -265,6 +288,23 @@ function processBeginPath(arguments) {
     }
     logDebugMessage("beginPath()", divReceived);
     context.beginPath();
+}
+
+function processBezierCurveTo(arguments) {
+    if (arguments.length != 6) {
+	logErrorMessage("processBezierCurveTo: Requires six arguments", divReceived);
+	return;
+    }
+    let controlPoint1x = arguments.shift();
+    let controlPoint1y = arguments.shift();
+    let controlPoint2x = arguments.shift();
+    let controlPoint2y = arguments.shift();
+    let endPointX = arguments.shift();
+    let endPointY = arguments.shift();
+    logDebugMessage("bezierCurveTo(" + controlPoint1x + "," + controlPoint1y + "," + controlPoint2x + "," + controlPoint2y + "," +
+		    endPointX + "," + endPointY + ")", divReceived);
+    context.bezierCurveTo(controlPoint1x, controlPoint1y, controlPoint2x, controlPoint2y, endPointX, endPointY);
+		    
 }
 
 function processClearRect(arguments) {
@@ -394,6 +434,19 @@ function processMoveTo(arguments) {
     let y = arguments.shift();
     logDebugMessage("moveTo(" + x + "," + y + ")", divReceived);
     context.moveTo(x, y)
+}
+
+function processQuadraticCurveTo(arguments) {
+    if (arguments.length != 4) {
+	logErrorMessage("processQuadraticCurveTo: Requires four arguments", divReceived);
+	return;
+    }
+    let controlPointX = arguments.shift();
+    let controlPointY = arguments.shift();
+    let endPointX = arguments.shift();
+    let endPointY = arguments.shift();
+    logDebugMessage("quadraticCurveTo(" + controlPointX + "," + controlPointY + "," + endPointX + "," + endPointY + ")", divReceived);
+    context.quadraticCurveTo(controlPointX, controlPointY, endPointX, endPointY);
 }
 
 function processStroke(arguments) {
