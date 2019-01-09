@@ -187,8 +187,14 @@ function processCommand(commandMessage, commandIndex) {
     case "ping":
 	break;
 
+    case "arc":
+	processArc(arguments);
+	break;
     case "beginPath":
 	processBeginPath(arguments);
+	break;
+    case "closePath":
+	processClosePath(arguments);
 	break;
     case "clearRect":
 	processClearRect(arguments);
@@ -237,6 +243,21 @@ function processCommand(commandMessage, commandIndex) {
     }
 }
 
+function processArc(arguments) {
+    if (arguments.length != 6) {
+	logErrorMessage("processArc: Requires six arguments", divReceived);
+	return;
+    }
+    let centerX = arguments.shift();
+    let centerY = arguments.shift();
+    let radius  = arguments.shift();
+    let startAngle = arguments.shift();
+    let endAngle   = arguments.shift();
+    let antiClockwise = arguments.shift();
+    logDebugMessage("arc(" + centerX + "," + centerY + "," + radius + "," + startAngle + "," + endAngle + "," + antiClockwise + ")", divReceived);
+    context.arc(centerX, centerY, radius, startAngle, endAngle, antiClockwise);
+}
+
 function processBeginPath(arguments) {
     if (arguments.length != 0) {
 	logErrorMessage("processBeginPath: Requires zero arguments", divReceived);
@@ -257,6 +278,15 @@ function processClearRect(arguments) {
     let height = arguments.shift();
     logDebugMessage("clearRect(" + x + "," + y + "," + width + "," + height + ")", divReceived);
     context.clearRect(x, y, width, height);
+}
+
+function processClosePath(arguments) {
+    if (arguments.length != 0) {
+	logErrorMessage("processClosePath: Requires zero arguments", divReceived);
+	return;
+    }
+    logDebugMessage("closePath()", divReceived);
+    context.closePath();
 }
 
 function processEllipse(arguments) {

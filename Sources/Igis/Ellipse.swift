@@ -31,7 +31,7 @@ public class Ellipse : CanvasObject {
         self.rotation = rotation
         self.startAngle = startAngle
         self.endAngle = endAngle
-        self.antiClockwise = false
+        self.antiClockwise = antiClockwise
         self.fillMode = fillMode
     }
     
