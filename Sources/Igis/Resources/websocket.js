@@ -253,7 +253,7 @@ function processArc(arguments) {
     let radius  = arguments.shift();
     let startAngle = arguments.shift();
     let endAngle   = arguments.shift();
-    let antiClockwise = arguments.shift();
+    let antiClockwise = arguments.shift() === "true";
     logDebugMessage("arc(" + centerX + "," + centerY + "," + radius + "," + startAngle + "," + endAngle + "," + antiClockwise + ")", divReceived);
     context.arc(centerX, centerY, radius, startAngle, endAngle, antiClockwise);
 }
@@ -301,7 +301,7 @@ function processEllipse(arguments) {
     let rotation = arguments.shift();
     let startAngle = arguments.shift();
     let endAngle = arguments.shift();
-    let antiClockwise = arguments.shift();
+    let antiClockwise = arguments.shift() === "true";
     logDebugMessage("ellipse(" + x + "," + y + "," +
 		    radiusX + "," + radiusY + "," +
 		    rotation + "," +
