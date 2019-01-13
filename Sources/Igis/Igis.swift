@@ -28,9 +28,9 @@ public class Igis {
 
     // Use parameters if specified, otherwise fallback to environment, otherwise fail
     public init(resourcePath:String?=nil, localHost:String?=nil, localPort:Int?=nil) {
-        self.resourcePath = resourcePath ?? ProcessInfo.processInfo.environment["IGIS_RESOURCE_PATH"]
+        self.resourcePath = resourcePath ?? Igis.detectedResourcePath() ?? ProcessInfo.processInfo.environment["IGIS_RESOURCE_PATH"]
         guard self.resourcePath != nil else {
-            fatalError("resourcePath not specified and environment variable 'IGIS_RESOURCE_PATH' not set")
+            fatalError("resourcePath not specified, and environment variable 'IGIS_RESOURCE_PATH' not set")
         }
         self.resourceDirectory = URL(fileURLWithPath:self.resourcePath.expandingTildeInPath, isDirectory:true)
         print("Loading resources from \(resourceDirectory.path)")
@@ -94,5 +94,86 @@ public class Igis {
 
         print("Server closed")
     } // func main
+
+    private static func detectedResourcePath() -> String? {
+        // Begin with the current directory, moving upwards, until "Package.swift" is found
+        // or the root directory is reached
+        // Then, find the resource directory from that point by descending via ".build/checkouts/Igis[.git]-\d+/Sources/Igis/Resources"
+        let packageSwiftFilename = "Package.swift"
+        let buildDirectoryName = ".build"
+        let checkoutDirectoryName = "checkouts"
+        let sourcesDirectoryName = "Sources"
+        let igisDirectoryName = "Igis"
+        let resourceDirectoryName = "Resources"
+        var resourcePath : String? = nil
+
+        var testDirectory = URL(fileURLWithPath:FileManager.default.currentDirectoryPath, isDirectory:true)
+        var testURL = testDirectory.appendingPathComponent(packageSwiftFilename, isDirectory:false)
+        testURL.standardize()
+        
+        while !FileManager.default.fileExists(atPath:testURL.path)  && testDirectory.pathComponents.count > 1 {
+            testDirectory.deleteLastPathComponent()
+            testURL = testDirectory.appendingPathComponent(packageSwiftFilename, isDirectory:false)
+            testURL.standardize()
+        }
+
+        // At this point, either we found the file or have reached the root directory and have no other place to look
+        if FileManager.default.fileExists(atPath:testURL.path) {
+            print("Found \(packageSwiftFilename) at: \(testURL.path)")
+
+            // At this point, we should be able to find a parallel directory ".build"
+            let buildDirectory = testDirectory.appendingPathComponent(buildDirectoryName, isDirectory:true)
+            guard FileManager.default.fileExists(atPath:buildDirectory.path) else {
+                print("\(buildDirectory.path) not found")
+                return nil
+            }
+
+            let checkoutDirectory = buildDirectory.appendingPathComponent(checkoutDirectoryName, isDirectory:true)
+            guard FileManager.default.fileExists(atPath:checkoutDirectory.path) else {
+                print("\(checkoutDirectory.path) not found")
+                return nil
+            }
+
+            guard let checkoutDirectoryContents = try? FileManager.default.contentsOfDirectory(at:checkoutDirectory, includingPropertiesForKeys:nil) else {
+                print("Unable to read directory contents of \(checkoutDirectory.path)")
+                return nil
+            }
+
+            // We should have found either an Igis-* or Igis.git-* directory
+            let igisRepositoryDirectoryName =
+              checkoutDirectoryContents.filter{$0.lastPathComponent.starts(with:"Igis-")}.first?.lastPathComponent ??
+              checkoutDirectoryContents.filter{$0.lastPathComponent.starts(with:"Igis.git-")}.first?.lastPathComponent
+            guard igisRepositoryDirectoryName != nil else {
+                print("Igis-* or Igis.git-* directory not found")
+                return nil
+            }
+            let igisRepositoryDirectory = checkoutDirectory.appendingPathComponent(igisRepositoryDirectoryName!, isDirectory:true)
+
+            let sourcesDirectory = igisRepositoryDirectory.appendingPathComponent(sourcesDirectoryName, isDirectory:true)
+            guard FileManager.default.fileExists(atPath:sourcesDirectory.path) else {
+                print("\(sourcesDirectory.path) not found")
+                return nil
+            }
+
+            let igisDirectory = sourcesDirectory.appendingPathComponent(igisDirectoryName, isDirectory:true)
+            guard FileManager.default.fileExists(atPath:igisDirectory.path) else {
+                print("\(igisDirectory.path) not found")
+                return nil
+            }
+
+            let resourceDirectory = igisDirectory.appendingPathComponent(resourceDirectoryName, isDirectory:true)
+            guard FileManager.default.fileExists(atPath:resourceDirectory.path) else {
+                print("\(resourceDirectory.path) not found")
+                return nil
+            }
+            resourcePath = resourceDirectory.path
+            
+        } else {
+            print("\(packageSwiftFilename) not found")
+        }
+
+        return resourcePath
+    }
+
 } // class Igis
 
