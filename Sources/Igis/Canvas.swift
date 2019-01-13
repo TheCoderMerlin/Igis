@@ -27,9 +27,11 @@ public class Canvas {
 
     // MARK: ********** API **********
 
-    public func paint(_ canvasObject:CanvasObject) {
-        let command = canvasObject.canvasCommand()
-        pendingCommandList.append(command)
+    public func paint(_ canvasObjects:CanvasObject...) {
+        for canvasObject in canvasObjects {
+            let command = canvasObject.canvasCommand()
+            pendingCommandList.append(command)
+        }
     }
 
     // MARK: ********** Internal **********
