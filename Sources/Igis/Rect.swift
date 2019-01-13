@@ -22,4 +22,19 @@ public struct Rect {
         self.size = size
     }
 
+    public init(bottomLeft:Point, size:Size) {
+        self.topLeft = Point(x:bottomLeft.x, y:bottomLeft.y-size.height)
+        self.size = size
+    }
+
+    public init(topRight:Point, size:Size) {
+        self.topLeft = Point(x:topRight.x-size.width, y:topRight.y)
+        self.size = size
+    }
+
+    public init(bottomRight:Point, size:Size) {
+        self.topLeft = Point(x:bottomRight.x-size.width, y:bottomRight.y-size.height)
+        self.size = size
+    }
+
 }
