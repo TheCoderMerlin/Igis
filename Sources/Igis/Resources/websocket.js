@@ -143,6 +143,20 @@ function doSend(message) {
     webSocket.send(message);
 }
 
+// Images
+function notifyImageLoaded(imageId) {
+    doSend("imageLoaded|"+imageId);
+}
+
+function loadImage(imageId, sourceURL) {
+    let divImages = document.getElementById("divImages");
+    let img = document.createElement("img");
+    img.src = sourceURL;
+    img.style.display = "none";
+    img.addEventListener("load", notifyImageLoaded(imageId));
+    img.onLoad = function() {notifyImageLoaded(imageId)};
+}
+
 // Canvas
 function onClick(event) {
     logDebugMessage("onClick(" + event.clientX + ", " + event.clientY + ")", divTransmitted);
