@@ -34,6 +34,13 @@ public class Canvas {
         }
     }
 
+    public func setup(_ canvasObjects:CanvasObject...) {
+        for canvasObject in canvasObjects {
+            let command = canvasObject.setupCommand()
+            pendingCommandList.append(command)
+        }
+    }
+
     // MARK: ********** Internal **********
     internal func processCommands(ctx:ChannelHandlerContext, webSocketHandler:WebSocketHandler) {
         if pendingCommandList.count > 0 {

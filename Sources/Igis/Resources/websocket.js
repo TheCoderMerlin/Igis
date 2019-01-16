@@ -145,16 +145,19 @@ function doSend(message) {
 
 // Images
 function notifyImageLoaded(imageId) {
-    doSend("imageLoaded|"+imageId);
+    let command = "imageLoaded|"+imageId;
+    alert(command);
+    doSend(command);
 }
 
-function loadImage(imageId, sourceURL) {
+function createImage(id, sourceURL) {
     let divImages = document.getElementById("divImages");
     let img = document.createElement("img");
+    img.id = id;
     img.src = sourceURL;
-    img.style.display = "none";
-    img.addEventListener("load", notifyImageLoaded(imageId));
-    img.onLoad = function() {notifyImageLoaded(imageId)};
+//    img.style.display = "none";
+    img.addEventListener("load", notifyImageLoaded(id));
+    img.onLoad = function() {notifyImageLoaded(id)};
 }
 
 // Canvas
@@ -219,6 +222,8 @@ function processCommand(commandMessage, commandIndex) {
     case "clearRect":
 	processClearRect(arguments);
 	break;
+    case "createImage":
+	processCreateImage(arguments);
     case "ellipse":
 	processEllipse(arguments);
 	break;
@@ -341,6 +346,17 @@ function processClosePath(arguments) {
     }
     logDebugMessage("closePath()", divReceived);
     context.closePath();
+}
+
+function processCreateImage(arguments) {
+    if (arguments.length != 2) {
+	logErrorMessage("processCreateImage: Requires two arguments", divReceived);
+	return;
+    }
+    let id = arguments.shift();
+    let sourceURL = arguments.shift();
+    logDebugMessage("processCreateImage(" + id + "," + sourceURL + ")", divReceived);
+    createImage(id, sourceURL);
 }
 
 function processEllipse(arguments) {

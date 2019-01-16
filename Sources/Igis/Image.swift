@@ -13,12 +13,27 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-public class CanvasObject {
-    internal func canvasCommand() -> String {
-        return "Undefined"
+import Foundation  
+  
+public class Image : CanvasObject {
+    public let sourceURL : URL
+    public var topLeft : Point
+    private let id : UUID
+
+    public init(sourceURL:URL, topLeft:Point) {
+        self.sourceURL = sourceURL
+        self.topLeft = topLeft
+        self.id = UUID()
     }
 
-    internal func setupCommand() -> String {
-        return ""
+    internal override func canvasCommand() -> String {
+        let commands = "drawImage|\(id.uuidString)|\(topLeft.x)|\(topLeft.y)"
+        return commands
     }
+
+    internal override func setupCommand() -> String {
+        let commands = "createImage|\(id.uuidString)|\(sourceURL.absoluteString)"
+        return commands
+    }
+    
 }
