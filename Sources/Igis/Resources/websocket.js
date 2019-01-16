@@ -155,7 +155,7 @@ function createImage(id, sourceURL) {
     let img = document.createElement("img");
     img.id = id;
     img.src = sourceURL;
-//    img.style.display = "none";
+    img.style.display = debugAvailable ? "visible" : "none";
     img.addEventListener("load", notifyImageLoaded(id));
     img.onLoad = function() {notifyImageLoaded(id)};
     divImages.appendChild(img);
