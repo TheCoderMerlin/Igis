@@ -145,7 +145,7 @@ function doSend(message) {
 
 // Images
 function onImageLoaded(imageId) {
-    logDebugMessage("onImageLoaded(" + imageId + ")");
+    logDebugMessage("onImageLoaded(" + imageId + ")", divTransmitted);
     let message = "onImageLoaded|" + imageId;
     doSend(command);
 }
