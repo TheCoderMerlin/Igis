@@ -13,6 +13,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import Foundation
 import NIO
 
 public class Canvas {
@@ -70,6 +71,8 @@ public class Canvas {
             switch (command) {
             case "onClick":
                 receptionOnClick(arguments:arguments)
+            case "onImageLoaded":
+                receptionOnImageLoaded(arguments:arguments)
             case "onSetSize":
                 receptionOnSetSize(arguments:arguments)
             default:
@@ -87,6 +90,15 @@ public class Canvas {
             return
         }
         painter.onClick(canvas:self, location:Point(x:x, y:y))
+    }
+
+    internal func receptionOnImageLoaded(arguments:[String]) {
+        guard arguments.count == 1,
+              let id = UUID(uuidString:arguments[0]) else {
+            print("ERROR: onImageLoaded requires exactly one argument which must be a valid UUID.")
+            return
+        }
+        print("Image loaded: \(id.uuidString)")
     }
 
     internal func receptionOnSetSize(arguments:[String]) {

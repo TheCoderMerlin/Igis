@@ -144,9 +144,9 @@ function doSend(message) {
 }
 
 // Images
-function notifyImageLoaded(imageId) {
-    let command = "imageLoaded|"+imageId;
-    alert(command);
+function onImageLoaded(imageId) {
+    logDebugMessage("onImageLoaded(" + imageId + ")");
+    let message = "onImageLoaded|" + imageId;
     doSend(command);
 }
 
@@ -156,8 +156,7 @@ function createImage(id, sourceURL) {
     img.id = id;
     img.src = sourceURL;
     img.style.display = debugAvailable ? "visible" : "none";
-    img.addEventListener("load", notifyImageLoaded(id));
-    img.onLoad = function() {notifyImageLoaded(id)};
+    img.addEventListener("load", onImageLoaded(id));
     divImages.appendChild(img);
 }
 
