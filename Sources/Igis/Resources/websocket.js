@@ -158,6 +158,7 @@ function createImage(id, sourceURL) {
 //    img.style.display = "none";
     img.addEventListener("load", notifyImageLoaded(id));
     img.onLoad = function() {notifyImageLoaded(id)};
+    divImages.appendChild(img);
 }
 
 // Canvas
