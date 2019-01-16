@@ -20,6 +20,7 @@ public class Canvas {
 
     private let painter : PainterProtocol
     private var pendingCommandList = [String]()
+    private var identifiedObjectDictionary = [UUID:CanvasIdentifiedObject]()
     public private(set) var size : Size? = nil
     
     internal init(painter:PainterProtocol) {
@@ -35,10 +36,14 @@ public class Canvas {
         }
     }
 
-    public func setup(_ canvasObjects:CanvasObject...) {
-        for canvasObject in canvasObjects {
-            let command = canvasObject.setupCommand()
+    public func setup(_ canvasIdentifiedObjects:CanvasIdentifiedObject...) {
+        for canvasIdentifiedObject in canvasIdentifiedObjects {
+            identifiedObjectDictionary[canvasIdentifiedObject.id] = canvasIdentifiedObject
+            
+            let command = canvasIdentifiedObject.setupCommand()
             pendingCommandList.append(command)
+            
+            canvasIdentifiedObject.notifyObjectSetupComplete()
         }
     }
 
@@ -98,7 +103,13 @@ public class Canvas {
             print("ERROR: onImageLoaded requires exactly one argument which must be a valid UUID.")
             return
         }
-        print("Image loaded: \(id.uuidString)")
+
+        guard let identifiedObject = identifiedObjectDictionary[id] else {
+            print("ERROR: receptionOnImageLoaded: Object with id \(id.uuidString) was not found.")
+            return
+        }
+        identifiedObject.notifyObjectLoadComplete()
+        print("Image loaded and object notified: \(id.uuidString)")
     }
 
     internal func receptionOnSetSize(arguments:[String]) {

@@ -15,18 +15,19 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation  
   
-public class Image : CanvasObject {
+public class Image : CanvasIdentifiedObject {
     public let sourceURL : URL
     public var topLeft : Point
-    private let id : UUID
 
     public init(sourceURL:URL, topLeft:Point = Point(x:0, y:0)) {
         self.sourceURL = sourceURL
         self.topLeft = topLeft
-        self.id = UUID()
     }
 
     internal override func canvasCommand() -> String {
+        if !isLoaded {
+            print("WARNING: canvasCommand requested on image not yet loaded. ID: \(id.uuidString).")
+        }
         let commands = "drawImage|\(id.uuidString)|\(topLeft.x)|\(topLeft.y)"
         return commands
     }
@@ -35,5 +36,6 @@ public class Image : CanvasObject {
         let commands = "createImage|\(id.uuidString)|\(sourceURL.absoluteString)"
         return commands
     }
+
     
 }

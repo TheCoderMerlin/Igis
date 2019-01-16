@@ -13,9 +13,24 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-public class CanvasObject {
-    internal func canvasCommand() -> String {
-        fatalError("canvasCommand() invoked on CanvasObject")
+import Foundation  
+  
+public class CanvasIdentifiedObject : CanvasObject {
+
+    internal let id = UUID()
+    public private(set) var isSetup = false
+    public private(set) var isLoaded = false
+
+    
+    internal func setupCommand() -> String {
+        fatalError("setupCommand() invoked on CanvasIdentifiedObject")
     }
 
+    internal func notifyObjectSetupComplete() {
+        isSetup = true
+    }
+
+    internal func notifyObjectLoadComplete() {
+        isLoaded = true
+    }
 }

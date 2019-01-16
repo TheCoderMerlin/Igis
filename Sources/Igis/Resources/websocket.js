@@ -225,6 +225,8 @@ function processCommand(commandMessage, commandIndex) {
     case "createImage":
 	processCreateImage(arguments);
 	break;
+    case "drawImage":
+	processDrawImage(arguments);
     case "ellipse":
 	processEllipse(arguments);
 	break;
@@ -358,6 +360,19 @@ function processCreateImage(arguments) {
     let sourceURL = arguments.shift();
     logDebugMessage("processCreateImage(" + id + "," + sourceURL + ")", divReceived);
     createImage(id, sourceURL);
+}
+
+function processDrawImage(arguments) {
+    if (arguments.length != 3) {
+	logErrorMessage("processDrawImage: Requires three arguments", divReceived);
+	return;
+    }
+    let id = arguments.shift();
+    let x = arguments.shift();
+    let y = arguments.shift();
+    logDebugMessage("processDrawImage(" + id + "," + x + "," + y + ")", divReceived);
+    let img = document.getElementById(id);
+    context.drawImage(img, x, y);
 }
 
 function processEllipse(arguments) {
