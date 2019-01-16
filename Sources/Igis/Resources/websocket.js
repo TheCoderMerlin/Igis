@@ -224,6 +224,7 @@ function processCommand(commandMessage, commandIndex) {
 	break;
     case "createImage":
 	processCreateImage(arguments);
+	break;
     case "ellipse":
 	processEllipse(arguments);
 	break;

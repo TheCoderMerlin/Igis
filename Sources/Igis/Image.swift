@@ -20,7 +20,7 @@ public class Image : CanvasObject {
     public var topLeft : Point
     private let id : UUID
 
-    public init(sourceURL:URL, topLeft:Point) {
+    public init(sourceURL:URL, topLeft:Point = Point(x:0, y:0)) {
         self.sourceURL = sourceURL
         self.topLeft = topLeft
         self.id = UUID()
