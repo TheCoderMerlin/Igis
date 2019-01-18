@@ -31,4 +31,8 @@ public struct Point {
         self.x = x
         self.y = y
     }
+
+    public mutating func moveTo(_ point:Point) {
+        self = point
+    }
 }
