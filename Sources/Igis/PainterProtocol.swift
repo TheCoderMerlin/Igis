@@ -20,4 +20,7 @@ public protocol PainterProtocol {
     func update(canvas:Canvas)
     
     func onClick(canvas:Canvas, location:Point)
+    func onMouseDown(canvas:Canvas, location:Point)
+    func onMouseUp(canvas:Canvas, location:Point)
+    func onMouseMove(canvas:Canvas, location:Point)
 }

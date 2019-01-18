@@ -40,8 +40,12 @@ function onLoad() {
     context = canvas.getContext("2d");
 
     // Register events
-    window.onkeydown = function (event) {onKeyDown(event)};
-    canvas.onclick = function (event) {onClick(event)};
+    window.addEventListener("keydown", onKeyDown);
+    canvas.addEventListener("click", onClick);
+    canvas.addEventListener("mousedown", onMouseDown);
+    canvas.addEventListener("mouseup", onMouseUp);
+    canvas.addEventListener("mousemove", onMouseMove);
+    
 
     // Connection
     webSocket = establishConnection();
@@ -164,6 +168,24 @@ function createImage(id, sourceURL) {
 function onClick(event) {
     logDebugMessage("onClick(" + event.clientX + ", " + event.clientY + ")", divTransmitted);
     let message = "onClick|" + event.clientX + "|" + event.clientY;
+    doSend(message);
+}
+
+function onMouseDown(event) {
+    logDebugMessage("onMouseDown(" + event.clientX + ", " + event.clientY + ")", divTransmitted);
+    let message = "onMouseDown|" + event.clientX + "|" + event.clientY;
+    doSend(message);
+}
+
+function onMouseUp(event) {
+    logDebugMessage("onMouseUp(" + event.clientX + ", " + event.clientY + ")", divTransmitted);
+    let message = "onMouseUp|" + event.clientX + "|" + event.clientY;
+    doSend(message);
+}
+
+function onMouseMove(event) {
+    logDebugMessage("onMouseMove(" + event.clientX + ", " + event.clientY + ")", divTransmitted);
+    let message = "onMouseMove|" + event.clientX + "|" + event.clientY;
     doSend(message);
 }
 

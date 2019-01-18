@@ -76,6 +76,12 @@ public class Canvas {
             switch (command) {
             case "onClick":
                 receptionOnClick(arguments:arguments)
+            case "onMouseDown":
+                receptionOnMouseDown(arguments:arguments)
+            case "onMouseUp":
+                receptionOnMouseUp(arguments:arguments)
+            case "onMouseMove":
+                receptionOnMouseMove(arguments:arguments)
             case "onImageLoaded":
                 receptionOnImageLoaded(arguments:arguments)
             case "onSetSize":
@@ -95,6 +101,36 @@ public class Canvas {
             return
         }
         painter.onClick(canvas:self, location:Point(x:x, y:y))
+    }
+
+    internal func receptionOnMouseDown(arguments:[String]) {
+        guard arguments.count == 2,
+              let x = Int(arguments[0]),
+              let y = Int(arguments[1]) else {
+            print("ERROR: onMouseDown requires exactly two integer arguments")
+            return
+        }
+        painter.onMouseDown(canvas:self, location:Point(x:x, y:y))
+    }
+
+    internal func receptionOnMouseUp(arguments:[String]) {
+        guard arguments.count == 2,
+              let x = Int(arguments[0]),
+              let y = Int(arguments[1]) else {
+            print("ERROR: onMouseUp requires exactly two integer arguments")
+            return
+        }
+        painter.onMouseUp(canvas:self, location:Point(x:x, y:y))
+    }
+
+    internal func receptionOnMouseMove(arguments:[String]) {
+        guard arguments.count == 2,
+              let x = Int(arguments[0]),
+              let y = Int(arguments[1]) else {
+            print("ERROR: onMouseMove requires exactly two integer arguments")
+            return
+        }
+        painter.onMouseMove(canvas:self, location:Point(x:x, y:y))
     }
 
     internal func receptionOnImageLoaded(arguments:[String]) {
