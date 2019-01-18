@@ -71,7 +71,7 @@ public init (red:UInt8, green:UInt8, blue:UInt8)
 
 public init(_ name:Name)
 ```
-Note:  Color names are from [w3 org](https://www.w3.org/TR/css-color-3/#html4).  If a name is not available it has an available synonym.  For example "grey" can be found by using "gray", and "aqua" can be found by using "cyan".
+Note:  Color names are from [w3 org](https://www.w3.org/TR/css-color-3/#svg-color).  If a name is not available it has an available synonym.  For example "grey" can be found by using "gray", and "aqua" can be found by using "cyan".
 
 ### StrokeStyle
 ```swift
