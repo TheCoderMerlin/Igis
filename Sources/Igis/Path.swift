@@ -27,21 +27,19 @@ public class Path : CanvasObject {
         case closePath
     }
     private var actions = [Action]()
-    private var at : Point
     public var fillMode : FillMode
 
     internal func begin() {
         actions.append(.beginPath)
     }
 
-    public init(at:Point, fillMode:FillMode = .stroke) {
-        self.at = at
+    
+    public init(fillMode:FillMode = .stroke) {
         self.fillMode = fillMode
         
         super.init()
         
         begin()
-        moveTo(at)
     }
 
     public func moveTo(_ point:Point) {
