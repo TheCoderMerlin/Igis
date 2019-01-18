@@ -19,25 +19,25 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
    be overridden.    
 */
   
-public class PainterBase : PainterProtocol {
+open class PainterBase : PainterProtocol {
     public required init() {
     }
 
-    public func setup(canvas:Canvas) {
+    open func setup(canvas:Canvas) {
     }
     
-    public func update(canvas:Canvas) {
+    open func update(canvas:Canvas) {
     }
     
-    public func onClick(canvas:Canvas, location:Point) {
+    open func onClick(canvas:Canvas, location:Point) {
     }
     
-    public func onMouseDown(canvas:Canvas, location:Point) {
+    open func onMouseDown(canvas:Canvas, location:Point) {
     }
     
-    public func onMouseUp(canvas:Canvas, location:Point) {
+    open func onMouseUp(canvas:Canvas, location:Point) {
     }
     
-    public func onMouseMove(canvas:Canvas, location:Point) {
+    open func onMouseMove(canvas:Canvas, location:Point) {
     }
 }
