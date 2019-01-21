@@ -41,10 +41,12 @@ function onLoad() {
 
     // Register events
     window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("resize", onWindowResize);
     canvas.addEventListener("click", onClick);
     canvas.addEventListener("mousedown", onMouseDown);
     canvas.addEventListener("mouseup", onMouseUp);
     canvas.addEventListener("mousemove", onMouseMove);
+    canvas.addEventListener("resize", onCanvasResize);
     
 
     // Connection
@@ -125,10 +127,9 @@ function establishConnection() {
 function onOpen(event) {
     logMessage("<span style='color: blue;'>CONNECTED</span>", divReceived);
     
-    // Establish size
-    let width = canvas.getAttribute("width");
-    let height = canvas.getAttribute("height");
-    notifySize(width, height);
+    // Notify sizes
+    notifyWindowSize(window.innerWidth, window.innerHeight);
+    notifyCanvasSize(canvas.getAttribute("width"), canvas.getAttribute("height"));
 }
 
 function onClose(event) {
@@ -216,9 +217,27 @@ function onKeyDown(event) {
 
 }
 
-function notifySize(width, height) {
-    logDebugMessage("onSetSize(" + width + ", " + height + ")", divTransmitted);
-    let message = "onSetSize|" + width + "|" + height;
+function onWindowResize(event) {
+    let width = event.target.innerWidth;
+    let height = event.target.innerHeight;
+    notifyWindowSize(width, height);
+}
+
+function onCanvasResize(event) {
+    let width = event.target.width
+    let height = event.target.height
+    notifyCanvasSize(width, height);
+}
+
+function notifyCanvasSize(width, height) {
+    logDebugMessage("onCanvasResize(" + width + "," + height + ")", divTransmitted);
+    let message = "onCanvasResize|" + width + "|" + height;
+    doSend(message);
+}
+
+function notifyWindowSize(width, height) {
+    logDebugMessage("onWindowResize(" + width + "," + height + ")", divTransmitted);
+    let message = "onWindowResize|" + width + "|" + height;
     doSend(message);
 }
 

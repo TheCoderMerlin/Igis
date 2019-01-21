@@ -18,6 +18,9 @@ public protocol PainterProtocol {
 
     func setup(canvas:Canvas)
     func update(canvas:Canvas)
+
+    func onCanvasResize(canvas:Canvas, size:Size)
+    func onWindowResize(canvas:Canvas, size:Size)
     
     func onClick(canvas:Canvas, location:Point)
     func onMouseDown(canvas:Canvas, location:Point)

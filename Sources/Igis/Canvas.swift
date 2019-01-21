@@ -21,7 +21,8 @@ public class Canvas {
     private let painter : PainterProtocol
     private var pendingCommandList = [String]()
     private var identifiedObjectDictionary = [UUID:CanvasIdentifiedObject]()
-    public private(set) var size : Size? = nil
+    public private(set) var canvasSize : Size? = nil
+    public private(set) var windowSize : Size? = nil
     
     internal init(painter:PainterProtocol) {
         self.painter = painter
@@ -74,6 +75,8 @@ public class Canvas {
             let command = commandAndArguments.removeFirst()
             let arguments = commandAndArguments
             switch (command) {
+            case "onCanvasResize":
+                receptionOnCanvasResize(arguments:arguments)
             case "onClick":
                 receptionOnClick(arguments:arguments)
             case "onMouseDown":
@@ -88,8 +91,8 @@ public class Canvas {
                 receptionOnImageLoaded(arguments:arguments)
             case "onImageProcessed":
                 receptionOnImageProcessed(arguments:arguments)
-            case "onSetSize":
-                receptionOnSetSize(arguments:arguments)
+            case "onWindowResize":
+                receptionOnWindowResize(arguments:arguments)
             default:
                 do{}
             }
@@ -179,14 +182,26 @@ public class Canvas {
         identifiedObject.setState(.processedByClient)
     }
 
-    internal func receptionOnSetSize(arguments:[String]) {
+    internal func receptionOnCanvasResize(arguments:[String]) {
         guard arguments.count == 2,
               let width = Double(arguments[0]),
               let height = Double(arguments[1]) else {
-            print("ERROR: onSetSize requires exactly two double arguments")
+            print("ERROR: onCanvasResize requires exactly two double arguments")
             return
         }
-        size = Size(width:Int(width), height:Int(height))
+        canvasSize = Size(width:Int(width), height:Int(height))
+        painter.onCanvasResize(canvas:self, size:canvasSize!);
+    }
+    
+    internal func receptionOnWindowResize(arguments:[String]) {
+        guard arguments.count == 2,
+              let width = Double(arguments[0]),
+              let height = Double(arguments[1]) else {
+            print("ERROR: onWindowResize requires exactly two double arguments")
+            return
+        }
+        windowSize = Size(width:Int(width), height:Int(height))
+        painter.onWindowResize(canvas:self, size:windowSize!)
     }
     
     internal func nextRecurringInterval() -> TimeAmount {
