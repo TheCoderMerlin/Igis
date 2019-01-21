@@ -46,7 +46,6 @@ function onLoad() {
     canvas.addEventListener("mousedown", onMouseDown);
     canvas.addEventListener("mouseup", onMouseUp);
     canvas.addEventListener("mousemove", onMouseMove);
-    canvas.addEventListener("resize", onCanvasResize);
     
 
     // Connection
@@ -223,12 +222,6 @@ function onWindowResize(event) {
     notifyWindowSize(width, height);
 }
 
-function onCanvasResize(event) {
-    let width = event.target.width
-    let height = event.target.height
-    notifyCanvasSize(width, height);
-}
-
 function notifyCanvasSize(width, height) {
     logDebugMessage("onCanvasResize(" + width + "," + height + ")", divTransmitted);
     let message = "onCanvasResize|" + width + "|" + height;
@@ -269,6 +262,9 @@ function processCommand(commandMessage, commandIndex) {
 	break;
     case "bezierCurveTo":
 	processBezierCurveTo(arguments);
+	break;
+    case "canvasSetSize":
+	processCanvasSetSize(arguments);
 	break;
     case "closePath":
 	processClosePath(arguments);
@@ -382,6 +378,19 @@ function processBezierCurveTo(arguments) {
 		    endPointX + "," + endPointY + ")", divReceived);
     context.bezierCurveTo(controlPoint1x, controlPoint1y, controlPoint2x, controlPoint2y, endPointX, endPointY);
 		    
+}
+
+function processCanvasSetSize(arguments) {
+    if  (arguments.length != 2) {
+	logErrorMessage("processCanvasSetSize: Requires two arguments", divReceived);
+	return;
+    }
+    let width = arguments.shift();
+    let height = arguments.shift();
+    logDebugMessage("canvasSetSize(" + width + "," + height + ")", divReceived);
+    canvas.width = width;
+    canvas.height = height;
+    notifyCanvasSize(width, height);
 }
 
 function processClearRect(arguments) {

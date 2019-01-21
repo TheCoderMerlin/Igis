@@ -48,6 +48,11 @@ public class Canvas {
         }
     }
 
+    public func canvasSetSize(size:Size) {
+        let command = "canvasSetSize|\(size.width)|\(size.height)"
+        pendingCommandList.append(command)
+    }
+
     // MARK: ********** Internal **********
     internal func processCommands(ctx:ChannelHandlerContext, webSocketHandler:WebSocketHandler) {
         if pendingCommandList.count > 0 {
