@@ -42,7 +42,7 @@ public class Image : CanvasIdentifiedObject {
             commands += "\(rect.topLeft.x)|\(rect.topLeft.y)|\(rect.size.width)|\(rect.size.height)"
         case .sourceAndDestination(let sourceRect, let destinationRect):
             commands += "\(sourceRect.topLeft.x)|\(sourceRect.topLeft.y)|\(sourceRect.size.width)|\(sourceRect.size.height)|" +
-              "\(destinationRect.topLeft.x)|\(destinationRect.topLeft.y)|\(destinationRect.size.width)|\(destinationRect.size.height)|"
+              "\(destinationRect.topLeft.x)|\(destinationRect.topLeft.y)|\(destinationRect.size.width)|\(destinationRect.size.height)"
         }
         
         return commands
