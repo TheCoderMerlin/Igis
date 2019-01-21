@@ -38,7 +38,6 @@ public class CanvasIdentifiedObject : CanvasObject {
             print("ERROR: State of object with id \(id) is regressing from \(state) to \(newState).")
         }
         state = newState
-        print("INFO: State of object with id \(id) is now \(state)")
     }
 
     public var isReady : Bool {
