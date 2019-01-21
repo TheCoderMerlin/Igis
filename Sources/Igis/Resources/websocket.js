@@ -399,16 +399,40 @@ function processCreateImage(arguments) {
 }
 
 function processDrawImage(arguments) {
-    if (arguments.length != 3) {
-	logErrorMessage("processDrawImage: Requires three arguments", divReceived);
+    if (arguments.length != 3 || arguments.length != 5 || arguments.length != 9) {
+	logErrorMessage("processDrawImage: Requires three, five, or nine arguments", divReceived);
 	return;
     }
+
     let id = arguments.shift();
-    let x = arguments.shift();
-    let y = arguments.shift();
-    logDebugMessage("processDrawImage(" + id + "," + x + "," + y + ")", divReceived);
     let img = document.getElementById(id);
-    context.drawImage(img, x, y);
+    
+    if (arguments.length == 2) {
+	let dx = arguments.shift();
+	let dy = arguments.shift();
+	logDebugMessage("processDrawImage(" + id + "," + dx + "," + dy + ")", divReceived);
+	context.drawImage(img, dx, dy);
+    } else if (arguments.length == 4) {
+	let dx = arguments.shift();
+	let dy = arguments.shift();
+	let dWidth = arguments.shift();
+	let dHeight = arguments.shift();
+	logDebugMessage("processDrawImage(" + id + "," + dx + "," + dy + "," + dWidth + "," + dHeight + ")", divReceived);
+	context.drawImage(img, dx, dy, dWidth, dHeight);
+    } else if (arguments.length == 8) {
+	let sx = arguments.shift();
+	let sy = arguments.shift();
+	let sWidth = arguments.shift();
+	let sHeight = arguments.shift();
+	let dx = arguments.shift();
+	let dy = arguments.shift();
+	let dWidth = arguments.shift();
+	let dHeight = arguments.shift();
+	logDebugMessage("processDrawImage(" + id + "," +
+			sx + "," + sy + "," + sWidth + "," + sHeight +
+			dx + "," + dy + "," + dWidth + "," + dHeight + ")", divReceived);
+	context.drawImage(img, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+    }
 }
 
 function processEllipse(arguments) {

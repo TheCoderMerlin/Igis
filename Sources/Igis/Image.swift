@@ -17,18 +17,34 @@ import Foundation
   
 public class Image : CanvasIdentifiedObject {
     public let sourceURL : URL
-    public var topLeft : Point
+
+    public enum RenderMode {
+        case destinationPoint(_ topLeft:Point)
+        case destinationRect(_ rect:Rect)
+        case sourceAndDestination(sourceRect:Rect, destinationRect:Rect)
+    }
+    public var renderMode : RenderMode
 
     public init(sourceURL:URL, topLeft:Point = Point(x:0, y:0)) {
         self.sourceURL = sourceURL
-        self.topLeft = topLeft
+        self.renderMode = .destinationPoint(topLeft)
     }
 
     internal override func canvasCommand() -> String {
         if !isReady {
             print("WARNING: canvasCommand requested on image not yet ready. ID: \(id.uuidString).")
         }
-        let commands = "drawImage|\(id.uuidString)|\(topLeft.x)|\(topLeft.y)"
+        var commands : String =  "drawImage|\(id.uuidString)|"
+        switch renderMode {
+        case .destinationPoint(let topLeft):
+            commands += "\(topLeft.x)|\(topLeft.y)"
+        case .destinationRect(let rect):
+            commands += "\(rect.topLeft.x)|\(rect.topLeft.y)|\(rect.size.width)|\(rect.size.height)"
+        case .sourceAndDestination(let sourceRect, let destinationRect):
+            commands += "\(sourceRect.topLeft.x)|\(sourceRect.topLeft.y)|\(sourceRect.size.width)|\(sourceRect.size.height)|" +
+              "\(destinationRect.topLeft.x)|\(destinationRect.topLeft.y)|\(destinationRect.size.width)|\(destinationRect.size.height)|"
+        }
+        
         return commands
     }
 
