@@ -74,14 +74,14 @@ function toggleDebugDisplayMode() {
 
 function setDebugCollectMode(mode) {
     if (mode == 1) {
-	let offMessage = "Debug collect mode is now on.";
-	logMessage(offMessage, divReceived);
-	logMessage(offMessage, divTransmitted);
-	debugCollectMode = 1;
-    } else {
-	let onMessage = "Debug collect mode is now off.";
+	let onMessage = "Debug collect mode is now on.";
 	logMessage(onMessage, divReceived);
 	logMessage(onMessage, divTransmitted);
+	debugCollectMode = 1;
+    } else {
+	let offMessage = "Debug collect mode is now off.";
+	logMessage(offMessage, divReceived);
+	logMessage(offMessage, divTransmitted);
 	debugCollectMode = 0;
     }
 }
@@ -399,7 +399,7 @@ function processCreateImage(arguments) {
 }
 
 function processDrawImage(arguments) {
-    if (arguments.length != 3 || arguments.length != 5 || arguments.length != 9) {
+    if (arguments.length != 3 && arguments.length != 5 && arguments.length != 9) {
 	logErrorMessage("processDrawImage: Requires three, five, or nine arguments", divReceived);
 	return;
     }
