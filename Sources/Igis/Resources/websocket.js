@@ -429,7 +429,7 @@ function processDrawImage(arguments) {
 	let dWidth = arguments.shift();
 	let dHeight = arguments.shift();
 	logDebugMessage("processDrawImage(" + id + "," +
-			sx + "," + sy + "," + sWidth + "," + sHeight +
+			sx + "," + sy + "," + sWidth + "," + sHeight + "," +
 			dx + "," + dy + "," + dWidth + "," + dHeight + ")", divReceived);
 	context.drawImage(img, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
     }
