@@ -29,10 +29,10 @@ open class PainterBase : PainterProtocol {
     open func update(canvas:Canvas) {
     }
 
-    open func onCanvasResize(canvas:Canvas, size:Size) {
+    open func onCanvasResize(size:Size) {
     }
 
-    open func onWindowResize(canvas:Canvas, size:Size) {
+    open func onWindowResize(size:Size) {
     }
     
     open func onClick(canvas:Canvas, location:Point) {

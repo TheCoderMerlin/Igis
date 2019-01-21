@@ -195,7 +195,7 @@ public class Canvas {
             return
         }
         canvasSize = Size(width:Int(width), height:Int(height))
-        painter.onCanvasResize(canvas:self, size:canvasSize!);
+        painter.onCanvasResize(size:canvasSize!);
     }
     
     internal func receptionOnWindowResize(arguments:[String]) {
@@ -206,7 +206,7 @@ public class Canvas {
             return
         }
         windowSize = Size(width:Int(width), height:Int(height))
-        painter.onWindowResize(canvas:self, size:windowSize!)
+        painter.onWindowResize(size:windowSize!)
     }
     
     internal func nextRecurringInterval() -> TimeAmount {
