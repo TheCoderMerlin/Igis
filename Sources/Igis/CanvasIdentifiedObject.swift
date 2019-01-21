@@ -18,19 +18,27 @@ import Foundation
 public class CanvasIdentifiedObject : CanvasObject {
 
     internal let id = UUID()
-    public private(set) var isSetup = false
-    public private(set) var isLoaded = false
 
+    // Object state; proceeds from top to bottom
+    internal enum State : Int {
+        case pendingTransmission   // Not yet transmitted
+        case transmissionQueued    // Transmission queued for client
+        case processedByClient     // Processed by client
+        case resourceError         // Resource is not available on client
+        case ready                 // Ready for use on client
+    }
+    private var state : State = .pendingTransmission
     
     internal func setupCommand() -> String {
         fatalError("setupCommand() invoked on CanvasIdentifiedObject")
     }
 
-    internal func notifyObjectSetupComplete() {
-        isSetup = true
+    internal func setState(_ newState:State) {
+        if newState.rawValue <= state.rawValue {
+            print("ERROR: State of object with id \(id) is regressing from \(state) to \(newState).")
+        }
+        state = newState
+        print("INFO: State of object with id \(id) is now \(state)")
     }
-
-    internal func notifyObjectLoadComplete() {
-        isLoaded = true
-    }
+    
 }

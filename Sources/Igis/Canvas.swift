@@ -43,7 +43,7 @@ public class Canvas {
             let command = canvasIdentifiedObject.setupCommand()
             pendingCommandList.append(command)
             
-            canvasIdentifiedObject.notifyObjectSetupComplete()
+            canvasIdentifiedObject.setState(.transmissionQueued)
         }
     }
 
@@ -82,8 +82,12 @@ public class Canvas {
                 receptionOnMouseUp(arguments:arguments)
             case "onMouseMove":
                 receptionOnMouseMove(arguments:arguments)
+            case "onImageError":
+                receptionOnImageError(arguments:arguments)
             case "onImageLoaded":
                 receptionOnImageLoaded(arguments:arguments)
+            case "onImageProcessed":
+                receptionOnImageProcessed(arguments:arguments)
             case "onSetSize":
                 receptionOnSetSize(arguments:arguments)
             default:
@@ -133,10 +137,24 @@ public class Canvas {
         painter.onMouseMove(canvas:self, location:Point(x:x, y:y))
     }
 
+    internal func receptionOnImageError(arguments:[String]) {
+        guard arguments.count == 1,
+              let id = UUID(uuidString:arguments[0]) else {
+            print("ERROR: receptionInImageError: requires exactly one argment which must be a valid UUID.")
+            return
+        }
+
+        guard let identifiedObject = identifiedObjectDictionary[id] else {
+            print("ERROR: receptionOnImageError: Object with id \(id.uuidString) was not found.")
+            return
+        }
+        identifiedObject.setState(.resourceError)
+    }
+
     internal func receptionOnImageLoaded(arguments:[String]) {
         guard arguments.count == 1,
               let id = UUID(uuidString:arguments[0]) else {
-            print("ERROR: onImageLoaded requires exactly one argument which must be a valid UUID.")
+            print("ERROR: receptionOnImageLoaded requires exactly one argument which must be a valid UUID.")
             return
         }
 
@@ -144,8 +162,21 @@ public class Canvas {
             print("ERROR: receptionOnImageLoaded: Object with id \(id.uuidString) was not found.")
             return
         }
-        identifiedObject.notifyObjectLoadComplete()
-        print("Image loaded and object notified: \(id.uuidString)")
+        identifiedObject.setState(.ready)
+    }
+
+    internal func receptionOnImageProcessed(arguments:[String]) {
+        guard arguments.count == 1,
+              let id = UUID(uuidString:arguments[0]) else {
+            print("ERROR: receptionOnImageProcessed requires exactly one argument which must be a valid UUID.")
+            return
+        }
+
+        guard let identifiedObject = identifiedObjectDictionary[id] else {
+            print("ERROR: receptionOnImageProcessed: Object with id \(id.uuidString) was not found.")
+            return
+        }
+        identifiedObject.setState(.processedByClient)
     }
 
     internal func receptionOnSetSize(arguments:[String]) {

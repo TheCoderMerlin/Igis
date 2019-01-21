@@ -148,9 +148,17 @@ function doSend(message) {
 }
 
 // Images
-function onImageLoaded(imageId) {
-    logDebugMessage("onImageLoaded(" + imageId + ")", divTransmitted);
-    let message = "onImageLoaded|" + imageId;
+function onImageLoaded(event) {
+    let id = event.target.id;
+    logDebugMessage("onImageLoaded(" + id + ")", divTransmitted);
+    let message = "onImageLoaded|" + id;
+    doSend(message);
+}
+
+function onImageError(event) {
+    let id = event.target.id;
+    logDebugMessage("onImageError(" + id + ")", divTransmitted);
+    let message = "onImageError|" + id;
     doSend(message);
 }
 
@@ -160,8 +168,13 @@ function createImage(id, sourceURL) {
     img.id = id;
     img.src = sourceURL;
     img.style.display = debugAvailable ? "visible" : "none";
-    img.addEventListener("load", onImageLoaded(id));
+    img.addEventListener("load", onImageLoaded);
+    img.addEventListener("error", onImageError);
     divImages.appendChild(img);
+
+    logDebugMessage("onImageProcessed(" + id + ")", divTransmitted);
+    let message = "onImageProcessed|" + id;
+    doSend(message);
 }
 
 // Canvas
