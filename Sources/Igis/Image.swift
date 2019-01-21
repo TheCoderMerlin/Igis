@@ -25,8 +25,8 @@ public class Image : CanvasIdentifiedObject {
     }
 
     internal override func canvasCommand() -> String {
-        if !isLoaded {
-            print("WARNING: canvasCommand requested on image not yet loaded. ID: \(id.uuidString).")
+        if !isReady {
+            print("WARNING: canvasCommand requested on image not yet ready. ID: \(id.uuidString).")
         }
         let commands = "drawImage|\(id.uuidString)|\(topLeft.x)|\(topLeft.y)"
         return commands

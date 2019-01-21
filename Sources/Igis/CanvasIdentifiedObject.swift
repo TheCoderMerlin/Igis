@@ -40,5 +40,13 @@ public class CanvasIdentifiedObject : CanvasObject {
         state = newState
         print("INFO: State of object with id \(id) is now \(state)")
     }
+
+    public var isReady : Bool {
+        return state == .ready
+    }
+
+    public var isResourceError : Bool {
+        return state == .resourceError
+    }
     
 }
