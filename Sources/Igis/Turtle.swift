@@ -238,6 +238,7 @@ public class Turtle : CanvasObject {
                 } else {
                     moveTo(location:turtleLocation)
                 }
+                turtleAngle = 0.0
             } // switch action
         }  // for action
 
