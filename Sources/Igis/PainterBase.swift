@@ -35,15 +35,15 @@ open class PainterBase : PainterProtocol {
     open func onWindowResize(size:Size) {
     }
     
-    open func onClick(canvas:Canvas, location:Point) {
+    open func onClick(location:Point) {
     }
     
-    open func onMouseDown(canvas:Canvas, location:Point) {
+    open func onMouseDown(location:Point) {
     }
     
-    open func onMouseUp(canvas:Canvas, location:Point) {
+    open func onMouseUp(location:Point) {
     }
     
-    open func onMouseMove(canvas:Canvas, location:Point) {
+    open func onMouseMove(location:Point) {
     }
 }

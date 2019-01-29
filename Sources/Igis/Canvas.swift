@@ -112,7 +112,7 @@ public class Canvas {
             print("ERROR: onClick requires exactly two integer arguments")
             return
         }
-        painter.onClick(canvas:self, location:Point(x:x, y:y))
+        painter.onClick(location:Point(x:x, y:y))
     }
 
     internal func receptionOnMouseDown(arguments:[String]) {
@@ -122,7 +122,7 @@ public class Canvas {
             print("ERROR: onMouseDown requires exactly two integer arguments")
             return
         }
-        painter.onMouseDown(canvas:self, location:Point(x:x, y:y))
+        painter.onMouseDown(location:Point(x:x, y:y))
     }
 
     internal func receptionOnMouseUp(arguments:[String]) {
@@ -132,7 +132,7 @@ public class Canvas {
             print("ERROR: onMouseUp requires exactly two integer arguments")
             return
         }
-        painter.onMouseUp(canvas:self, location:Point(x:x, y:y))
+        painter.onMouseUp(location:Point(x:x, y:y))
     }
 
     internal func receptionOnMouseMove(arguments:[String]) {
@@ -142,7 +142,7 @@ public class Canvas {
             print("ERROR: onMouseMove requires exactly two integer arguments")
             return
         }
-        painter.onMouseMove(canvas:self, location:Point(x:x, y:y))
+        painter.onMouseMove(location:Point(x:x, y:y))
     }
 
     internal func receptionOnImageError(arguments:[String]) {
