@@ -210,7 +210,7 @@ function onKeyDown(event) {
     let altKey   = event.altKey
     let metaKey  = event.metaKey
 
-    logDebugMessage("onKeyDown(" + key + "," + code + "," + ctrlKey + "," + shiftKey + "," + altKey + "," + metaKey, divTransmitted);
+    logDebugMessage("onKeyDown(" + key + "," + code + "," + ctrlKey + "," + shiftKey + "," + altKey + "," + metaKey + ")", divTransmitted);
     let message = "onKeyDown|"   + key + "|" + code + "|" + ctrlKey + "|" + shiftKey + "|" + altKey + "|" + metaKey;
     doSend(message);
 
