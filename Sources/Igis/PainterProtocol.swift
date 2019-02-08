@@ -26,4 +26,6 @@ public protocol PainterProtocol {
     func onMouseDown(location:Point)
     func onMouseUp(location:Point)
     func onMouseMove(location:Point)
+
+    func onKeyDown(key:String, code:String, ctrlKey:Bool, shiftKey:Bool, altKey:Bool, metaKey:Bool)
 }

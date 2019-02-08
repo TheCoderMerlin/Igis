@@ -90,6 +90,8 @@ public class Canvas {
                 receptionOnMouseUp(arguments:arguments)
             case "onMouseMove":
                 receptionOnMouseMove(arguments:arguments)
+            case "onKeyDown":
+                receptionOnKeyDown(arguments:arguments)
             case "onImageError":
                 receptionOnImageError(arguments:arguments)
             case "onImageLoaded":
@@ -143,6 +145,21 @@ public class Canvas {
             return
         }
         painter.onMouseMove(location:Point(x:x, y:y))
+    }
+
+    internal func receptionOnKeyDown(arguments:[String]) {
+        guard arguments.count == 6,
+              let ctrlKey = Bool(arguments[2]),
+              let shiftKey = Bool(arguments[3]),
+              let altKey = Bool(arguments[4]),
+              let metaKey = Bool(arguments[5]) else {
+            print("ERROR: onKeyDown requires exactly six arguments (String, String, Bool, Bool, Bool, Bool)")
+            return
+        }
+        let key = arguments[0]
+        let code = arguments[1]
+        
+        painter.onKeyDown(key:key, code:code, ctrlKey:ctrlKey, shiftKey:shiftKey, altKey:altKey, metaKey:metaKey)
     }
 
     internal func receptionOnImageError(arguments:[String]) {

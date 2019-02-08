@@ -203,7 +203,16 @@ function onMouseMove(event) {
 }
 
 function onKeyDown(event) {
-    let code = event.code
+    let key      = event.key
+    let code     = event.code
+    let ctrlKey  = event.ctrlKey
+    let shiftKey = event.shiftKey
+    let altKey   = event.altKey
+    let metaKey  = event.metaKey
+
+    logDebugMessage("onKeyDown(" + key + "," + code + "," + ctrlKey + "," + shiftKey + "," + altKey + "," + metaKey, divTransmitted);
+    let message = "onKeyDown|"   + key + "|" + code + "|" + ctrlKey + "|" + shiftKey + "|" + altKey + "|" + metaKey;
+    doSend(message);
 
     switch (code) {
     case "F1":
