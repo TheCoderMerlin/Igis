@@ -17,6 +17,22 @@ public struct Rect {
     public var topLeft : Point
     public var size : Size
 
+    public var left : Int {
+        return topLeft.x
+    }
+
+    public var top : Int {
+        return topLeft.y
+    }
+
+    public var right : Int {
+        return topLeft.x + size.width
+    }
+
+    public var bottom : Int {
+        return topLeft.y + size.height
+    }
+
     public init(topLeft:Point, size:Size) {
         self.topLeft = topLeft
         self.size = size
