@@ -1,21 +1,29 @@
 var webSocketPath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf("/")) + "/websocket"
 var webSocketURL = "ws://" + window.location.hostname +  webSocketPath
 var webSocket;
+var isConnected;
 
 var canvas;
 var context;
 var divStatistics;
 
 var statisticsInitialTime;
-var statisticsProcessCommandGroupCount;
+var statisticsEnqueuedFrameCount;
+var statisticsEmptyFrameCount;
+var statisticsFramesRenderedCount;
+
+var frameQueue;
 
 function onLoad() {
     // Log
     divStatistics = document.getElementById("divStatistics");
 
     // Statistics
-    statisticsProcessCommandGroupCount = 0;
     statisticsInitialTime = performance.now();
+    statisticsEnqueuedFrameCount = 0;
+    statisticsFramesRenderedCount = 0;
+    statisticsEmptyFrameCount = 0;
+    statisticsMaxFrameQueueCount = 0;
     
     // Canvas
     canvas = document.getElementById("canvasMain");
@@ -31,9 +39,12 @@ function onLoad() {
     canvas.addEventListener("mousedown", onMouseDown);
     canvas.addEventListener("mouseup", onMouseUp);
     canvas.addEventListener("mousemove", onMouseMove);
-    
+
+    // Frame Queue
+    frameQueue = [];
 
     // Connection
+    isConnected = false;
     webSocket = establishConnection();
 }
 
@@ -60,19 +71,53 @@ function establishConnection() {
 
 // Web Socket
 function onOpen(event) {
+    isConnected = true;
     logMessage("CONNECTED");
     
     // Notify sizes
     notifyWindowSize(window.innerWidth, window.innerHeight);
     notifyCanvasSize(canvas.getAttribute("width"), canvas.getAttribute("height"));
+
+    // Request update frame event
+    window.requestAnimationFrame(onUpdateFrame);
+}
+
+function onUpdateFrame(timestamp) {
+    // Update statistics
+    statisticsFramesRenderedCount += 1;
+
+    // Process frame if available
+    if (frameQueue.length > 0) {
+	statisticsMaxFrameQueueCount = Math.max(statisticsMaxFrameQueueCount, frameQueue.length);
+	frame = frameQueue.shift();
+	processCommands(frame);
+    } else {
+	statisticsEmptyFrameCount += 1;
+    }
+
+    // Display statistics
+    elapsedMilliseconds = performance.now() - statisticsInitialTime;
+    renderedFramesPerSecond = statisticsFramesRenderedCount / elapsedMilliseconds * 1000;
+    enqueuedFramesPerSecond = statisticsEnqueuedFrameCount / elapsedMilliseconds * 1000;
+    emptyFramesPerSecond = statisticsEmptyFrameCount / elapsedMilliseconds * 1000;
+    logStatistics("Rendered FPS: " + renderedFramesPerSecond +
+		  " Enqueued FPS: " + enqueuedFramesPerSecond +
+		  " Empty FPS: " + emptyFramesPerSecond +
+		  " Max Frame Queue: " + statisticsMaxFrameQueueCount);
+
+    // Request next update frame event if still connected
+    if (isConnected) {
+	window.requestAnimationFrame(onUpdateFrame)
+    }
 }
 
 function onClose(event) {
+    isConnected = false;
     logMessage("DISCONNECTED. Code: " + event.code + " Reason: " + event.reason);
 }
 
 function onMessage(event) {
-    processCommands(event.data);
+    enqueueFrame(event.data);
 }
 
 function onError(event) {
@@ -169,15 +214,15 @@ function notifyWindowSize(width, height) {
     doSend(message);
 }
 
-function processCommands(commandMessages) {
-    commandMessages.split("||").forEach(processCommand)
+function enqueueFrame(commandMessages) {
+    frameQueue.push(commandMessages);
     
     // Statistics
-    statisticsProcessCommandGroupCount += 1;
-    elapsedMilliseconds = performance.now() - statisticsInitialTime;
-    framesPerSecond = statisticsProcessCommandGroupCount / elapsedMilliseconds * 1000;
-    
-    logStatistics("FPS: " + framesPerSecond);
+    statisticsEnqueuedFrameCount += 1;
+}
+
+function processCommands(commandMessages) {
+    commandMessages.split("||").forEach(processCommand)
 }
 
 function processCommand(commandMessage, commandIndex) {
