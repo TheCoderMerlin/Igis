@@ -58,9 +58,9 @@ public final class WebSocketHandler: ChannelInboundHandler {
     }
 
     public func recurringCallback(ctx: ChannelHandlerContext) {
-        canvas.recurring(ctx:ctx, webSocketHandler:self)
         let interval = canvas.nextRecurringInterval()
         ctx.eventLoop.scheduleTask(in: interval, {self.recurringCallback(ctx: ctx)})
+        canvas.recurring(ctx:ctx, webSocketHandler:self)
     }
 
     public func channelReadComplete(ctx: ChannelHandlerContext) {
