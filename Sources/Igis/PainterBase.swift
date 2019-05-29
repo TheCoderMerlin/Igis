@@ -18,9 +18,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
    essentially acting as a stub for which only selected functions may
    be overridden.    
 */
-  
+
 open class PainterBase : PainterProtocol {
     public required init() {
+    }
+
+    open func framesPerSecond() -> Int {
+        return 10
     }
 
     open func setup(canvas:Canvas) {

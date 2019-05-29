@@ -226,7 +226,10 @@ public class Canvas {
     }
     
     internal func nextRecurringInterval() -> TimeAmount {
-        return .milliseconds(100)
+        let framesPerSecond = painter.framesPerSecond()
+        let intervalInSeconds = 1.0 / Double(framesPerSecond)
+        let intervalInMilliSeconds = Int(intervalInSeconds * 1_000)
+        return .milliseconds(intervalInMilliSeconds)
     }
     
 }

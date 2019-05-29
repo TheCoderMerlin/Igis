@@ -16,6 +16,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 public protocol PainterProtocol {
     init()
 
+    func framesPerSecond() -> Int
+    
     func setup(canvas:Canvas)
     func update(canvas:Canvas)
 
@@ -28,4 +30,5 @@ public protocol PainterProtocol {
     func onMouseMove(location:Point)
 
     func onKeyDown(key:String, code:String, ctrlKey:Bool, shiftKey:Bool, altKey:Bool, metaKey:Bool)
+
 }
