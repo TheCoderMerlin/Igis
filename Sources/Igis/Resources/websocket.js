@@ -100,9 +100,9 @@ function onUpdateFrame(timestamp) {
     renderedFramesPerSecond = statisticsFramesRenderedCount / elapsedMilliseconds * 1000;
     enqueuedFramesPerSecond = statisticsEnqueuedFrameCount / elapsedMilliseconds * 1000;
     emptyFramesPerSecond = statisticsEmptyFrameCount / elapsedMilliseconds * 1000;
-    logStatistics("Rendered FPS: " + renderedFramesPerSecond +
-		  " Enqueued FPS: " + enqueuedFramesPerSecond +
-		  " Empty FPS: " + emptyFramesPerSecond +
+    logStatistics("Rendered FPS: " + renderedFramesPerSecond.toFixed(2) +
+		  " Enqueued FPS: " + enqueuedFramesPerSecond.toFixed(2) +
+		  " Empty FPS: " + emptyFramesPerSecond.toFixed(2) +
 		  " Max Frame Queue: " + statisticsMaxFrameQueueCount);
 
     // Request next update frame event if still connected
