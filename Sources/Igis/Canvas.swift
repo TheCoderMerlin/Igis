@@ -104,7 +104,7 @@ public class Canvas {
                 do{}
             }
         }
-        processCommands(ctx:ctx, webSocketHandler:webSocketHandler)
+//        processCommands(ctx:ctx, webSocketHandler:webSocketHandler)
     }
 
     internal func receptionOnClick(arguments:[String]) {
