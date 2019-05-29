@@ -6,15 +6,20 @@ var canvas;
 var context;
 var divRecieved;
 var divTransmitted;
+var divStatistics;
 
 var debugAvailable;
 var debugDisplayMode;
 var debugCollectMode;
 
+var statisticsInitialTime;
+var statisticsProcessCommandGroupCount;
+
 function onLoad() {
     // Log
     divReceived = document.getElementById("divReceived");
     divTransmitted = document.getElementById("divTransmitted");
+    divStatistics = document.getElementById("divStatistics");
 
     // Debug mode
     // We set this before Canvas  because it may alter size of canvas
@@ -31,6 +36,10 @@ function onLoad() {
 	document.getElementById("trTop").style.height = "100%";
 	document.getElementById("trBottom").style.height = "0%";
     }
+
+    // Statistics
+    statisticsProcessCommandGroupCount = 0;
+    statisticsInitialTime = performance.now();
     
     // Canvas
     canvas = document.getElementById("canvasMain");
@@ -111,6 +120,10 @@ function logDebugMessage(message, div) {
 function logErrorMessage(message, div) {
     let errorMessage = "<span style='color: red;'>" + message + "</span>";
     logMessage(errorMessage, div);
+}
+
+function logStatistics(message) {
+    divStatistics.innerHTML = message;
 }
 
 function establishConnection() {
@@ -245,6 +258,13 @@ function notifyWindowSize(width, height) {
 
 function processCommands(commandMessages) {
     commandMessages.split("||").forEach(processCommand)
+    
+    // Statistics
+    statisticsProcessCommandGroupCount += 1;
+    elapsedMilliseconds = performance.now() - statisticsInitialTime;
+    framesPerSecond = statisticsProcessCommandGroupCount / elapsedMilliseconds * 1000;
+    
+    logStatistics("FPS: " + framesPerSecond);
 }
 
 function processCommand(commandMessage, commandIndex) {
