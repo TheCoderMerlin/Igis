@@ -9,39 +9,11 @@ html, body {
     height: 100%;
 }
 
-#tdLeft {
-    width: 50%;
-}
-
-#tdRight {
-    width: 50%;
-}
-
-#trTop {
-    height: 80%; // For debug off value is 100%
-}
-
-#trBottom {
-    height: 20%; // For debug off value is 0%
-}
-
 #canvasMain {
     width: 100%;
     height: 100%;
 }
 
-.divScrolling {
-    font-family:sans-serif;padding:2px;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    width: 100%;
-    height: 100%;
-}
-
-#divReceived {
-    background-color: #FFEFD5;
-}
-
-#divTransmitted {
-    background-color: #FFDAB9;
+#trStat {
+    display: none;
 }

@@ -4,38 +4,14 @@ var webSocket;
 
 var canvas;
 var context;
-var divRecieved;
-var divTransmitted;
 var divStatistics;
-
-var debugAvailable;
-var debugDisplayMode;
-var debugCollectMode;
 
 var statisticsInitialTime;
 var statisticsProcessCommandGroupCount;
 
 function onLoad() {
     // Log
-    divReceived = document.getElementById("divReceived");
-    divTransmitted = document.getElementById("divTransmitted");
     divStatistics = document.getElementById("divStatistics");
-
-    // Debug mode
-    // We set this before Canvas  because it may alter size of canvas
-    let urlParameters = new URLSearchParams(window.location.search);
-    debugAvailable = urlParameters.get("debug") == 1
-    if (debugAvailable) {
-	setDebugDisplayMode(1);
-	setDebugCollectMode(1);
-    } else {
-	// Disable debugging display
-	setDebugDisplayMode(0);
-	setDebugCollectMode(0);
-
-	document.getElementById("trTop").style.height = "100%";
-	document.getElementById("trBottom").style.height = "0%";
-    }
 
     // Statistics
     statisticsProcessCommandGroupCount = 0;
@@ -61,65 +37,12 @@ function onLoad() {
     webSocket = establishConnection();
 }
 
-function setDebugDisplayMode(mode) {
-    if (mode == 1) {
-	divReceived.style.display = "block";
-	divTransmitted.style.display = "block";
-
-	debugDisplayMode = 1;
-    } else {
-	divReceived.style.display = "none";
-	divTransmitted.style.display = "none";
-	debugDisplayMode = 0;
-    }
+function logMessage(message) {
+    console.log(message);
 }
 
-function toggleDebugDisplayMode() {
-    if (debugDisplayMode == 1) {
-	setDebugDisplayMode(0);
-    } else {
-	setDebugDisplayMode(1);
-    }
-}
-
-function setDebugCollectMode(mode) {
-    if (mode == 1) {
-	let onMessage = "Debug collect mode is now on.";
-	logMessage(onMessage, divReceived);
-	logMessage(onMessage, divTransmitted);
-	debugCollectMode = 1;
-    } else {
-	let offMessage = "Debug collect mode is now off.";
-	logMessage(offMessage, divReceived);
-	logMessage(offMessage, divTransmitted);
-	debugCollectMode = 0;
-    }
-}
-
-function toggleDebugCollectMode() {
-    if (debugCollectMode == 1) {
-	setDebugCollectMode(0);
-    } else {
-	setDebugCollectMode(1);
-    }
-}
-
-function logMessage(message, div) {
-    let element = document.createElement("p");
-    element.innerHTML = message;
-    div.insertBefore(element, null);
-    div.scrollTop = div.scrollHeight; 
-}
-
-function logDebugMessage(message, div) {
-    if (debugCollectMode == 1) {
-	logMessage(message, div);
-    }
-}
-
-function logErrorMessage(message, div) {
-    let errorMessage = "<span style='color: red;'>" + message + "</span>";
-    logMessage(errorMessage, div);
+function logError(message) {
+    console.error(message);
 }
 
 function logStatistics(message) {
@@ -137,7 +60,7 @@ function establishConnection() {
 
 // Web Socket
 function onOpen(event) {
-    logMessage("<span style='color: blue;'>CONNECTED</span>", divReceived);
+    logMessage("CONNECTED");
     
     // Notify sizes
     notifyWindowSize(window.innerWidth, window.innerHeight);
@@ -145,7 +68,7 @@ function onOpen(event) {
 }
 
 function onClose(event) {
-    logMessage("<span style='color: blue;'>DISCONNECTED. Code: " + event.code + " Reason: " + event.reason + "</span>", divReceived);
+    logMessage("DISCONNECTED. Code: " + event.code + " Reason: " + event.reason);
 }
 
 function onMessage(event) {
@@ -153,7 +76,7 @@ function onMessage(event) {
 }
 
 function onError(event) {
-    logErrorMessage(event.data, divReceived);
+    logErrorMessage(event.data);
 }
 
 function doSend(message) {
@@ -163,14 +86,12 @@ function doSend(message) {
 // Images
 function onImageLoaded(event) {
     let id = event.target.id;
-    logDebugMessage("onImageLoaded(" + id + ")", divTransmitted);
     let message = "onImageLoaded|" + id;
     doSend(message);
 }
 
 function onImageError(event) {
     let id = event.target.id;
-    logDebugMessage("onImageError(" + id + ")", divTransmitted);
     let message = "onImageError|" + id;
     doSend(message);
 }
@@ -180,37 +101,32 @@ function createImage(id, sourceURL) {
     let img = document.createElement("img");
     img.id = id;
     img.src = sourceURL;
-    img.style.display = debugAvailable ? "visible" : "none";
+    img.style.display = "none";
     img.addEventListener("load", onImageLoaded);
     img.addEventListener("error", onImageError);
     divImages.appendChild(img);
 
-    logDebugMessage("onImageProcessed(" + id + ")", divTransmitted);
     let message = "onImageProcessed|" + id;
     doSend(message);
 }
 
 // Canvas
 function onClick(event) {
-    logDebugMessage("onClick(" + event.clientX + ", " + event.clientY + ")", divTransmitted);
     let message = "onClick|" + event.clientX + "|" + event.clientY;
     doSend(message);
 }
 
 function onMouseDown(event) {
-    logDebugMessage("onMouseDown(" + event.clientX + ", " + event.clientY + ")", divTransmitted);
     let message = "onMouseDown|" + event.clientX + "|" + event.clientY;
     doSend(message);
 }
 
 function onMouseUp(event) {
-    logDebugMessage("onMouseUp(" + event.clientX + ", " + event.clientY + ")", divTransmitted);
     let message = "onMouseUp|" + event.clientX + "|" + event.clientY;
     doSend(message);
 }
 
 function onMouseMove(event) {
-    logDebugMessage("onMouseMove(" + event.clientX + ", " + event.clientY + ")", divTransmitted);
     let message = "onMouseMove|" + event.clientX + "|" + event.clientY;
     doSend(message);
 }
@@ -223,7 +139,6 @@ function onKeyDown(event) {
     let altKey   = event.altKey
     let metaKey  = event.metaKey
 
-    logDebugMessage("onKeyDown(" + key + "," + code + "," + ctrlKey + "," + shiftKey + "," + altKey + "," + metaKey + ")", divTransmitted);
     let message = "onKeyDown|"   + key + "|" + code + "|" + ctrlKey + "|" + shiftKey + "|" + altKey + "|" + metaKey;
     doSend(message);
 
@@ -245,13 +160,11 @@ function onWindowResize(event) {
 }
 
 function notifyCanvasSize(width, height) {
-    logDebugMessage("onCanvasResize(" + width + "," + height + ")", divTransmitted);
     let message = "onCanvasResize|" + width + "|" + height;
     doSend(message);
 }
 
 function notifyWindowSize(width, height) {
-    logDebugMessage("onWindowResize(" + width + "," + height + ")", divTransmitted);
     let message = "onWindowResize|" + width + "|" + height;
     doSend(message);
 }
@@ -270,7 +183,7 @@ function processCommands(commandMessages) {
 function processCommand(commandMessage, commandIndex) {
     let commandAndArguments = commandMessage.split("|");
     if (commandAndArguments.length < 1) {
-	logErrorMessage("processCommand: Unable to process empty commandAndArguments list", divReceived);
+	logErrorMessage("processCommand: Unable to process empty commandAndArguments list");
 	return;
     }
     let command = commandAndArguments.shift();
@@ -350,13 +263,13 @@ function processCommand(commandMessage, commandIndex) {
 	processStrokeText(arguments);
 	break;
     default:
-	logErrorMessage("Unknown command: " + command, divReceived);
+	logErrorMessage("Unknown command: " + command);
     }
 }
 
 function processArc(arguments) {
     if (arguments.length != 6) {
-	logErrorMessage("processArc: Requires six arguments", divReceived);
+	logErrorMessage("processArc: Requires six arguments");
 	return;
     }
     let centerX = arguments.shift();
@@ -365,13 +278,12 @@ function processArc(arguments) {
     let startAngle = arguments.shift();
     let endAngle   = arguments.shift();
     let antiClockwise = arguments.shift() === "true";
-    logDebugMessage("arc(" + centerX + "," + centerY + "," + radius + "," + startAngle + "," + endAngle + "," + antiClockwise + ")", divReceived);
     context.arc(centerX, centerY, radius, startAngle, endAngle, antiClockwise);
 }
 
 function processArcTo(arguments) {
     if (arguments.length != 5) {
-	logErrorMessage("processArcTo: Requires five arguments", divReceived);
+	logErrorMessage("processArcTo: Requires five arguments");
 	return;
     }
     let controlPoint1x = arguments.shift();
@@ -379,22 +291,20 @@ function processArcTo(arguments) {
     let controlPoint2x = arguments.shift();
     let controlPoint2y = arguments.shift();
     let radius = arguments.shift();
-    logDebugMessage("arcTo(" + controlPoint1x + "," + controlPoint1y + "," + controlPoint2x + "," + controlPoint2y + "," + radius + ")", divReceived);
     context.arcTo(controlPoint1x, controlPoint1y, controlPoint2x, controlPoint2y, radius);
 }
 
 function processBeginPath(arguments) {
     if (arguments.length != 0) {
-	logErrorMessage("processBeginPath: Requires zero arguments", divReceived);
+	logErrorMessage("processBeginPath: Requires zero arguments");
 	return;
     }
-    logDebugMessage("beginPath()", divReceived);
     context.beginPath();
 }
 
 function processBezierCurveTo(arguments) {
     if (arguments.length != 6) {
-	logErrorMessage("processBezierCurveTo: Requires six arguments", divReceived);
+	logErrorMessage("processBezierCurveTo: Requires six arguments");
 	return;
     }
     let controlPoint1x = arguments.shift();
@@ -403,20 +313,17 @@ function processBezierCurveTo(arguments) {
     let controlPoint2y = arguments.shift();
     let endPointX = arguments.shift();
     let endPointY = arguments.shift();
-    logDebugMessage("bezierCurveTo(" + controlPoint1x + "," + controlPoint1y + "," + controlPoint2x + "," + controlPoint2y + "," +
-		    endPointX + "," + endPointY + ")", divReceived);
     context.bezierCurveTo(controlPoint1x, controlPoint1y, controlPoint2x, controlPoint2y, endPointX, endPointY);
 		    
 }
 
 function processCanvasSetSize(arguments) {
     if  (arguments.length != 2) {
-	logErrorMessage("processCanvasSetSize: Requires two arguments", divReceived);
+	logErrorMessage("processCanvasSetSize: Requires two arguments");
 	return;
     }
     let width = arguments.shift();
     let height = arguments.shift();
-    logDebugMessage("canvasSetSize(" + width + "," + height + ")", divReceived);
     canvas.width = width;
     canvas.height = height;
     notifyCanvasSize(width, height);
@@ -424,40 +331,37 @@ function processCanvasSetSize(arguments) {
 
 function processClearRect(arguments) {
     if (arguments.length != 4) {
-	logErrorMessage("processClearRect: Requires four arguments", divReceived);
+	logErrorMessage("processClearRect: Requires four arguments");
 	return;
     }
     let x = arguments.shift();
     let y = arguments.shift();
     let width = arguments.shift();
     let height = arguments.shift();
-    logDebugMessage("clearRect(" + x + "," + y + "," + width + "," + height + ")", divReceived);
     context.clearRect(x, y, width, height);
 }
 
 function processClosePath(arguments) {
     if (arguments.length != 0) {
-	logErrorMessage("processClosePath: Requires zero arguments", divReceived);
+	logErrorMessage("processClosePath: Requires zero arguments");
 	return;
     }
-    logDebugMessage("closePath()", divReceived);
     context.closePath();
 }
 
 function processCreateImage(arguments) {
     if (arguments.length != 2) {
-	logErrorMessage("processCreateImage: Requires two arguments", divReceived);
+	logErrorMessage("processCreateImage: Requires two arguments");
 	return;
     }
     let id = arguments.shift();
     let sourceURL = arguments.shift();
-    logDebugMessage("processCreateImage(" + id + "," + sourceURL + ")", divReceived);
     createImage(id, sourceURL);
 }
 
 function processDrawImage(arguments) {
     if (arguments.length != 3 && arguments.length != 5 && arguments.length != 9) {
-	logErrorMessage("processDrawImage: Requires three, five, or nine arguments", divReceived);
+	logErrorMessage("processDrawImage: Requires three, five, or nine arguments");
 	return;
     }
 
@@ -467,14 +371,12 @@ function processDrawImage(arguments) {
     if (arguments.length == 2) {
 	let dx = arguments.shift();
 	let dy = arguments.shift();
-	logDebugMessage("processDrawImage(" + id + "," + dx + "," + dy + ")", divReceived);
 	context.drawImage(img, dx, dy);
     } else if (arguments.length == 4) {
 	let dx = arguments.shift();
 	let dy = arguments.shift();
 	let dWidth = arguments.shift();
 	let dHeight = arguments.shift();
-	logDebugMessage("processDrawImage(" + id + "," + dx + "," + dy + "," + dWidth + "," + dHeight + ")", divReceived);
 	context.drawImage(img, dx, dy, dWidth, dHeight);
     } else if (arguments.length == 8) {
 	let sx = arguments.shift();
@@ -485,16 +387,13 @@ function processDrawImage(arguments) {
 	let dy = arguments.shift();
 	let dWidth = arguments.shift();
 	let dHeight = arguments.shift();
-	logDebugMessage("processDrawImage(" + id + "," +
-			sx + "," + sy + "," + sWidth + "," + sHeight + "," +
-			dx + "," + dy + "," + dWidth + "," + dHeight + ")", divReceived);
 	context.drawImage(img, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
     }
 }
 
 function processEllipse(arguments) {
     if (arguments.length != 8) {
-	logErrorMessage("processEllipse: Requires eight arguments", divReceived);
+	logErrorMessage("processEllipse: Requires eight arguments");
 	return;
     }
     let x = arguments.shift();
@@ -505,154 +404,136 @@ function processEllipse(arguments) {
     let startAngle = arguments.shift();
     let endAngle = arguments.shift();
     let antiClockwise = arguments.shift() === "true";
-    logDebugMessage("ellipse(" + x + "," + y + "," +
-		    radiusX + "," + radiusY + "," +
-		    rotation + "," +
-		    startAngle + "," + endAngle + "," +
-		    antiClockwise + ")", divReceived);
     context.ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, antiClockwise);
 }
 
 function processFill(arguments) {
     if (arguments.length != 0) {
-	logErrorMessage("processFill: Requires zero arguments", divReceived);
+	logErrorMessage("processFill: Requires zero arguments");
 	return;
     }
-    logDebugMessage("fill()", divReceived);
     context.fill();
 }
 
 function processFillRect(arguments) {
     if (arguments.length != 4) {
-	logErrorMessage("processFillRect: Requires four arguments", divReceived);
+	logErrorMessage("processFillRect: Requires four arguments");
 	return;
     }
     let x = arguments.shift();
     let y = arguments.shift();
     let width = arguments.shift();
     let height = arguments.shift();
-    logDebugMessage("fillRect(" + x + "," + y + "," + width + "," + height + ")", divReceived);
     context.fillRect(x, y, width, height);
 }
 
 function processFillStyle(arguments) {
     if (arguments.length != 1) {
-	logErrorMessage("procesFillStyle: Requires one argument", divReceived);
+	logErrorMessage("procesFillStyle: Requires one argument");
 	return;
     }
     let style = arguments.shift();
-    logDebugMessage("fillStyle=" + style, divReceived);
     context.fillStyle = style;
 }
 
 function processFillText(arguments) {
     if (arguments.length != 3) {
-	logErrorMessage("processFillText: Requires three arguments", divReceived);
+	logErrorMessage("processFillText: Requires three arguments");
 	return;
     }
     let text = arguments.shift();
     let x = arguments.shift();
     let y = arguments.shift();
-    logDebugMessage("fillText(" + text + "," + x + "," + y + ")", divReceived);
     context.fillText(text, x, y);
 }
 
 function processFont(arguments) {
     if (arguments.length != 1) {
-	logErrorMessage("processFont: Requires one argument", divReceived);
+	logErrorMessage("processFont: Requires one argument");
 	return;
     }
     let font = arguments.shift();
-    logDebugMessage("font=" + font, divReceived);
     context.font = font;
 }
 
 function processLineWidth(arguments) {
     if (arguments.length != 1) {
-	logErrorMessage("processLineWidth: Requires one argument", divReceived);
+	logErrorMessage("processLineWidth: Requires one argument");
 	return;
     }
     let width = arguments.shift();
-    logDebugMessage("lineWidth=" + width, divReceived);
     context.lineWidth = width;
 }
 
 function processLineTo(arguments) {
     if (arguments.length != 2) {
-	logErrorMessage("processLineTo: Requires two arguments", divReceived);
+	logErrorMessage("processLineTo: Requires two arguments");
 	return;
     }
     let x = arguments.shift();
     let y = arguments.shift();
-    logDebugMessage("lineTo(" + x + "," + y + ")", divReceived);
     context.lineTo(x, y)
 }
 
 function processMoveTo(arguments) {
     if (arguments.length != 2) {
-	logErrorMessage("processMoveTo: Requires two arguments", divReceived);
+	logErrorMessage("processMoveTo: Requires two arguments");
 	return;
     }
     let x = arguments.shift();
     let y = arguments.shift();
-    logDebugMessage("moveTo(" + x + "," + y + ")", divReceived);
     context.moveTo(x, y)
 }
 
 function processQuadraticCurveTo(arguments) {
     if (arguments.length != 4) {
-	logErrorMessage("processQuadraticCurveTo: Requires four arguments", divReceived);
+	logErrorMessage("processQuadraticCurveTo: Requires four arguments");
 	return;
     }
     let controlPointX = arguments.shift();
     let controlPointY = arguments.shift();
     let endPointX = arguments.shift();
     let endPointY = arguments.shift();
-    logDebugMessage("quadraticCurveTo(" + controlPointX + "," + controlPointY + "," + endPointX + "," + endPointY + ")", divReceived);
     context.quadraticCurveTo(controlPointX, controlPointY, endPointX, endPointY);
 }
 
 function processStroke(arguments) {
     if (arguments.length != 0) {
-	logErrorMessage("processStroke: Requires zero arguments", divReceived);
+	logErrorMessage("processStroke: Requires zero arguments");
 	return;
     }
-    logDebugMessage("stroke()", divReceived);
     context.stroke();
 }
 
 function processStrokeRect(arguments) {
     if (arguments.length != 4) {
-	logErrorMessage("processStrokeRect: Requires four arguments", divReceived);
+	logErrorMessage("processStrokeRect: Requires four arguments");
 	return;
     }
     let x = arguments.shift();
     let y = arguments.shift();
     let width = arguments.shift();
     let height = arguments.shift();
-    logDebugMessage("strokeRect(" + x + "," + y + "," + width + "," + height + ")", divReceived);
     context.strokeRect(x, y, width, height);
 }
 
 function processStrokeStyle(arguments) {
     if (arguments.length != 1) {
-	logErrorMessage("procesStrokeStyle: Requires one argument", divReceived);
+	logErrorMessage("procesStrokeStyle: Requires one argument");
 	return;
     }
     let style = arguments.shift();
-    logDebugMessage("strokeStyle=" + style, divReceived);
     context.strokeStyle = style;
 }
 
 function processStrokeText(arguments) {
     if (arguments.length != 3) {
-	logErrorMessage("processStrokeText: Requires three arguments", divReceived);
+	logErrorMessage("processStrokeText: Requires three arguments");
 	return;
     }
     let text = arguments.shift();
     let x = arguments.shift();
     let y = arguments.shift();
-    logDebugMessage("strokeText(" + text + "," + x + "," + y + ")", divReceived);
     context.strokeText(text, x, y);
 }
 
