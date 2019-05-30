@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 public class Color {
     public let style : String
 
-    public enum Name : String {
+    public enum Name : String, CaseIterable {
         case aliceblue = "#F0F8FF"
         case antiquewhite = "#FAEBD7"
         case aquamarine = "#7FFFD4"
