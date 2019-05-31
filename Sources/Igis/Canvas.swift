@@ -18,6 +18,8 @@ import NIO
 
 public class Canvas {
 
+    private static var nextId : Int = 1000
+    private let id : Int
     private let painter : PainterProtocol
     private var pendingCommandList = [String]()
     private var identifiedObjectDictionary = [UUID:CanvasIdentifiedObject]()
@@ -25,6 +27,10 @@ public class Canvas {
     public private(set) var windowSize : Size? = nil
     
     internal init(painter:PainterProtocol) {
+        // Assign ID.  Potentially conflict if two threads enter simultaneously?
+        self.id = Canvas.nextId
+        Canvas.nextId += 1
+        
         self.painter = painter
     }
 
@@ -70,12 +76,7 @@ public class Canvas {
     }
 
     internal func recurring(ctx:ChannelHandlerContext, webSocketHandler:WebSocketHandler) {
-        var clientId = ""
-        if let remoteAddress = ctx.remoteAddress {
-            clientId = remoteAddress.description
-        }
-
-        painter.update(canvas:self, clientId:clientId)
+        painter.update(canvas:self, id:id)
         processCommands(ctx:ctx, webSocketHandler:webSocketHandler)
     }
 
