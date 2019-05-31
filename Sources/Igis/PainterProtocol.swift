@@ -19,7 +19,7 @@ public protocol PainterProtocol {
     func framesPerSecond() -> Int
     
     func setup(canvas:Canvas)
-    func update(canvas:Canvas)
+    func update(canvas:Canvas, clientId:String)
 
     func onCanvasResize(size:Size)
     func onWindowResize(size:Size)

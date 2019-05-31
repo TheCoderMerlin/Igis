@@ -65,19 +65,17 @@ public class Canvas {
     }
     
     internal func ready(ctx:ChannelHandlerContext, webSocketHandler:WebSocketHandler) {
-        print("ready")
         painter.setup(canvas:self)
         processCommands(ctx:ctx, webSocketHandler:webSocketHandler)
     }
 
     internal func recurring(ctx:ChannelHandlerContext, webSocketHandler:WebSocketHandler) {
-        print("recurring")
+        var clientId = ""
         if let remoteAddress = ctx.remoteAddress {
-            print("Remote address: \(remoteAddress)")
-        } else {
-            print("No remote address")
+            clientId = remoteAddress.description
         }
-        painter.update(canvas:self)
+
+        painter.update(canvas:self, clientId:clientId)
         processCommands(ctx:ctx, webSocketHandler:webSocketHandler)
     }
 
