@@ -18,13 +18,20 @@ import NIO
 
 public class Canvas {
 
+    private static var nextCanvasId : Int = 1000
     private let painter : PainterProtocol
     private var pendingCommandList = [String]()
     private var identifiedObjectDictionary = [UUID:CanvasIdentifiedObject]()
+
+    public private(set) var canvasId : Int
     public private(set) var canvasSize : Size? = nil
     public private(set) var windowSize : Size? = nil
     
     internal init(painter:PainterProtocol) {
+        // Assign ID.  Potentially conflict if two threads enter simultaneously?
+        self.canvasId = Canvas.nextCanvasId
+        Canvas.nextCanvasId += 1
+        
         self.painter = painter
     }
 
