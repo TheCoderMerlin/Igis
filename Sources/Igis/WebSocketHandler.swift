@@ -31,6 +31,10 @@ public final class WebSocketHandler: ChannelInboundHandler {
         self.canvas = canvas
     }
 
+    deinit {
+        print("WebSocketHandler:deinit")
+    }
+
     public func handlerAdded(ctx: ChannelHandlerContext) {
         let interval = canvas.nextRecurringInterval()
         ctx.eventLoop.scheduleTask(in: interval, {self.recurringCallback(ctx: ctx)})
@@ -97,6 +101,7 @@ public final class WebSocketHandler: ChannelInboundHandler {
                 ctx.close(promise: nil)
             }
         }
+        print("WebSocketHandler:receivedClose")
     }
 
     private func pong(ctx: ChannelHandlerContext, frame: WebSocketFrame) {
