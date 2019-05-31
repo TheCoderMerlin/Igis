@@ -186,7 +186,7 @@ function createAudio(id, sourceURL, shouldLoop, sourceMIMEType) {
     divAudios.appendChild(audio);
 
     let message = "onAudioProcessed|" + id;
-    doSendMessage();
+    doSend(message);
 }
 
 // Canvas
