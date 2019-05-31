@@ -155,6 +155,21 @@ function createImage(id, sourceURL) {
     doSend(message);
 }
 
+function createAudio(id, sourceURL, shouldLoop, sourceMIMEType) {
+    let divAudios = document.getElementById("divAudios");
+    let audio = document.createElement("audio");
+    audio.id = id;
+    if (shouldLoop) {
+	audio.attr("loop", "");
+    }
+    let source = document.createElement("src");
+    source.src = sourceURL;
+    if (sourceMIMEType != null) {
+	source.type = sourceMIMEType;
+    }
+    
+}
+
 // Canvas
 function onClick(event) {
     let message = "onClick|" + event.clientX + "|" + event.clientY;
@@ -258,6 +273,9 @@ function processCommand(commandMessage, commandIndex) {
 	break;
     case "clearRect":
 	processClearRect(arguments);
+	break;
+    case "createAudio":
+	processCreateAudio(arguments);
 	break;
     case "createImage":
 	processCreateImage(arguments);
@@ -392,6 +410,18 @@ function processClosePath(arguments) {
 	return;
     }
     context.closePath();
+}
+
+function processCreateAudio(arguments) {
+    if (arguments.length != 3 && arguments.length != 4) {
+	logErrorMessage("processCreateAudio: Requires three or four arguments")
+	return;
+    }
+    let id = arguments.shift();
+    let sourceURL = arguments.shift();
+    let shouldLoop = arguments.shift();
+    let sourceMIMEType = (arguments.length > 0) ? arguments.shift() : null;
+    createAudio(id, sourceURL, shouldLoop, sourceMIMEType);
 }
 
 function processCreateImage(arguments) {
