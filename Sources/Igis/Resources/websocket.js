@@ -155,6 +155,19 @@ function createImage(id, sourceURL) {
     doSend(message);
 }
 
+// Audio
+function onAudioLoaded(event) {
+    let id = event.target.id;
+    let message = "onAudioLoaded|" + id;
+    doSend(message);
+}
+
+function onAudioError(event) {
+    let id = event.target.id;
+    let message = "onAudioError|" + id;
+    doSend(message);
+}
+
 function createAudio(id, sourceURL, shouldLoop, sourceMIMEType) {
     let divAudios = document.getElementById("divAudios");
     let audio = document.createElement("audio");
@@ -167,7 +180,13 @@ function createAudio(id, sourceURL, shouldLoop, sourceMIMEType) {
     if (sourceMIMEType != null) {
 	source.type = sourceMIMEType;
     }
-    
+    audio.appendChild(source);
+    audio.addEventListener("canplay", onAudioLoaded);
+    audio.addEventListener("error", onAudioError);
+    divAudios.appendChild(audio);
+
+    let message = "onAudioProcessed|" + id;
+    doSendMessage();
 }
 
 // Canvas

@@ -106,6 +106,8 @@ public class Canvas {
                 receptionOnImageLoaded(arguments:arguments)
             case "onImageProcessed":
                 receptionOnImageProcessed(arguments:arguments)
+            case "onAudioProcessed":
+                receptionOnAudioProcessed(arguments:arguments)
             case "onWindowResize":
                 receptionOnWindowResize(arguments:arguments)
             default:
@@ -201,6 +203,48 @@ public class Canvas {
         guard arguments.count == 1,
               let id = UUID(uuidString:arguments[0]) else {
             print("ERROR: receptionOnImageProcessed requires exactly one argument which must be a valid UUID.")
+            return
+        }
+
+        guard let identifiedObject = identifiedObjectDictionary[id] else {
+            print("ERROR: receptionOnImageProcessed: Object with id \(id.uuidString) was not found.")
+            return
+        }
+        identifiedObject.setState(.processedByClient)
+    }
+
+    internal func receptionOnAudioError(arguments:[String]) {
+        guard arguments.count == 1,
+              let id = UUID(uuidString:arguments[0]) else {
+            print("ERROR: receptionOnAudioError: requires exactly one argment which must be a valid UUID.")
+            return
+        }
+
+        guard let identifiedObject = identifiedObjectDictionary[id] else {
+            print("ERROR: receptionOnAudioError: Object with id \(id.uuidString) was not found.")
+            return
+        }
+        identifiedObject.setState(.resourceError)
+    }
+
+    internal func receptionOnAudioLoaded(arguments:[String]) {
+        guard arguments.count == 1,
+              let id = UUID(uuidString:arguments[0]) else {
+            print("ERROR: receptionOnAudioLoaded requires exactly one argument which must be a valid UUID.")
+            return
+        }
+
+        guard let identifiedObject = identifiedObjectDictionary[id] else {
+            print("ERROR: receptionOnAudioLoaded: Object with id \(id.uuidString) was not found.")
+            return
+        }
+        identifiedObject.setState(.ready)
+    }
+
+    internal func receptionOnAudioProcessed(arguments:[String]) {
+        guard arguments.count == 1,
+              let id = UUID(uuidString:arguments[0]) else {
+            print("ERROR: receptionOnAudioProcessed requires exactly one argument which must be a valid UUID.")
             return
         }
 
