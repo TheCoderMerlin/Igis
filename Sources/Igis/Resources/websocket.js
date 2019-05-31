@@ -175,7 +175,7 @@ function createAudio(id, sourceURL, shouldLoop, sourceMIMEType) {
     if (shouldLoop) {
 	audio.setAttribute("loop", "");
     }
-    let source = document.createElement("src");
+    let source = document.createElement("source");
     source.src = sourceURL;
     if (sourceMIMEType != null) {
 	source.type = sourceMIMEType;
