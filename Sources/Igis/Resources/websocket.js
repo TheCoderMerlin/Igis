@@ -328,7 +328,7 @@ function processCommand(commandMessage, commandIndex) {
 	processQuadraticCurveTo(arguments);
 	break;
     case "setAudioMode":
-	procressSetAudioMode(arguments);
+	processSetAudioMode(arguments);
     case "stroke":
 	processStroke(arguments);
 	break;
