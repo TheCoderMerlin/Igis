@@ -173,7 +173,7 @@ function createAudio(id, sourceURL, shouldLoop) {
     let audio = document.createElement("audio");
     audio.id = id;
     audio.src = sourceURL;
-    if (shouldLoop) {
+    if (shouldLoop === "true") {
 	audio.setAttribute("loop", "");
     }
     audio.addEventListener("canplay", onAudioLoaded);
