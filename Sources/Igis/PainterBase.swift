@@ -30,7 +30,7 @@ open class PainterBase : PainterProtocol {
     open func setup(canvas:Canvas) {
     }
     
-    open func update(canvas:Canvas, id:Int) {
+    open func update(canvas:Canvas) {
     }
 
     open func onCanvasResize(size:Size) {
