@@ -23,7 +23,7 @@ public class Canvas {
     private var pendingCommandList = [String]()
     private var identifiedObjectDictionary = [UUID:CanvasIdentifiedObject]()
 
-    public let canvasId : Int
+    public private(set) var canvasId : Int
     public private(set) var canvasSize : Size? = nil
     public private(set) var windowSize : Size? = nil
     
