@@ -19,13 +19,27 @@ public class Audio : CanvasIdentifiedObject {
     public let sourceURL : URL
     public let shouldLoop : Bool
 
+    public enum Mode {
+        case play
+        case pause
+    }
+    public var mode : Mode
+
     public init(sourceURL:URL, shouldLoop:Bool = false) {
         self.sourceURL = sourceURL
         self.shouldLoop = shouldLoop
+        self.mode = .play
     }
 
     internal override func canvasCommand() -> String {
-        return ""
+        var commands : String = "setAudioMode|\(id.uuidString)|"
+        switch mode {
+        case .play:
+            commands += "play"
+        case .pause:
+            commands += "pause"
+        }
+        return commands
     }
 
     internal override func setupCommand() -> String {

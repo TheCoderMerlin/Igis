@@ -37,7 +37,7 @@ public class Canvas {
 
     // MARK: ********** API **********
 
-    public func paint(_ canvasObjects:CanvasObject...) {
+    public func render(_ canvasObjects:CanvasObject...) {
         for canvasObject in canvasObjects {
             let command = canvasObject.canvasCommand()
             pendingCommandList.append(command)
@@ -78,7 +78,7 @@ public class Canvas {
 
     internal func recurring(ctx:ChannelHandlerContext, webSocketHandler:WebSocketHandler) {
         painter.calculate(canvasId:self.canvasId, canvasSize:canvasSize)
-        painter.paint(canvas:self)
+        painter.render(canvas:self)
         processCommands(ctx:ctx, webSocketHandler:webSocketHandler)
     }
 

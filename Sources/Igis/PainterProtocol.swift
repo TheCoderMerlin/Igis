@@ -20,7 +20,7 @@ public protocol PainterProtocol {
     
     func setup(canvas:Canvas)
     func calculate(canvasId:Int, canvasSize:Size?)
-    func paint(canvas:Canvas)
+    func render(canvas:Canvas)
 
     func onCanvasResize(size:Size)
     func onWindowResize(size:Size)

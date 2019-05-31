@@ -327,6 +327,8 @@ function processCommand(commandMessage, commandIndex) {
     case "quadraticCurveTo":
 	processQuadraticCurveTo(arguments);
 	break;
+    case "setAudioMode":
+	procressSetAudioMode(arguments);
     case "stroke":
 	processStroke(arguments);
 	break;
@@ -445,6 +447,24 @@ function processCreateImage(arguments) {
     let id = arguments.shift();
     let sourceURL = arguments.shift();
     createImage(id, sourceURL);
+}
+
+function processSetAudioMode(arguments) {
+    if (arguments.length != 2) {
+	logErrorMessage("processSetAudioMode: Requires two arguments")
+    }
+
+    let id = arguments.shift();
+    let mode = arguments.shift();
+
+    let audio = document.getElementById(id);
+
+    if (mode == "play") {
+	audio.play();
+    } else if (mode == "pause") {
+	audio.pause();
+    }
+    
 }
 
 function processDrawImage(arguments) {
