@@ -160,7 +160,7 @@ function createAudio(id, sourceURL, shouldLoop, sourceMIMEType) {
     let audio = document.createElement("audio");
     audio.id = id;
     if (shouldLoop) {
-	audio.attr("loop", "");
+	audio.setAttribute("loop", "");
     }
     let source = document.createElement("src");
     source.src = sourceURL;
