@@ -88,8 +88,7 @@ public class Canvas {
             let command = commandAndArguments.removeFirst()
             let arguments = commandAndArguments
             switch (command) {
-            case "onCanvasResize":
-                receptionOnCanvasResize(arguments:arguments)
+                // Mouse events
             case "onClick":
                 receptionOnClick(arguments:arguments)
             case "onMouseDown":
@@ -98,16 +97,30 @@ public class Canvas {
                 receptionOnMouseUp(arguments:arguments)
             case "onMouseMove":
                 receptionOnMouseMove(arguments:arguments)
+
+                // Key events
             case "onKeyDown":
                 receptionOnKeyDown(arguments:arguments)
+
+                // Image events
             case "onImageError":
                 receptionOnImageError(arguments:arguments)
             case "onImageLoaded":
                 receptionOnImageLoaded(arguments:arguments)
             case "onImageProcessed":
                 receptionOnImageProcessed(arguments:arguments)
+
+                // Audio events
+            case "onAudioError":
+                receptionOnAudioError(arguments:arguments)
+            case "onAudioLoaded":
+                receptionOnAudioLoaded(arguments:arguments)
             case "onAudioProcessed":
                 receptionOnAudioProcessed(arguments:arguments)
+
+                // Resize events
+            case "onCanvasResize":
+                receptionOnCanvasResize(arguments:arguments)
             case "onWindowResize":
                 receptionOnWindowResize(arguments:arguments)
             default:
