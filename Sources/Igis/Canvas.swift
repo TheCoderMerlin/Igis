@@ -18,7 +18,7 @@ import NIO
 
 public class Canvas {
 
-    private static var nextCanvasId : Int = 1000
+    private static var nextCanvasId : Int = 0
     private let painter : PainterProtocol
     private var pendingCommandList = [String]()
     private var identifiedObjectDictionary = [UUID:CanvasIdentifiedObject]()
@@ -77,7 +77,8 @@ public class Canvas {
     }
 
     internal func recurring(ctx:ChannelHandlerContext, webSocketHandler:WebSocketHandler) {
-        painter.update(canvas:self)
+        painter.calculate(canvasId:self.canvasId, canvasSize:canvasSize)
+        painter.paint(canvas:self)
         processCommands(ctx:ctx, webSocketHandler:webSocketHandler)
     }
 
