@@ -168,19 +168,14 @@ function onAudioError(event) {
     doSend(message);
 }
 
-function createAudio(id, sourceURL, shouldLoop, sourceMIMEType) {
+function createAudio(id, sourceURL, shouldLoop) {
     let divAudios = document.getElementById("divAudios");
     let audio = document.createElement("audio");
     audio.id = id;
+    audio.src = sourceURL;
     if (shouldLoop) {
 	audio.setAttribute("loop", "");
     }
-    let source = document.createElement("source");
-    source.src = sourceURL;
-    if (sourceMIMEType != null) {
-	source.type = sourceMIMEType;
-    }
-    audio.appendChild(source);
     audio.addEventListener("canplay", onAudioLoaded);
     audio.addEventListener("error", onAudioError);
     divAudios.appendChild(audio);
@@ -432,15 +427,14 @@ function processClosePath(arguments) {
 }
 
 function processCreateAudio(arguments) {
-    if (arguments.length != 3 && arguments.length != 4) {
-	logErrorMessage("processCreateAudio: Requires three or four arguments")
+    if (arguments.length != 3) {
+	logErrorMessage("processCreateAudio: Requires three arguments")
 	return;
     }
     let id = arguments.shift();
     let sourceURL = arguments.shift();
     let shouldLoop = arguments.shift();
-    let sourceMIMEType = (arguments.length > 0) ? arguments.shift() : null;
-    createAudio(id, sourceURL, shouldLoop, sourceMIMEType);
+    createAudio(id, sourceURL, shouldLoop);
 }
 
 function processCreateImage(arguments) {

@@ -18,12 +18,10 @@ import Foundation
 public class Audio : CanvasIdentifiedObject {
     public let sourceURL : URL
     public let shouldLoop : Bool
-    public let sourceMIMEType : String?
 
-    public init(sourceURL:URL, shouldLoop:Bool = false, sourceMIMEType:String? = nil) {
+    public init(sourceURL:URL, shouldLoop:Bool = false) {
         self.sourceURL = sourceURL
         self.shouldLoop = shouldLoop
-        self.sourceMIMEType = sourceMIMEType
     }
 
     internal override func canvasCommand() -> String {
@@ -31,10 +29,7 @@ public class Audio : CanvasIdentifiedObject {
     }
 
     internal override func setupCommand() -> String {
-        var commands = "createAudio|\(id.uuidString)|\(sourceURL.absoluteString)|\(shouldLoop)"
-        if let sourceMIMEType = sourceMIMEType {
-            commands += "|\(sourceMIMEType)"
-        }
+        let commands = "createAudio|\(id.uuidString)|\(sourceURL.absoluteString)|\(shouldLoop)"
         return commands
     }
 
