@@ -37,7 +37,6 @@ public class CanvasIdentifiedObject : CanvasObject {
         if newState.rawValue <= state.rawValue {
             print("ERROR: State of object with id \(id) is regressing from \(state) to \(newState).")
         }
-        print("\(type(of:self)) \(id) State transition from \(state) to \(newState)")
         state = newState
     }
 

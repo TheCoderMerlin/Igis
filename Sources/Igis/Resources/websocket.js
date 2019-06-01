@@ -460,7 +460,20 @@ function processSetAudioMode(arguments) {
     let audio = document.getElementById(id);
 
     if (mode == "play") {
-	audio.play();
+	audio.play().then(function() {
+
+	}).catch(function(error) {
+	    var enablePlayButton = document.getElementById("enablePlayButton");
+	    enablePlayButton.style = "display:block;";
+
+	    var callback = function() {
+		audio.play();
+		enablePlayButton.removeEventListener('click', callback);
+		enablePlayButton.style = "display:none;";
+	    };
+
+ 	    enablePlayButton.addEventListener('click', callback);
+	});
     } else if (mode == "pause") {
 	audio.pause();
     }

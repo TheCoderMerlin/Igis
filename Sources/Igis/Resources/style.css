@@ -17,3 +17,9 @@ html, body {
 #trStat {
     display: none;
 }
+
+#enablePlayButton {
+    display: none;
+    width: 200px;
+    background-color: pink;
+}
