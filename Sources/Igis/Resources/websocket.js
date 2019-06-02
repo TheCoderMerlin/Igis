@@ -288,6 +288,9 @@ function processCommand(commandMessage, commandIndex) {
     case "clearRect":
 	processClearRect(arguments);
 	break;
+    case "clip":
+	processClip(arguments);
+	break;
     case "createAudio":
 	processCreateAudio(arguments);
 	break;
