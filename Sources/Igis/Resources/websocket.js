@@ -315,6 +315,9 @@ function processCommand(commandMessage, commandIndex) {
     case "font":
 	processFont(arguments);
 	break;
+    case "globalAlpha":
+	processGlobalAlpha(arguments);
+	break;
     case "lineTo":
 	processLineTo(arguments);
 	break;
@@ -582,6 +585,15 @@ function processFont(arguments) {
     }
     let font = arguments.shift();
     context.font = font;
+}
+
+function processGlobalAlpha(arguments) {
+    if (arguments.length != 1) {
+	logErrorMessage("processGlobalAlpha: Requires one argument");
+	return;
+    }
+    let alphaValue = Number(arguments.shift());
+    context.globalAlpha = alphaValue;
 }
 
 function processLineWidth(arguments) {
