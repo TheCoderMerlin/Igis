@@ -16,7 +16,7 @@ import PackageDescription
 let package = Package(
     name: "IgisShell",
     dependencies: [
-      .package(url: "https://github.com/TangoGolfDigital/Igis.git", from:"0.1.35"),
+      .package(url: "https://github.com/TangoGolfDigital/Igis.git", from:"0.1.38"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -130,6 +130,9 @@ do {
 }
 ```
 
+As a shortcut, if only a few methods are required to be overridden, the PainterBase class 
+is available as a starting point.
+
 ### Text
 ```swift
 // Text Definition
@@ -186,6 +189,30 @@ public init(from:Point, to:Point)
 public func moveTo(_ point:Point) // Moves to the specified point without drawing
 
 public func lineTo(_ point:Point) // Draws a line to the specified point
+
+```
+
+### Transforms
+Transforms may be applied using the Transform object
+
+```swift
+// Translation
+let transform = Transform(translate:DoublePoint(x:10, y:10))
+
+// Rotation
+let radians = 1.0 * Double.pi / 180.0 
+let transform = Transform(rotateRadians:radians)
+
+// Scale
+let transform = Transform(scale:DoublePoint(x:1.1, y:1.1))    
+
+// Shear
+let transform = Transform(shear:DoublePoint(x:0.0, y:0.2))
+
+// Return to identity transform
+let transform = Transform() // or
+let transform = Transform(mode: .toIdentity)
+
 
 ```
 
