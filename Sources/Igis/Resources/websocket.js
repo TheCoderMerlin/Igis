@@ -329,6 +329,10 @@ function processCommand(commandMessage, commandIndex) {
 	break;
     case "setAudioMode":
 	processSetAudioMode(arguments);
+	break;
+    case "setTransform":
+	processSetTransform(arguments);
+	break;
     case "stroke":
 	processStroke(arguments);
 	break;
@@ -340,6 +344,9 @@ function processCommand(commandMessage, commandIndex) {
 	break;
     case "strokeText":
 	processStrokeText(arguments);
+	break;
+    case "transform":
+	processTransform(arguments);
 	break;
     default:
 	logErrorMessage("Unknown command: " + command);
@@ -618,6 +625,20 @@ function processQuadraticCurveTo(arguments) {
     context.quadraticCurveTo(controlPointX, controlPointY, endPointX, endPointY);
 }
 
+function processSetTransform(arguments) {
+    if (arguments.length != 6) {
+	logErrorMessage("processSetTransform: Requires six arguments");
+	return;
+    }
+    let a = arguments.shift();
+    let b = arguments.shift();
+    let c = arguments.shift();
+    let d = arguments.shift();
+    let e = arguments.shift();
+    let f = arguments.shift();
+    context.setTransform(a, b, c, d, e, f);
+}
+
 function processStroke(arguments) {
     if (arguments.length != 0) {
 	logErrorMessage("processStroke: Requires zero arguments");
@@ -656,6 +677,20 @@ function processStrokeText(arguments) {
     let x = arguments.shift();
     let y = arguments.shift();
     context.strokeText(text, x, y);
+}
+
+function processTransform(arguments) {
+    if (arguments.length != 6) {
+	logErrorMessage("processTransform: Requires six arguments");
+	return;
+    }
+    let a = arguments.shift();
+    let b = arguments.shift();
+    let c = arguments.shift();
+    let d = arguments.shift();
+    let e = arguments.shift();
+    let f = arguments.shift();
+    context.transform(a, b, c, d, e, f);
 }
 
 document.addEventListener("DOMContentLoaded", onLoad);
