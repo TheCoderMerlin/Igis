@@ -330,6 +330,12 @@ function processCommand(commandMessage, commandIndex) {
     case "quadraticCurveTo":
 	processQuadraticCurveTo(arguments);
 	break;
+    case "restore":
+	processRestore(arguments);
+	break;
+    case "save":
+	processSave(arguments);
+	break;
     case "setAudioMode":
 	processSetAudioMode(arguments);
 	break;
@@ -428,6 +434,15 @@ function processClearRect(arguments) {
     let width = arguments.shift();
     let height = arguments.shift();
     context.clearRect(x, y, width, height);
+}
+
+function processClip(arguments) {
+    if (arguments.length != 1) {
+	logErrorMessage("processClip: Requires one argment");
+	return;
+    }
+    let windingRule = arguments.shift();
+    context.clip(windingRule);
 }
 
 function processClosePath(arguments) {
@@ -635,6 +650,22 @@ function processQuadraticCurveTo(arguments) {
     let endPointX = arguments.shift();
     let endPointY = arguments.shift();
     context.quadraticCurveTo(controlPointX, controlPointY, endPointX, endPointY);
+}
+
+function processRestore(arguments) {
+    if (arguments.length != 0) {
+	logErrorMessage("processRestore: Requires zero arguments");
+	return;
+    }
+    context.restore();
+}
+
+function processSave(arguments) {
+    if (arguments.length != 0) {
+	logErrorMessage("processSave: Requires zero arguments");
+	return;
+    }
+    context.save();
 }
 
 function processSetTransform(arguments) {
