@@ -223,6 +223,23 @@ Alpha may be applied using the Alpha object
 let alpha = Alpha(alphaValue:0.3)
 ```
 
+### State
+State may be saved and subsequently restored on a stack
+
+```swift
+let save = State(mode:.save)
+...
+let restore = State(mode:.restore)
+```
+
+### Clipping
+Drawing may be clipped to a path by first rendering the path and then
+
+```swift
+let clip = Clip(windingRule:.evenOdd) // or
+let clip = Clip(windingRule:.nonZero)
+```
+
 ### Turtle Graphics
 In addition to the above objects, Igis supports traditional turtle graphics.  For turtle graphics, the coordinate system is different.  In this coordinate system, the center of the canvas is labeled as the origin (0,0), termed "home".  When the turtle is in the home position, it is oriented up.  Rotating to the right rotates the turtle clockwise from north the specified number of degreess, rotating left rotates the turtle counter-clockwise the specified number of degrees.  The turtle can also move forwards or backwards a specified number of steps in the direction in which it is currently pointed.  
 
