@@ -361,8 +361,8 @@ function processArc(arguments) {
     let centerX = arguments.shift();
     let centerY = arguments.shift();
     let radius  = arguments.shift();
-    let startAngle = arguments.shift();
-    let endAngle   = arguments.shift();
+    let startAngle = Number(arguments.shift());
+    let endAngle   = Number(arguments.shift());
     let antiClockwise = arguments.shift() === "true";
     context.arc(centerX, centerY, radius, startAngle, endAngle, antiClockwise);
 }
@@ -528,9 +528,9 @@ function processEllipse(arguments) {
     let y = arguments.shift();
     let radiusX = arguments.shift();
     let radiusY = arguments.shift();
-    let rotation = arguments.shift();
-    let startAngle = arguments.shift();
-    let endAngle = arguments.shift();
+    let rotation = Number(arguments.shift());
+    let startAngle = Number(arguments.shift());
+    let endAngle = Number(arguments.shift());
     let antiClockwise = arguments.shift() === "true";
     context.ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, antiClockwise);
 }
@@ -630,12 +630,12 @@ function processSetTransform(arguments) {
 	logErrorMessage("processSetTransform: Requires six arguments");
 	return;
     }
-    let a = arguments.shift();
-    let b = arguments.shift();
-    let c = arguments.shift();
-    let d = arguments.shift();
-    let e = arguments.shift();
-    let f = arguments.shift();
+    let a = Number(arguments.shift());
+    let b = Number(arguments.shift());
+    let c = Number(arguments.shift());
+    let d = Number(arguments.shift());
+    let e = Number(arguments.shift());
+    let f = Number(arguments.shift());
     context.setTransform(a, b, c, d, e, f);
 }
 
@@ -684,12 +684,12 @@ function processTransform(arguments) {
 	logErrorMessage("processTransform: Requires six arguments");
 	return;
     }
-    let a = arguments.shift();
-    let b = arguments.shift();
-    let c = arguments.shift();
-    let d = arguments.shift();
-    let e = arguments.shift();
-    let f = arguments.shift();
+    let a = Number(arguments.shift());
+    let b = Number(arguments.shift());
+    let c = Number(arguments.shift());
+    let d = Number(arguments.shift());
+    let e = Number(arguments.shift());
+    let f = Number(arguments.shift());
     context.transform(a, b, c, d, e, f);
 }
 
