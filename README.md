@@ -16,7 +16,7 @@ import PackageDescription
 let package = Package(
     name: "IgisShell",
     dependencies: [
-      .package(url: "https://github.com/TangoGolfDigital/Igis.git", from:"0.0.85"),
+      .package(url: "https://github.com/TangoGolfDigital/Igis.git", from:"0.1.35"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -92,7 +92,7 @@ The painting of all objects occurs on a "canvas".  The coordinate system of the 
 In order for an object to be visible it must be painted on the canvas.
 
 ```swift
-canvas.paint(helloWorld)
+canvas.render(helloWorld)
 ```
 
 Most objects can be created at anytime, however they may only be painted in an event which provides a Canvas as a parameter.  The [IgisShell project](https://github.com/TangoGolfDigital/IgisShell) provides a useful shell to get started.  In order to start Igis, a class implementing the PainterProtocol is required:
@@ -105,8 +105,13 @@ class Painter : PainterProtocol {
     func setup(canvas:Canvas) {
     }
 
-    func update(canvas:Canvas) {
+    func calculate(canvasId:Int, canvasSize:Size?) {
+        // Calculate position and movement of objects here
+        // The canvasId may be used to distinguish between different clients
+    }
 
+    func render(canvas:Canvas) {
+        // Render objects here
     }
 
     func onClick(canvas:Canvas, location:Point) {
@@ -214,4 +219,28 @@ public func push() // Push the current position, angle, and pen attributes onto 
 public func pop() // Pop the previously pushed position, angle, and pen attributes
 
 public func home() // Return to the home position
+```
+
+### Audio
+Audio may be rendered in a manner similar to images.
+
+```swift
+// Audio Definition
+public init(sourceURL:URL, shouldLoop:Bool = false)
+```
+
+To play audio, render it in the same manner as images:
+```swift
+required init() {
+    ...
+    background = Audio(sourceURL:backgroundURL, shouldLoop:true)
+}
+
+override func render(canvas:Canvas) {
+    ...
+    if !isBackgroundPlaying && background.isReady {
+        canvas.render(background) 
+        isBackgroundPlaying = true 
+    }
+}
 ```
