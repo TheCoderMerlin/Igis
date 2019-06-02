@@ -121,7 +121,7 @@ function onMessage(event) {
 }
 
 function onError(event) {
-    logErrorMessage(event.data);
+    logError(event.data);
 }
 
 function doSend(message) {
@@ -257,7 +257,7 @@ function processCommands(commandMessages) {
 function processCommand(commandMessage, commandIndex) {
     let commandAndArguments = commandMessage.split("|");
     if (commandAndArguments.length < 1) {
-	logErrorMessage("processCommand: Unable to process empty commandAndArguments list");
+	logError("processCommand: Unable to process empty commandAndArguments list");
 	return;
     }
     let command = commandAndArguments.shift();
@@ -358,13 +358,13 @@ function processCommand(commandMessage, commandIndex) {
 	processTransform(arguments);
 	break;
     default:
-	logErrorMessage("Unknown command: " + command);
+	logError("Unknown command: " + command);
     }
 }
 
 function processArc(arguments) {
     if (arguments.length != 6) {
-	logErrorMessage("processArc: Requires six arguments");
+	logError("processArc: Requires six arguments");
 	return;
     }
     let centerX = arguments.shift();
@@ -378,7 +378,7 @@ function processArc(arguments) {
 
 function processArcTo(arguments) {
     if (arguments.length != 5) {
-	logErrorMessage("processArcTo: Requires five arguments");
+	logError("processArcTo: Requires five arguments");
 	return;
     }
     let controlPoint1x = arguments.shift();
@@ -391,7 +391,7 @@ function processArcTo(arguments) {
 
 function processBeginPath(arguments) {
     if (arguments.length != 0) {
-	logErrorMessage("processBeginPath: Requires zero arguments");
+	logError("processBeginPath: Requires zero arguments");
 	return;
     }
     context.beginPath();
@@ -399,7 +399,7 @@ function processBeginPath(arguments) {
 
 function processBezierCurveTo(arguments) {
     if (arguments.length != 6) {
-	logErrorMessage("processBezierCurveTo: Requires six arguments");
+	logError("processBezierCurveTo: Requires six arguments");
 	return;
     }
     let controlPoint1x = arguments.shift();
@@ -414,7 +414,7 @@ function processBezierCurveTo(arguments) {
 
 function processCanvasSetSize(arguments) {
     if  (arguments.length != 2) {
-	logErrorMessage("processCanvasSetSize: Requires two arguments");
+	logError("processCanvasSetSize: Requires two arguments");
 	return;
     }
     let width = arguments.shift();
@@ -426,7 +426,7 @@ function processCanvasSetSize(arguments) {
 
 function processClearRect(arguments) {
     if (arguments.length != 4) {
-	logErrorMessage("processClearRect: Requires four arguments");
+	logError("processClearRect: Requires four arguments");
 	return;
     }
     let x = arguments.shift();
@@ -438,7 +438,7 @@ function processClearRect(arguments) {
 
 function processClip(arguments) {
     if (arguments.length != 1) {
-	logErrorMessage("processClip: Requires one argment");
+	logError("processClip: Requires one argment");
 	return;
     }
     let windingRule = arguments.shift();
@@ -447,7 +447,7 @@ function processClip(arguments) {
 
 function processClosePath(arguments) {
     if (arguments.length != 0) {
-	logErrorMessage("processClosePath: Requires zero arguments");
+	logError("processClosePath: Requires zero arguments");
 	return;
     }
     context.closePath();
@@ -455,7 +455,7 @@ function processClosePath(arguments) {
 
 function processCreateAudio(arguments) {
     if (arguments.length != 3) {
-	logErrorMessage("processCreateAudio: Requires three arguments")
+	logError("processCreateAudio: Requires three arguments")
 	return;
     }
     let id = arguments.shift();
@@ -466,7 +466,7 @@ function processCreateAudio(arguments) {
 
 function processCreateImage(arguments) {
     if (arguments.length != 2) {
-	logErrorMessage("processCreateImage: Requires two arguments");
+	logError("processCreateImage: Requires two arguments");
 	return;
     }
     let id = arguments.shift();
@@ -476,7 +476,7 @@ function processCreateImage(arguments) {
 
 function processSetAudioMode(arguments) {
     if (arguments.length != 2) {
-	logErrorMessage("processSetAudioMode: Requires two arguments")
+	logError("processSetAudioMode: Requires two arguments")
     }
 
     let id = arguments.shift();
@@ -507,7 +507,7 @@ function processSetAudioMode(arguments) {
 
 function processDrawImage(arguments) {
     if (arguments.length != 3 && arguments.length != 5 && arguments.length != 9) {
-	logErrorMessage("processDrawImage: Requires three, five, or nine arguments");
+	logError("processDrawImage: Requires three, five, or nine arguments");
 	return;
     }
 
@@ -539,7 +539,7 @@ function processDrawImage(arguments) {
 
 function processEllipse(arguments) {
     if (arguments.length != 8) {
-	logErrorMessage("processEllipse: Requires eight arguments");
+	logError("processEllipse: Requires eight arguments");
 	return;
     }
     let x = arguments.shift();
@@ -555,7 +555,7 @@ function processEllipse(arguments) {
 
 function processFill(arguments) {
     if (arguments.length != 0) {
-	logErrorMessage("processFill: Requires zero arguments");
+	logError("processFill: Requires zero arguments");
 	return;
     }
     context.fill();
@@ -563,7 +563,7 @@ function processFill(arguments) {
 
 function processFillRect(arguments) {
     if (arguments.length != 4) {
-	logErrorMessage("processFillRect: Requires four arguments");
+	logError("processFillRect: Requires four arguments");
 	return;
     }
     let x = arguments.shift();
@@ -575,7 +575,7 @@ function processFillRect(arguments) {
 
 function processFillStyle(arguments) {
     if (arguments.length != 1) {
-	logErrorMessage("procesFillStyle: Requires one argument");
+	logError("procesFillStyle: Requires one argument");
 	return;
     }
     let style = arguments.shift();
@@ -584,7 +584,7 @@ function processFillStyle(arguments) {
 
 function processFillText(arguments) {
     if (arguments.length != 3) {
-	logErrorMessage("processFillText: Requires three arguments");
+	logError("processFillText: Requires three arguments");
 	return;
     }
     let text = arguments.shift();
@@ -595,7 +595,7 @@ function processFillText(arguments) {
 
 function processFont(arguments) {
     if (arguments.length != 1) {
-	logErrorMessage("processFont: Requires one argument");
+	logError("processFont: Requires one argument");
 	return;
     }
     let font = arguments.shift();
@@ -604,7 +604,7 @@ function processFont(arguments) {
 
 function processGlobalAlpha(arguments) {
     if (arguments.length != 1) {
-	logErrorMessage("processGlobalAlpha: Requires one argument");
+	logError("processGlobalAlpha: Requires one argument");
 	return;
     }
     let alphaValue = Number(arguments.shift());
@@ -613,7 +613,7 @@ function processGlobalAlpha(arguments) {
 
 function processLineWidth(arguments) {
     if (arguments.length != 1) {
-	logErrorMessage("processLineWidth: Requires one argument");
+	logError("processLineWidth: Requires one argument");
 	return;
     }
     let width = arguments.shift();
@@ -622,7 +622,7 @@ function processLineWidth(arguments) {
 
 function processLineTo(arguments) {
     if (arguments.length != 2) {
-	logErrorMessage("processLineTo: Requires two arguments");
+	logError("processLineTo: Requires two arguments");
 	return;
     }
     let x = arguments.shift();
@@ -632,7 +632,7 @@ function processLineTo(arguments) {
 
 function processMoveTo(arguments) {
     if (arguments.length != 2) {
-	logErrorMessage("processMoveTo: Requires two arguments");
+	logError("processMoveTo: Requires two arguments");
 	return;
     }
     let x = arguments.shift();
@@ -642,7 +642,7 @@ function processMoveTo(arguments) {
 
 function processQuadraticCurveTo(arguments) {
     if (arguments.length != 4) {
-	logErrorMessage("processQuadraticCurveTo: Requires four arguments");
+	logError("processQuadraticCurveTo: Requires four arguments");
 	return;
     }
     let controlPointX = arguments.shift();
@@ -654,7 +654,7 @@ function processQuadraticCurveTo(arguments) {
 
 function processRestore(arguments) {
     if (arguments.length != 0) {
-	logErrorMessage("processRestore: Requires zero arguments");
+	logError("processRestore: Requires zero arguments");
 	return;
     }
     context.restore();
@@ -662,7 +662,7 @@ function processRestore(arguments) {
 
 function processSave(arguments) {
     if (arguments.length != 0) {
-	logErrorMessage("processSave: Requires zero arguments");
+	logError("processSave: Requires zero arguments");
 	return;
     }
     context.save();
@@ -670,7 +670,7 @@ function processSave(arguments) {
 
 function processSetTransform(arguments) {
     if (arguments.length != 6) {
-	logErrorMessage("processSetTransform: Requires six arguments");
+	logError("processSetTransform: Requires six arguments");
 	return;
     }
     let a = Number(arguments.shift());
@@ -684,7 +684,7 @@ function processSetTransform(arguments) {
 
 function processStroke(arguments) {
     if (arguments.length != 0) {
-	logErrorMessage("processStroke: Requires zero arguments");
+	logError("processStroke: Requires zero arguments");
 	return;
     }
     context.stroke();
@@ -692,7 +692,7 @@ function processStroke(arguments) {
 
 function processStrokeRect(arguments) {
     if (arguments.length != 4) {
-	logErrorMessage("processStrokeRect: Requires four arguments");
+	logError("processStrokeRect: Requires four arguments");
 	return;
     }
     let x = arguments.shift();
@@ -704,7 +704,7 @@ function processStrokeRect(arguments) {
 
 function processStrokeStyle(arguments) {
     if (arguments.length != 1) {
-	logErrorMessage("procesStrokeStyle: Requires one argument");
+	logError("procesStrokeStyle: Requires one argument");
 	return;
     }
     let style = arguments.shift();
@@ -713,7 +713,7 @@ function processStrokeStyle(arguments) {
 
 function processStrokeText(arguments) {
     if (arguments.length != 3) {
-	logErrorMessage("processStrokeText: Requires three arguments");
+	logError("processStrokeText: Requires three arguments");
 	return;
     }
     let text = arguments.shift();
@@ -724,7 +724,7 @@ function processStrokeText(arguments) {
 
 function processTransform(arguments) {
     if (arguments.length != 6) {
-	logErrorMessage("processTransform: Requires six arguments");
+	logError("processTransform: Requires six arguments");
 	return;
     }
     let a = Number(arguments.shift());
