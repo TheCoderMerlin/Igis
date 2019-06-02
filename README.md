@@ -16,7 +16,7 @@ import PackageDescription
 let package = Package(
     name: "IgisShell",
     dependencies: [
-      .package(url: "https://github.com/TangoGolfDigital/Igis.git", from:"0.1.38"),
+      .package(url: "https://github.com/TangoGolfDigital/Igis.git", from:"0.1.41"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -214,6 +214,13 @@ let transform = Transform() // or
 let transform = Transform(mode: .toIdentity)
 
 
+```
+
+### Alpha
+Alpha may be applied using the Alpha object
+
+```swift
+let alpha = Alpha(alphaValue:0.3)
 ```
 
 ### Turtle Graphics
