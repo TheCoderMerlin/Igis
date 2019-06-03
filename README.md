@@ -232,6 +232,30 @@ let save = State(mode:.save)
 let restore = State(mode:.restore)
 ```
 
+### Paths
+Paths may be used to contruct arbitrary shapes
+
+Paths support several operations:
+* moveTo
+* lineTo
+* quadraticCurveTo
+* bezierCurveTo
+* arc
+* arcTo
+
+```swift
+let path = Path(fillMode:.fillAndStroke)
+path.moveTo(Point(x:900, y:100))
+path.lineTo(Point(x:1000, y:100))
+path.quadraticCurveTo(controlPoint:Point(x:1000, y:200), endPoint:Point(x:900, y:200))
+path.lineTo(Point(x:1000, y:200))
+path.bezierCurveTo(controlPoint1:Point(x:1100, y:250), controlPoint2:Point(x:950, y:350), endPoint:Point(x:900, y:300))
+path.arc(center:Point(x:950, y:350), radius:50, startAngle:Double.pi, endAngle:2*Double.pi, antiClockwise:true)
+path.arcTo(controlPoint1:Point(x:1200, y:300), controlPoint2:Point(x:1200, y:400), radius:50)
+path.lineTo(Point(x:850, y:500))
+path.close()       
+```
+
 ### Clipping
 Drawing may be clipped to a path by first rendering the path and then
 
