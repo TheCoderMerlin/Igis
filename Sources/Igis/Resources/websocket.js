@@ -320,8 +320,11 @@ function processCommand(commandMessage, commandIndex) {
     case "fillRect":
 	processFillRect(arguments);
 	break;
-    case "fillStyle":
-	processFillStyle(arguments);
+    case "fillStyleSolidColor":
+	processFillStyleSolidColor(arguments);
+	break;
+    case "fillStyleGradient":
+	processFillStyleGradient(arguments);
 	break;
     case "fillText":
 	processFillText(arguments);
@@ -518,6 +521,36 @@ function processCreateRadialGradient(arguments) {
 	logError("processCreateRadialGradient: Requires at least eight arguments");
 	return;
     }
+
+    let id = arguments.shift();
+    let center1x = Number(arguments.shift());
+    let center1y = Number(arguments.shift());
+    let radius1 = Number(arguments.shift());
+    let center2x = Number(arguments.shift());
+    let center2y = Number(arguments.shift());
+    let radius2 = Number(arguments.shift());
+    let colorStopCount = arguments.shift();
+
+    if (arguments.length < colorStopCount * 2) {
+	logError("processCreateLinearGradient: colorStopCount specified is greater than arguments available");
+	return;
+    }
+
+    var radialGradient = context.createRadialGradient(center1x, center1y, radius1, center2x, center2y, radius2);
+    for (var colorStopIndex = 0; colorStopIndex < colorStopCount; colorStopIndex++) {
+	let position = Number(arguments.shift());
+	let solidColor = arguments.shift();
+	radialGradient.addColorStop(position, solidColor);
+    }
+
+    gradientDictionary[id] = radialGradient;
+
+    let messageProcessed = "onRadialGradientProcessed|" + id;
+    doSend(messageProcessed);
+    let messageLoaded = "onRadialGradientLoaded|" + id;
+    doSend(messageLoaded);
+    
+
 }
 
 function processCreateImage(arguments) {
@@ -629,13 +662,23 @@ function processFillRect(arguments) {
     context.fillRect(x, y, width, height);
 }
 
-function processFillStyle(arguments) {
+function processFillStyleSolidColor(arguments) {
     if (arguments.length != 1) {
-	logError("procesFillStyle: Requires one argument");
+	logError("procesFillStyleSolidColor: Requires one argument");
 	return;
     }
-    let style = arguments.shift();
-    context.fillStyle = style;
+    let solidColor = arguments.shift();
+    context.fillStyle = solidColor;
+}
+
+function processFillStyleGradient(arguments) {
+    if (arguments.length != 1) {
+	logError("procesFillStyleGradient: Requires one argument");
+	return;
+    }
+    let gradientId = arguments.shift();
+    let gradient = gradientDictionary[gradientId];
+    context.fillStyle = gradient;
 }
 
 function processFillText(arguments) {
