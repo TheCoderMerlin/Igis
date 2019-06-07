@@ -7,6 +7,8 @@ var canvas;
 var context;
 var divStatistics;
 
+var gradientDictionary;
+
 var statisticsInitialTime;
 var statisticsEnqueuedFrameCount;
 var statisticsEmptyFrameCount;
@@ -31,6 +33,9 @@ function onLoad() {
     canvas.setAttribute("width", canvasContainerRect.width);
     canvas.setAttribute("height", canvasContainerRect.height);
     context = canvas.getContext("2d");
+
+    // Object dictionaries
+    gradientDictionary = {};
 
     // Register events
     window.addEventListener("keydown", onKeyDown);
@@ -297,6 +302,12 @@ function processCommand(commandMessage, commandIndex) {
     case "createImage":
 	processCreateImage(arguments);
 	break;
+    case "createLinearGradient":
+	processCreateLinearGradient(arguments);
+	break;
+    case "createRadialGradient":
+	processCreateRadialGradient(arguments);
+	break;
     case "drawImage":
 	processDrawImage(arguments);
 	break;
@@ -348,8 +359,8 @@ function processCommand(commandMessage, commandIndex) {
     case "stroke":
 	processStroke(arguments);
 	break;
-    case "strokeStyle":
-	processStrokeStyle(arguments);
+    case "strokeStyleSolidColor":
+	processStrokeStyleSolidColor(arguments);
 	break;
     case "strokeRect":
 	processStrokeRect(arguments);
@@ -458,13 +469,50 @@ function processClosePath(arguments) {
 
 function processCreateAudio(arguments) {
     if (arguments.length != 3) {
-	logError("processCreateAudio: Requires three arguments")
+	logError("processCreateAudio: Requires three arguments");
 	return;
     }
     let id = arguments.shift();
     let sourceURL = arguments.shift();
     let shouldLoop = arguments.shift();
     createAudio(id, sourceURL, shouldLoop);
+}
+
+function processCreateLinearGradient(arguments) {
+    if (arguments.length < 6) {
+	logError("processCreateLinearGradient: Requires at least six arguments");
+	return;
+    }
+    let id = arguments.shift();
+    let startX = Number(arguments.shift());
+    let startY = Number(arguments.shift());
+    let endX = Number(arguments.shift());
+    let endY = Number(arguments.shift());
+    let colorStopCount = arguments.shift();
+
+    if (arguments.length < colorStopCount * 2) {
+	logError("processCreateLinearGradient: colorStopCount specified is greater than arguments available");
+	return;
+    }
+
+    var linearGradient = context.createLinearGradient(startX, startY, endX, endY);
+    for (var colorStopIndex = 0; colorStopIndex < colorStopCount; colorStopIndex++) {
+	let position = Number(arguments.shift());
+	let solidColor = arguments.shift();
+	linearGradient.addColorStop(position, solidColor);
+    }
+
+    gradientDictionary[id] = linearGradient;
+
+    let message = "onLinearGradientProcessed|" + id + "|onLinearGradientLoaded|" + id;
+    doSend(message);
+}
+
+function processCreateRadialGradient(arguments) {
+    if (arguments.length < 8) {
+	logError("processCreateRadialGradient: Requires at least eight arguments");
+	return;
+    }
 }
 
 function processCreateImage(arguments) {
@@ -479,7 +527,7 @@ function processCreateImage(arguments) {
 
 function processSetAudioMode(arguments) {
     if (arguments.length != 2) {
-	logError("processSetAudioMode: Requires two arguments")
+	logError("processSetAudioMode: Requires two arguments");
     }
 
     let id = arguments.shift();
@@ -705,13 +753,23 @@ function processStrokeRect(arguments) {
     context.strokeRect(x, y, width, height);
 }
 
-function processStrokeStyle(arguments) {
+function processStrokeStyleSolidColor(arguments) {
     if (arguments.length != 1) {
 	logError("procesStrokeStyle: Requires one argument");
 	return;
     }
-    let style = arguments.shift();
-    context.strokeStyle = style;
+    let solidColor = arguments.shift();
+    context.strokeStyle = solidColor;
+}
+
+function processStrokeStyleGradient(arguments) {
+    if (arguments.length != 1) {
+	logError("procesStrokeStyleGradient: Requires one argument");
+	return;
+    }
+    let gradientId = arguments.shift();
+    let gradient = gradientDictionary[gradientId];
+    context.strokeStyle = solidColor;
 }
 
 function processStrokeText(arguments) {

@@ -32,6 +32,9 @@ public class Audio : CanvasIdentifiedObject {
     }
 
     internal override func canvasCommand() -> String {
+        if !isReady {
+            print("WARNING: canvasCommand requested on audio not yet ready. ID: \(id.uuidString).")
+        }
         var commands : String = "setAudioMode|\(id.uuidString)|"
         switch mode {
         case .play:

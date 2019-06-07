@@ -14,15 +14,29 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 public class StrokeStyle : CanvasObject {
-    public let style : String
+    private enum Mode {
+        case solidColor(color:Color)
+        case gradient(gradientValue:Gradient)
+    }
+    private let mode : Mode
 
     public init(color:Color) {
-        style = color.style
+        mode = .solidColor(color:color)
+    }
+
+    public init(gradient:Gradient) {
+        mode = .gradient(gradientValue:gradient)
     }
 
     internal override func canvasCommand() -> String {
         var commands = String()
-        commands += "strokeStyle|\(style)"
+        switch mode {
+        case .solidColor(let color):
+            commands += "strokeStyleSolidColor|\(color.style)"
+        case .gradient(let gradient):
+            commands += "strokeStyleGradient|\(gradient.id.uuidString)"
+        }
+
         return commands
     }
 }
