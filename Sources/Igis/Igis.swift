@@ -103,7 +103,7 @@ public class Igis {
     private static func detectedResourcePath() -> String? {
         // Begin with the current directory, moving upwards, until "Package.swift" is found
         // or the root directory is reached
-        // Then, find the resource directory from that point by descending via ".build/checkouts/Igis[.git]-\d+/Sources/Igis/Resources"
+        // Then, find the resource directory from that point by descending via ".build/checkouts/Igis/Sources/Igis/Resources"
         let packageSwiftFilename = "Package.swift"
         let buildDirectoryName = ".build"
         let checkoutDirectoryName = "checkouts"
@@ -139,20 +139,12 @@ public class Igis {
                 return nil
             }
 
-            guard let checkoutDirectoryContents = try? FileManager.default.contentsOfDirectory(at:checkoutDirectory, includingPropertiesForKeys:nil) else {
-                print("Unable to read directory contents of \(checkoutDirectory.path)")
+            let igisRepositoryDirectory = checkoutDirectory.appendingPathComponent(igisDirectoryName, isDirectory:true)
+            guard FileManager.default.fileExists(atPath:igisRepositoryDirectory.path) else {
+                print("\(igisRepositoryDirectory.path) not found")
                 return nil
             }
-
-            // We should have found either an Igis-* or Igis.git-* directory
-            let igisRepositoryDirectoryName =
-              checkoutDirectoryContents.filter{$0.lastPathComponent.starts(with:"Igis-")}.first?.lastPathComponent ??
-              checkoutDirectoryContents.filter{$0.lastPathComponent.starts(with:"Igis.git-")}.first?.lastPathComponent
-            guard igisRepositoryDirectoryName != nil else {
-                print("Igis-* or Igis.git-* directory not found")
-                return nil
-            }
-            let igisRepositoryDirectory = checkoutDirectory.appendingPathComponent(igisRepositoryDirectoryName!, isDirectory:true)
+            
 
             let sourcesDirectory = igisRepositoryDirectory.appendingPathComponent(sourcesDirectoryName, isDirectory:true)
             guard FileManager.default.fileExists(atPath:sourcesDirectory.path) else {
