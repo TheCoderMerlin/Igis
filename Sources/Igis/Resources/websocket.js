@@ -504,7 +504,7 @@ function processCreateLinearGradient(arguments) {
 
     gradientDictionary[id] = linearGradient;
 
-    let message = "onLinearGradientProcessed|" + id + "|onLinearGradientLoaded|" + id;
+    let message = "onLinearGradientProcessed|" + id + "||onLinearGradientLoaded|" + id;
     doSend(message);
 }
 
