@@ -504,8 +504,10 @@ function processCreateLinearGradient(arguments) {
 
     gradientDictionary[id] = linearGradient;
 
-    let message = "onLinearGradientProcessed|" + id + "||onLinearGradientLoaded|" + id;
-    doSend(message);
+    let messageProcessed = "onLinearGradientProcessed|" + id;
+    doSend(messageProcessed);
+    let messageLoaded = "onLinearGradientLoaded|" + id;
+    doSend(messageLoaded);
 }
 
 function processCreateRadialGradient(arguments) {
