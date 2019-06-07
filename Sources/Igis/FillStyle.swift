@@ -35,7 +35,7 @@ public class FillStyle : CanvasObject {
             commands += "fillStyleSolidColor|\(color.style)"
         case .gradient(let gradient):
             if !gradient.isReady {
-                print("WARNING: canvasCommand requested on gradient not yet ready. ID: \(id.uuidString).")
+                print("WARNING: canvasCommand requested on gradient not yet ready. ID: \(gradient.id.uuidString).")
             }
             commands += "fillStyleGradient|\(gradient.id.uuidString)"
         }
