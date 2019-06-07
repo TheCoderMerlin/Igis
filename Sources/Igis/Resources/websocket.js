@@ -774,7 +774,7 @@ function processStrokeStyleGradient(arguments) {
     }
     let gradientId = arguments.shift();
     let gradient = gradientDictionary[gradientId];
-    context.strokeStyle = solidColor;
+    context.strokeStyle = gradient;
 }
 
 function processStrokeText(arguments) {
