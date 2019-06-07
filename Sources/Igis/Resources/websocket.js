@@ -362,6 +362,9 @@ function processCommand(commandMessage, commandIndex) {
     case "strokeStyleSolidColor":
 	processStrokeStyleSolidColor(arguments);
 	break;
+    case "strokeStyleGradient":
+	processStrokeStyleGradient(arguments);
+	break;
     case "strokeRect":
 	processStrokeRect(arguments);
 	break;
