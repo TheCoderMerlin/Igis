@@ -20,6 +20,7 @@ public class Path : CanvasObject {
         case beginPath
         case moveTo(point:Point)
         case lineTo(point:Point)
+        case rect(rect:Rect)
         case arc(center:Point, radius:Int, startAngle:Double, endAngle:Double, antiClockwise:Bool)
         case arcTo(controlPoint1:Point, controlPoint2:Point, radius:Int)
         case quadraticCurveTo(controlPoint:Point, endPoint:Point)
@@ -48,6 +49,10 @@ public class Path : CanvasObject {
 
     public func lineTo(_ point:Point) {
         actions.append(.lineTo(point:point))
+    }
+
+    public func rect(_ rect:Rect) {
+        actions.append(.rect(rect:rect))
     }
 
     public func arc(center:Point, radius:Int, startAngle:Double=0.0, endAngle:Double=2.0*Double.pi,
@@ -83,6 +88,8 @@ public class Path : CanvasObject {
                 actionStrings.append("moveTo|\(point.x)|\(point.y)")
             case .lineTo(let point):
                 actionStrings.append("lineTo|\(point.x)|\(point.y)")
+            case .rect(let rect):
+                actionStrings.append("rect|\(rect.topLeft.x)|\(rect.topLeft.y)|\(rect.size.width)|\(rect.size.height)")
             case .arc(let center, let radius, let startAngle, let endAngle, let antiClockwise):
                 actionStrings.append("arc|\(center.x)|\(center.y)|\(radius)|\(startAngle)|\(endAngle)|\(antiClockwise)")
             case .arcTo(let controlPoint1, let controlPoint2, let radius):

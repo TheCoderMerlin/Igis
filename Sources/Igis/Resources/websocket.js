@@ -347,6 +347,9 @@ function processCommand(commandMessage, commandIndex) {
     case "quadraticCurveTo":
 	processQuadraticCurveTo(arguments);
 	break;
+    case "rect":
+	processRect(arguments);
+	break;
     case "restore":
 	processRestore(arguments);
 	break;
@@ -749,6 +752,18 @@ function processQuadraticCurveTo(arguments) {
     let endPointX = arguments.shift();
     let endPointY = arguments.shift();
     context.quadraticCurveTo(controlPointX, controlPointY, endPointX, endPointY);
+}
+
+function processRect(arguments) {
+    if (arguments.length != 4) {
+	logError("processRect: Requires four arguments");
+	return;
+    }
+    let x = arguments.shift();
+    let y = arguments.shift();
+    let width = arguments.shift();
+    let height = arguments.shift();
+    context.rect(x, y, width, height);
 }
 
 function processRestore(arguments) {
