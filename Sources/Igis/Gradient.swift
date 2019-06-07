@@ -6,10 +6,6 @@ public class Gradient : CanvasIdentifiedObject {
         case linear(start:Point, end:Point)
         case radial(center1:Point, radius1:Double, center2:Point, radius2:Double)
     }
-    public struct ColorStop {
-        let position : Double
-        let color: Color
-    }
     
     public let mode : Mode
     public private(set) var colorStops : [ColorStop]
@@ -19,7 +15,7 @@ public class Gradient : CanvasIdentifiedObject {
         self.colorStops = [ColorStop]()
     }
 
-    public func addColorStop(colorStop:ColorStop) {
+    public func addColorStop(_ colorStop:ColorStop) {
         colorStops.append(colorStop)
     }
 
