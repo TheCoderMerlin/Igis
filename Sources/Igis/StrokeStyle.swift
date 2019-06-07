@@ -34,6 +34,9 @@ public class StrokeStyle : CanvasObject {
         case .solidColor(let color):
             commands += "strokeStyleSolidColor|\(color.style)"
         case .gradient(let gradient):
+            if !gradient.isReady {
+                print("WARNING: canvasCommand requested on gradient not yet ready. ID: \(id.uuidString).")
+            }
             commands += "strokeStyleGradient|\(gradient.id.uuidString)"
         }
 
