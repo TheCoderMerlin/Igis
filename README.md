@@ -73,16 +73,36 @@ public init(_ name:Name)
 ```
 Note:  Color names are from [w3 org](https://www.w3.org/TR/css-color-3/#svg-color).  If a name is not available it has an available synonym.  For example "grey" can be found by using "gray", and "aqua" can be found by using "cyan".
 
+### Gradients
+Gradients must be setup before being rendered.
+Gradients are created by specifying a series of colors across a range of positions, from 0.0 to 1.0.
+There are two types of gradients, linear and radial.  Both may be used for either StrokeStyle or FillStyle.
+```swift
+// ColorStop Definition
+public init(position:Double, color:Color)
+
+// Gradient Definition
+public enum Mode {
+    case linear(start:Point, end:Point)
+    case radial(center1:Point, radius1:Double, center2:Point, radius2:Double)
+}
+public init(mode:Mode)
+func addColorStop(_ colorStop:ColorStop)
+```
+
+
 ### StrokeStyle
 ```swift
 // StrokeStyle Definition
 public init(color:Color)
+public init(gradient:Gradient)
 ```
 
 ### FillStyle
 ```swift
 // FillStyle Definition
  public init(color:Color)
+ public init(gradient:Gradient)
  ```
 
 ### Painting 
