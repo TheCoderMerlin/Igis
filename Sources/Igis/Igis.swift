@@ -47,16 +47,11 @@ public class Igis {
     }
 
     public func run(painterType:PainterProtocol.Type) throws {
-        let painter = painterType.init()
-        try run(painter:painter)
-    }
-
-    public func run(painter:PainterProtocol) throws {
         let group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
 
         let upgrader = WebSocketUpgrader(shouldUpgrade: { (head: HTTPRequestHead) in HTTPHeaders() },
                                          upgradePipelineHandler: { (channel: Channel, _: HTTPRequestHead) in
-                                             channel.pipeline.add(handler: WebSocketHandler(canvas:Canvas(painter:painter)))
+                                             channel.pipeline.add(handler: WebSocketHandler(canvas:Canvas(painter:painterType.init())))
                                          })
 
         let bootstrap = ServerBootstrap(group: group)
