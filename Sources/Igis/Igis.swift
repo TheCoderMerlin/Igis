@@ -51,7 +51,6 @@ public class Igis {
 
         let upgrader = WebSocketUpgrader(shouldUpgrade: { (head: HTTPRequestHead) in HTTPHeaders() },
                                          upgradePipelineHandler: { (channel: Channel, _: HTTPRequestHead) in
-                                             print("Upgrade Pipline Handler executing")
                                              return channel.pipeline.add(handler: WebSocketHandler(canvas:Canvas(painter:painterType.init())))
                                          })
 
