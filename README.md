@@ -258,6 +258,7 @@ Paths may be used to contruct arbitrary shapes
 Paths support several operations:
 * moveTo
 * lineTo
+* rect
 * quadraticCurveTo
 * bezierCurveTo
 * arc
