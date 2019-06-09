@@ -28,6 +28,7 @@ public class Canvas {
     public private(set) var windowSize : Size? = nil
     
     internal init(painter:PainterProtocol) {
+        print("Canvas initializing")
         // Assign ID.  Potentially conflict if two threads enter simultaneously?
         self.canvasId = Canvas.nextCanvasId
         Canvas.nextCanvasId += 1
