@@ -220,16 +220,6 @@ function onKeyDown(event) {
 
     let message = "onKeyDown|"   + key + "|" + code + "|" + ctrlKey + "|" + shiftKey + "|" + altKey + "|" + metaKey;
     doSend(message);
-
-    switch (code) {
-    case "F1":
-	toggleDebugDisplayMode();
-	break;
-    case "F2":
-	toggleDebugCollectMode();
-	break;
-    }
-
 }
 
 function onWindowResize(event) {
@@ -376,6 +366,12 @@ function processCommand(commandMessage, commandIndex) {
 	break;
     case "strokeText":
 	processStrokeText(arguments);
+	break;
+    case "textAlign":
+	processTextAlign(arguments);
+	break;
+    case "textBaseline":
+	processTextBaseline(arguments);
 	break;
     case "transform":
 	processTransform(arguments);
@@ -844,6 +840,61 @@ function processStrokeText(arguments) {
     let x = arguments.shift();
     let y = arguments.shift();
     context.strokeText(text, x, y);
+}
+
+function processTextAlign(arguments) {
+    if (arguments.length != 1) {
+	logError("processTextAlign: Requires one argument");
+	return;
+    }
+    let alignment = shift();
+    
+    switch (alignment) {
+    case "left":
+	context.textAlign = "left";
+	break;
+    case "center":
+	context.textAlign = "center";
+	break;
+    case "center":
+	context.textAlign = "right";
+	break;
+    default:
+	logError("processTextAlign: Unexpected argument");
+	break;
+    }
+}
+
+function processTextBaseline(arguments) {
+    if (arguments.length != 1) {
+	logError("processTextBaseline: Requires one argument");
+	return;
+    }
+    let baseline = shift();
+
+    switch (baseline) {
+    case "top":
+	context.textBaseline = "top";
+	break;
+    case "hanging":
+	context.textBaseline = "hanging";
+	break;
+    case "middle":
+	context.textBaseline = "middle";
+	break;
+    case "alphabetic":
+	context.textBaseline = "alphabetic";
+	break;
+    case "ideographic":
+	context.textBaseline = "ideographic";
+	break;
+    case "bottom":
+	context.textBaseline = "bottom";
+	break;
+    default:
+	logError("processTextBaseline: Unexpected argument");
+	break;
+    }
 }
 
 function processTransform(arguments) {
