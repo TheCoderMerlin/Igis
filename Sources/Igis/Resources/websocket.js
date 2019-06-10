@@ -856,7 +856,7 @@ function processTextAlign(arguments) {
     case "center":
 	context.textAlign = "center";
 	break;
-    case "center":
+    case "right":
 	context.textAlign = "right";
 	break;
     default:
