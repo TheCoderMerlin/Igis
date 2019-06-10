@@ -156,7 +156,12 @@ is available as a starting point.
 ### Text
 ```swift
 // Text Definition
-public init(location:Point, text:String, font:String?=nil, fillMode:FillMode = .fill)
+public init(location:Point, text:String, fillMode:FillMode = .fill)
+
+// Optional:
+font = "10pt Arial"
+alignment = .left | .center | .right
+baseline = .top | .hanging | .middle | .alphabetic | .ideographic | .bottom
 ```
 
 ```swift
