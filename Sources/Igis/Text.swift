@@ -52,7 +52,7 @@ public class Text : CanvasObject {
         }
 
         if let alignment = alignment {
-            commands += "processTextAlign|"
+            commands += "textAlign|"
             switch alignment {
             case .left:
                 commands += "left"
@@ -69,7 +69,7 @@ public class Text : CanvasObject {
         }
 
         if let baseline = baseline {
-            commands += "processTextBaseline|"
+            commands += "textBaseline|"
             switch baseline {
             case .top:
                 commands += "top"
