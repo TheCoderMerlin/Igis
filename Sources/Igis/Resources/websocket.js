@@ -847,7 +847,7 @@ function processTextAlign(arguments) {
 	logError("processTextAlign: Requires one argument");
 	return;
     }
-    let alignment = shift();
+    let alignment = arguments.shift();
     
     switch (alignment) {
     case "left":
@@ -870,7 +870,7 @@ function processTextBaseline(arguments) {
 	logError("processTextBaseline: Requires one argument");
 	return;
     }
-    let baseline = shift();
+    let baseline = arguments.shift();
 
     switch (baseline) {
     case "top":
