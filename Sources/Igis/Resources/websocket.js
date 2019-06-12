@@ -136,7 +136,7 @@ function onUpdateFrame(timestamp) {
 		  " Enqueued FPS: " + enqueuedFramesPerSecond.toFixed(2) +
 		  " Empty FPS: " + emptyFramesPerSecond.toFixed(2) +
 		  " Max Frame Queue: " + statisticsMaxFrameQueueCount +
-          	  " Discarded Frame Count: " + statisticsFrameDiscardedCount);
+          	  " Discarded Frame Count: " + statisticsFramesDiscardedCount);
 
     // Request next update frame event if still connected
     if (isConnected) {
