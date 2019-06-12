@@ -18,10 +18,12 @@ import NIO
 
 public class Canvas {
 
+    private static let minimumSecondsBeforePing = 15
     private static var nextCanvasId : Int = 0
     private let painter : PainterProtocol
     private var pendingCommandList = [String]()
     private var identifiedObjectDictionary = [UUID:CanvasIdentifiedObject]()
+    private var mostRecentPingTime = Date()
 
     public let canvasId : Int
     public private(set) var canvasSize : Size? = nil
@@ -67,7 +69,11 @@ public class Canvas {
             webSocketHandler.send(ctx:ctx, text:allCommands)
             pendingCommandList.removeAll()
         } else {
-            webSocketHandler.send(ctx:ctx, text:"ping")
+            let secondsSincePreviousPing = -Int(mostRecentPingTime.timeIntervalSinceNow)
+            if (secondsSincePreviousPing > Canvas.minimumSecondsBeforePing) {
+                webSocketHandler.send(ctx:ctx, text:"ping")
+                mostRecentPingTime = Date()
+            }
         }
     }
     
