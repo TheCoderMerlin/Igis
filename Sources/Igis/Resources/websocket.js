@@ -1,3 +1,20 @@
+/*
+IGIS - Remote graphics for Swift on Linux
+Copyright (C) 2018, 2019 Tango Golf Digital, LLC
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+const maximumFrameQueueCount = 60
+
 var webSocketPath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf("/")) + "/websocket"
 var webSocketURL = "ws://" + window.location.hostname +  webSocketPath
 var webSocket;
@@ -13,6 +30,7 @@ var statisticsInitialTime;
 var statisticsEnqueuedFrameCount;
 var statisticsEmptyFrameCount;
 var statisticsFramesRenderedCount;
+var statisticsFramesDiscardedCount;
 
 var frameQueue;
 
@@ -26,6 +44,7 @@ function onLoad() {
     statisticsFramesRenderedCount = 0;
     statisticsEmptyFrameCount = 0;
     statisticsMaxFrameQueueCount = 0;
+    statisticsFramesDiscardedCount = 0;
     
     // Canvas
     canvas = document.getElementById("canvasMain");
@@ -93,6 +112,14 @@ function onUpdateFrame(timestamp) {
 
     // Process frame if available
     if (frameQueue.length > 0) {
+	// Discard oldest frames if maximumFrameQueueCount is exceeded
+	if (frameQueue.length > maximumFrameQueueCount) {
+	    let framesToDiscard = frameQueue.length - maximumFrameQueueCount;
+	    frameQueue.splice(0, framesToDiscard);
+	    statisticsFramesDiscardedCount += framesToDiscard;
+	    logError("frameQueue overflow; " + framesToDiscard + " frames discarded");
+	}
+	
 	statisticsMaxFrameQueueCount = Math.max(statisticsMaxFrameQueueCount, frameQueue.length);
 	frame = frameQueue.shift();
 	processCommands(frame);
@@ -108,7 +135,8 @@ function onUpdateFrame(timestamp) {
     logStatistics("Rendered FPS: " + renderedFramesPerSecond.toFixed(2) +
 		  " Enqueued FPS: " + enqueuedFramesPerSecond.toFixed(2) +
 		  " Empty FPS: " + emptyFramesPerSecond.toFixed(2) +
-		  " Max Frame Queue: " + statisticsMaxFrameQueueCount);
+		  " Max Frame Queue: " + statisticsMaxFrameQueueCount +
+          	  " Discarded Frame Count: " + statisticsFrameDiscardedCount);
 
     // Request next update frame event if still connected
     if (isConnected) {
