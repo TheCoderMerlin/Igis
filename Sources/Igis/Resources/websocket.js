@@ -117,7 +117,7 @@ function onUpdateFrame(timestamp) {
 	    let framesToDiscard = frameQueue.length - maximumFrameQueueCount;
 	    frameQueue.splice(0, framesToDiscard);
 	    statisticsFramesDiscardedCount += framesToDiscard;
-	    logError("frameQueue overflow; " + framesToDiscard + " frames discarded");
+	    logMessage("frameQueue overflow; " + framesToDiscard + " frames discarded");
 	}
 	
 	statisticsMaxFrameQueueCount = Math.max(statisticsMaxFrameQueueCount, frameQueue.length);
