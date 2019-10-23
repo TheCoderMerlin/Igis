@@ -173,7 +173,8 @@ let helloWorld = Text(location:Point(x:100, y:100), text:"Hello, World!")
 
 ```swift
 // Create a text object with a specific font using the current fill color.
-let helloWorld = Text(location:Point(x:100, y:100), text:"Hello, World!", font:"50pt Arial bold") 
+let helloWorld = Text(location:Point(x:100, y:100), text:"Hello, World!")
+helloWorld.font = "50pt Arial bold"
 ```
 
 ```swift
