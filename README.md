@@ -179,7 +179,8 @@ helloWorld.font = "50pt Arial bold"
 
 ```swift
 // Stroke the text using the current stroke color rather than fill.
-let helloWorld = Text(location:Point(x:100, y:100), text:"Hello, World!", font:"50pt Arial bold", fillMode:.stroke) 
+let helloWorld = Text(location:Point(x:100, y:100), text:"Hello, World!", fillMode:.stroke) 
+helloWorld.font = "50pt Arial bold"
 ```
 
 ### Rectangle
