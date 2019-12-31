@@ -63,6 +63,7 @@ function onLoad() {
     canvas.addEventListener("mousedown", onMouseDown);
     canvas.addEventListener("mouseup", onMouseUp);
     canvas.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onWindowMouseUp); // Used to handle events outside browser
 
     // Frame Queue
     frameQueue = [];
@@ -230,6 +231,13 @@ function onMouseDown(event) {
 
 function onMouseUp(event) {
     let message = "onMouseUp|" + event.clientX + "|" + event.clientY;
+    event.stopPropagation(); // This prevents firing of onWindowMouseUp() when cursor is within canvas
+    doSend(message);
+}
+
+function onWindowMouseUp(event) {
+    // Fires only when mouseup occurs outside of canvas.  See onMouseUp().
+    let message = "onWindowMouseUp|" + event.clientX + "|" + event.clientY;
     doSend(message);
 }
 

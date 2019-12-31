@@ -101,6 +101,8 @@ public class Canvas {
                 receptionOnMouseDown(arguments:arguments)
             case "onMouseUp":
                 receptionOnMouseUp(arguments:arguments)
+            case "onWindowMouseUp":
+                receptionOnWindowMouseUp(arguments:arguments)
             case "onMouseMove":
                 receptionOnMouseMove(arguments:arguments)
 
@@ -173,6 +175,16 @@ public class Canvas {
             return
         }
         painter.onMouseUp(location:Point(x:x, y:y))
+    }
+
+    internal func receptionOnWindowMouseUp(arguments:[String]) {
+        guard arguments.count == 2,
+              let x = Int(arguments[0]),
+              let y = Int(arguments[1]) else {
+            print("ERROR: onWindowMouseUp requires exactly two integer arguments")
+            return
+        }
+        painter.onWindowMouseUp(location:Point(x:x, y:y))
     }
 
     internal func receptionOnMouseMove(arguments:[String]) {

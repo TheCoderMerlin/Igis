@@ -51,6 +51,9 @@ open class PainterBase : PainterProtocol {
     open func onMouseUp(location:Point) {
     }
     
+    open func onWindowMouseUp(location:Point) {
+    }
+    
     open func onMouseMove(location:Point) {
     }
 
