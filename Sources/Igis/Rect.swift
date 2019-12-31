@@ -53,4 +53,49 @@ public struct Rect {
         self.size = size
     }
 
+    public init(source:Rect) {
+        self.topLeft = source.topLeft
+        self.size = source.size
+    }
+
+    public func containment(target:Point) -> ContainmentSet {
+        var containmentSet = ContainmentSet()
+
+        // Horizontal
+        switch target.x {
+            case let x where x < left:
+                containmentSet.formUnion([.beyondLeft, .beyondHorizontally])
+            case let x where x >= left && x < right:
+                containmentSet.formUnion([.containedHorizontally])
+            case let x where x >= right:
+                containmentSet.formUnion([.beyondRight, .beyondHorizontally])
+            default:
+                fatalError("Failed to determine horizontal containment for point \(target) with rect \(self)")
+        }
+
+        // Vertical
+        switch target.y {
+        case let y where y < top:
+            containmentSet.formUnion([.beyondTop, .beyondVertically])
+        case let y where y >= top && y < bottom:
+            containmentSet.formUnion([.containedVertically])
+        case let y where y >= bottom:
+            containmentSet.formUnion([.beyondBottom, .beyondVertically])
+        default:
+            fatalError("Failed to determine vertical containment for point \(target) with rect \(self)")
+        }
+
+        // Handle special cases
+        switch containmentSet {
+        case let set where set.isSuperset(of:[.beyondHorizontally, .beyondVertically]):
+            containmentSet.formUnion([.beyondFully])
+        case let set where set.isSuperset(of:[.containedHorizontally, .containedVertically]):
+            containmentSet.formUnion([.containedFully])
+        default:
+            break;
+        }
+
+        return containmentSet
+    }
+
 }
