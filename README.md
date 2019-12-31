@@ -118,23 +118,23 @@ canvas.render(helloWorld)
 Most objects can be created at anytime, however they may only be painted in an event which provides a Canvas as a parameter.  The [IgisShell project](https://github.com/TangoGolfDigital/IgisShell) provides a useful shell to get started.  In order to start Igis, a class implementing the PainterProtocol is required:
 
 ```swift
-class Painter : PainterProtocol {
+class Painter : PainterBase {
     required init() {
     }
 
-    func setup(canvas:Canvas) {
+    override func setup(canvas:Canvas) {
     }
 
-    func calculate(canvasId:Int, canvasSize:Size?) {
+    override func calculate(canvasId:Int, canvasSize:Size?) {
         // Calculate position and movement of objects here
         // The canvasId may be used to distinguish between different clients
     }
 
-    func render(canvas:Canvas) {
+    override func render(canvas:Canvas) {
         // Render objects here
     }
 
-    func onClick(canvas:Canvas, location:Point) {
+    override func onClick(location:Point) {
     }
 }
 ```
@@ -173,12 +173,14 @@ let helloWorld = Text(location:Point(x:100, y:100), text:"Hello, World!")
 
 ```swift
 // Create a text object with a specific font using the current fill color.
-let helloWorld = Text(location:Point(x:100, y:100), text:"Hello, World!", font:"50pt Arial bold") 
+let helloWorld = Text(location:Point(x:100, y:100), text:"Hello, World!")
+helloWorld.font = "50pt Arial bold"
 ```
 
 ```swift
 // Stroke the text using the current stroke color rather than fill.
-let helloWorld = Text(location:Point(x:100, y:100), text:"Hello, World!", font:"50pt Arial bold", fillMode:.stroke) 
+let helloWorld = Text(location:Point(x:100, y:100), text:"Hello, World!", fillMode:.stroke) 
+helloWorld.font = "50pt Arial bold"
 ```
 
 ### Rectangle
