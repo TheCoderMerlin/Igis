@@ -220,17 +220,26 @@ function createAudio(id, sourceURL, shouldLoop) {
 
 // Canvas
 function onClick(event) {
-    let message = "onClick|" + event.clientX + "|" + event.clientY;
+    var rect = event.target.getBoundingClientRect();
+    var x = event.clientX - rect.left;
+    var y = event.clientY - rect.top;
+    let message = "onClick|" + x + "|" + y;
     doSend(message);
 }
 
 function onMouseDown(event) {
-    let message = "onMouseDown|" + event.clientX + "|" + event.clientY;
+    var rect = event.target.getBoundingClientRect();
+    var x = event.clientX - rect.left;
+    var y = event.clientY - rect.top;
+    let message = "onMouseDown|" + x + "|" + y;
     doSend(message);
 }
 
 function onMouseUp(event) {
-    let message = "onMouseUp|" + event.clientX + "|" + event.clientY;
+    var rect = event.target.getBoundingClientRect();
+    var x = event.clientX - rect.left;
+    var y = event.clientY - rect.top;
+    let message = "onMouseUp|" + x + "|" + y;
     event.stopPropagation(); // This prevents firing of onWindowMouseUp() when cursor is within canvas
     doSend(message);
 }
@@ -242,7 +251,10 @@ function onWindowMouseUp(event) {
 }
 
 function onMouseMove(event) {
-    let message = "onMouseMove|" + event.clientX + "|" + event.clientY;
+    var rect = event.target.getBoundingClientRect();
+    var x = event.clientX - rect.left;
+    var y = event.clientY - rect.top;
+    let message = "onMouseMove|" + x + "|" + y;
     doSend(message);
 }
 
