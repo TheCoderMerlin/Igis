@@ -79,8 +79,8 @@ public mutating func changeTo(width:Int, height:Int)
 ### Rect
 ```swift
 // Rect Definition
-public private(set) var topLeft : Point
-public private(set) var size : Size 
+public var topLeft : Point
+public var size : Size 
 
 public init(topLeft:Point, size:Size)
 public init(bottomLeft:Point, size:Size)
