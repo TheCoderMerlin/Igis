@@ -13,7 +13,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-  public enum Containment {
+
+// Provides a description of a rectangle relative to a target Point or Rect    
+public enum Containment {
     // Special cases combining horizontal and vertical containment
     case containedFully           // Included in set when both containedHorizontally AND containedVertically (Points,Rects)
     case overlapsFully            // Included in set when both overlapsHorizontally AND overlapsVertically   (Rects only)
