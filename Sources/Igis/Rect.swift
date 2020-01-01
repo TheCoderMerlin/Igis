@@ -46,7 +46,6 @@ public struct Rect {
         set (newRight) {
             let delta = newRight - (topLeft.x + size.width)
             size.enlargeWidthBy(change:delta)
-            topLeft.moveXBy(offset:-delta)
         }
     }
 
@@ -57,7 +56,6 @@ public struct Rect {
         set (newBottom) {
             let delta = newBottom - (topLeft.y + size.height)
             size.enlargeHeightBy(change:delta)
-            topLeft.moveYBy(offset:-delta)
         }
     }
 
