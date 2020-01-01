@@ -27,6 +27,14 @@ public struct Size {
         height += changeHeight
     }
 
+    public mutating func enlargeWidthBy(change:Int) {
+        width += change
+    }
+
+    public mutating func enlargeHeightBy(change:Int) {
+        height += change
+    }
+
     public mutating func changeTo(width:Int, height:Int) {
         self.width = width
         self.height = height

@@ -31,11 +31,18 @@ let package = Package(
 ### Point
 ```swift
 // Point Definition
+public private (set) var x : Int
+public private (set) var y : Int
+
 public init(x:Int, y:Int)
 
 public mutating func moveBy(offsetX:Int, offsetY:Int)
+public mutating func moveBy(offset:Point)
+public mutating func moveXBy(offset:Int)
+public mutating func moveYBy(offset:Int)
 
 public mutating func moveTo(x:Int, y:Int)
+public mutating func moveTo(_ point:Point)
 ```
 
 ### DoublePoint
@@ -51,17 +58,44 @@ public mutating func moveTo(x:Double, y:Double)
 ### Size
 ```swift
 // Size Definition
+public private (set) var width : Int
+public private (set) var height : Int 
+
 public init(width:Int, height:Int)
 
 public mutating func enlargeBy(changeWidth:Int, changeHeight:Int)
+public mutating func enlargeWidthBy(change:Int)
+public mutating func enlargeHeightBy(change:Int)
 
 public mutating func changeTo(width:Int, height:Int)
+```
+
+### Containment
+```swift
+
+
 ```
 
 ### Rect
 ```swift
 // Rect Definition
+public private(set) var topLeft : Point
+public private(set) var size : Size 
+
 public init(topLeft:Point, size:Size)
+public init(bottomLeft:Point, size:Size)
+public init(topRight:Point, size:Size)
+public init(bottomRight:Point, size:Size)
+public init(source:Rect)
+
+public var left : Int
+public var top : Int
+public var right : Int
+public var bottom : Int
+
+public func containment(target:Point) -> ContainmentSet
+
+
 ```
 
 ### Color

@@ -27,6 +27,19 @@ public struct Point {
         y += offsetY
     }
 
+    public mutating func moveBy(offset:Point) {
+        x += offset.x
+        y += offset.y
+    }
+
+    public mutating func moveXBy(offset:Int) {
+        x += offset
+    }
+
+    public mutating func moveYBy(offset:Int) {
+        y += offset
+    }
+
     public mutating func moveTo(x:Int, y:Int) {
         self.x = x
         self.y = y

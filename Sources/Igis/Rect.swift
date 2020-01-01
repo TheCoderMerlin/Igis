@@ -14,23 +14,51 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 public struct Rect {
-    public var topLeft : Point
-    public var size : Size
+    public private(set) var topLeft : Point
+    public private(set) var size : Size
 
     public var left : Int {
-        return topLeft.x
+        get {
+            return topLeft.x
+        }
+        set (newLeft) {
+            let delta = newLeft - topLeft.x
+            topLeft.moveXBy(offset:delta)
+            size.enlargeWidthBy(change:-delta)
+        }
     }
 
     public var top : Int {
-        return topLeft.y
+        get {
+            return topLeft.y
+        }
+        set (newTop) {
+            let delta = newTop - topLeft.y
+            topLeft.moveYBy(offset:delta)
+            size.enlargeHeightBy(change:-delta)
+        }
     }
 
     public var right : Int {
-        return topLeft.x + size.width
+        get {
+            return topLeft.x + size.width
+        }
+        set (newRight) {
+            let delta = newRight - (topLeft.x + size.width)
+            size.enlargeWidthBy(change:delta)
+            topLeft.moveXBy(offset:-delta)
+        }
     }
 
     public var bottom : Int {
-        return topLeft.y + size.height
+        get {
+            return topLeft.y + size.height
+        }
+        set (newBottom) {
+            let delta = newBottom - (topLeft.y + size.height)
+            size.enlargeHeightBy(change:delta)
+            topLeft.moveYBy(offset:-delta)
+        }
     }
 
     public init(topLeft:Point, size:Size) {
@@ -98,4 +126,51 @@ public struct Rect {
         return containmentSet
     }
 
+    /*
+    public func containment(target:Rect) -> ContainmentSet {
+        var containmentSet = ContainmentSet()
+
+        // Horizontal
+        switch (target.left, target.right) {
+        case let (targetLeft, targetRight)  where targetRight < left:
+            containmentSet.formUnion([.beyondLeft, .beyondHorizontally])
+        case let (targetLeft, targetRight) where targetRight >= left && targetLeft < left:
+            containmentSet.formUnion([.overlapsLeft, .overlapsHorizontally])
+        case let (targetLeft, targetRight) where targetRight >= right && targetLeft < left:
+            containmentSet.formUnion([.overlapsLeft, .overlapsRight, .overlapsHorizontally])
+            case let x where x >= left && x < right:
+                containmentSet.formUnion([.containedHorizontally])
+            case let x where x >= right:
+                containmentSet.formUnion([.beyondRight, .beyondHorizontally])
+            default:
+                fatalError("Failed to determine horizontal containment for point \(target) with rect \(self)")
+        }
+
+        // Vertical
+        switch target.y {
+        case let y where y < top:
+            containmentSet.formUnion([.beyondTop, .beyondVertically])
+        case let y where y >= top && y < bottom:
+            containmentSet.formUnion([.containedVertically])
+        case let y where y >= bottom:
+            containmentSet.formUnion([.beyondBottom, .beyondVertically])
+        default:
+            fatalError("Failed to determine vertical containment for point \(target) with rect \(self)")
+        }
+
+        // Handle special cases
+        switch containmentSet {
+        case let set where set.isSuperset(of:[.beyondHorizontally, .beyondVertically]):
+            containmentSet.formUnion([.beyondFully])
+        case let set where set.isSuperset(of:[.containedHorizontally, .containedVertically]):
+            containmentSet.formUnion([.containedFully])
+        default:
+            break;
+        }
+
+        return containmentSet
+    }
+    
+     */
+    
 }
