@@ -16,7 +16,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   public enum Containment {
     // Special cases combining horizontal and vertical containment
     case containedFully           // Included in set when both containedHorizontally AND containedVertically (Points,Rects)
-    case overlapsFully            // Included in set when both overlapsHorizontally AND overlapsVertically   (Points,Rects)
+    case overlapsFully            // Included in set when both overlapsHorizontally AND overlapsVertically   (Rects only)
     case beyondFully              // Included in set when both beyondHorizontally AND beyondVertically       (Points,Rects)
 
     // Horizontal cases

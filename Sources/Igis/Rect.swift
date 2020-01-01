@@ -146,14 +146,19 @@ public struct Rect {
                 fatalError("Failed to determine horizontal containment for point \(target) with rect \(self)")
         }
 
-        /*
         // Vertical
-        switch target.y {
-        case let y where y < top:
+        switch (target.top, target.bottom) {
+        case let (_, targetBottom) where targetBottom < top:
             containmentSet.formUnion([.beyondTop, .beyondVertically])
-        case let y where y >= top && y < bottom:
+        case let (targetTop, targetBottom) where targetBottom >= top && targetBottom < bottom && targetTop < top:
+            containmentSet.formUnion([.overlapsTop, .overlapsVertically])
+        case let (targetTop, targetBottom) where targetBottom >= bottom && targetTop < top:
+            containmentSet.formUnion([.overlapsTop, .overlapsBottom, .overlapsVertically])
+        case let (targetTop, targetBottom) where targetBottom >= bottom && targetTop >= top && targetTop < bottom:
+            containmentSet.formUnion([.overlapsBottom, .overlapsVertically])
+        case let (targetTop, targetBottom) where targetBottom < bottom && targetBottom >= top && targetTop >= top && targetTop < bottom:
             containmentSet.formUnion([.containedVertically])
-        case let y where y >= bottom:
+        case let (targetTop, _) where targetTop >= bottom:
             containmentSet.formUnion([.beyondBottom, .beyondVertically])
         default:
             fatalError("Failed to determine vertical containment for point \(target) with rect \(self)")
@@ -165,11 +170,11 @@ public struct Rect {
             containmentSet.formUnion([.beyondFully])
         case let set where set.isSuperset(of:[.containedHorizontally, .containedVertically]):
             containmentSet.formUnion([.containedFully])
+        case let set where set.isSuperset(of:[.overlapsHorizontally, .overlapsVertically]):
+            containmentSet.formUnion([.overlapsFully])
         default:
             break;
         }
-        
-         */
 
         return containmentSet
     }
