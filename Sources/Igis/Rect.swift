@@ -124,26 +124,29 @@ public struct Rect {
         return containmentSet
     }
 
-    /*
+
     public func containment(target:Rect) -> ContainmentSet {
         var containmentSet = ContainmentSet()
 
         // Horizontal
         switch (target.left, target.right) {
-        case let (targetLeft, targetRight)  where targetRight < left:
+        case let (_, targetRight)  where targetRight < left:
             containmentSet.formUnion([.beyondLeft, .beyondHorizontally])
-        case let (targetLeft, targetRight) where targetRight >= left && targetLeft < left:
+        case let (targetLeft, targetRight) where targetRight >= left && targetRight < right && targetLeft < left:
             containmentSet.formUnion([.overlapsLeft, .overlapsHorizontally])
         case let (targetLeft, targetRight) where targetRight >= right && targetLeft < left:
             containmentSet.formUnion([.overlapsLeft, .overlapsRight, .overlapsHorizontally])
-            case let x where x >= left && x < right:
-                containmentSet.formUnion([.containedHorizontally])
-            case let x where x >= right:
+        case let (targetLeft, targetRight) where targetRight >= right && targetLeft >= left && targetLeft < right:
+            containmentSet.formUnion([.overlapsRight, .overlapsHorizontally])
+        case let (targetLeft, targetRight) where targetRight < right && targetRight >= left && targetLeft >= left && targetLeft < right:
+            containmentSet.formUnion([.containedHorizontally])
+        case let (targetLeft, _)  where targetLeft >= right:
                 containmentSet.formUnion([.beyondRight, .beyondHorizontally])
             default:
                 fatalError("Failed to determine horizontal containment for point \(target) with rect \(self)")
         }
 
+        /*
         // Vertical
         switch target.y {
         case let y where y < top:
@@ -165,10 +168,10 @@ public struct Rect {
         default:
             break;
         }
+        
+         */
 
         return containmentSet
     }
-    
-     */
     
 }
