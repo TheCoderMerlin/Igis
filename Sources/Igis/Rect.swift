@@ -133,11 +133,11 @@ public struct Rect {
         case let (_, targetRight)  where targetRight < left:
             containmentSet.formUnion([.beyondLeft, .beyondHorizontally])
         case let (targetLeft, targetRight) where targetRight >= left && targetRight < right && targetLeft < left:
-            containmentSet.formUnion([.overlapsLeft, .overlapsHorizontally])
+            containmentSet.formUnion([.overlapsLeft])
         case let (targetLeft, targetRight) where targetRight >= right && targetLeft < left:
             containmentSet.formUnion([.overlapsLeft, .overlapsRight, .overlapsHorizontally])
         case let (targetLeft, targetRight) where targetRight >= right && targetLeft >= left && targetLeft < right:
-            containmentSet.formUnion([.overlapsRight, .overlapsHorizontally])
+            containmentSet.formUnion([.overlapsRight])
         case let (targetLeft, targetRight) where targetRight < right && targetRight >= left && targetLeft >= left && targetLeft < right:
             containmentSet.formUnion([.containedHorizontally])
         case let (targetLeft, _)  where targetLeft >= right:
@@ -151,11 +151,11 @@ public struct Rect {
         case let (_, targetBottom) where targetBottom < top:
             containmentSet.formUnion([.beyondTop, .beyondVertically])
         case let (targetTop, targetBottom) where targetBottom >= top && targetBottom < bottom && targetTop < top:
-            containmentSet.formUnion([.overlapsTop, .overlapsVertically])
+            containmentSet.formUnion([.overlapsTop])
         case let (targetTop, targetBottom) where targetBottom >= bottom && targetTop < top:
             containmentSet.formUnion([.overlapsTop, .overlapsBottom, .overlapsVertically])
         case let (targetTop, targetBottom) where targetBottom >= bottom && targetTop >= top && targetTop < bottom:
-            containmentSet.formUnion([.overlapsBottom, .overlapsVertically])
+            containmentSet.formUnion([.overlapsBottom])
         case let (targetTop, targetBottom) where targetBottom < bottom && targetBottom >= top && targetTop >= top && targetTop < bottom:
             containmentSet.formUnion([.containedVertically])
         case let (targetTop, _) where targetTop >= bottom:
