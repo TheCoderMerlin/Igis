@@ -16,6 +16,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 public struct Point {
     public private (set) var x : Int
     public private (set) var y : Int
+
+    public init() {
+        self.x = 0
+        self.y = 0
+    }
     
     public init(x:Int, y:Int) {
         self.x = x

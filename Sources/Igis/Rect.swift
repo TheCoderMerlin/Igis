@@ -59,6 +59,11 @@ public struct Rect {
         }
     }
 
+    public init(size:Size) {
+        self.topLeft = Point()
+        self.size = size
+    }
+
     public init(topLeft:Point, size:Size) {
         self.topLeft = topLeft
         self.size = size
