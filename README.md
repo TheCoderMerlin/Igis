@@ -5,28 +5,8 @@ IGIS provides a Swift object library running as a server on Linux for remote gra
 ## Usage
 
 ### Library
-In order to use the library, include this resource as a dependency in Package.swift
+In order to use the library, use the project IgisShellD as a starting point.
 
-```swift
-// swift-tools-version:4.2
-// The swift-tools-version declares the minimum version of Swift required to build this package.
-
-import PackageDescription
-
-let package = Package(
-    name: "IgisShell",
-    dependencies: [
-      .package(url: "https://github.com/TangoGolfDigital/Igis.git", from:"0.1.41"),
-    ],
-    targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages which this package depends on.
-        .target(
-            name: "IgisShell",
-            dependencies: ["Igis"]),
-    ]
-)
-```
 
 ### Point
 ```swift
