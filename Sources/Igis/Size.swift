@@ -13,7 +13,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-public struct Size {
+public struct Size : Equatable {
     public private (set) var width : Int
     public private (set) var height : Int
 
@@ -39,4 +39,9 @@ public struct Size {
         self.width = width
         self.height = height
     }
+
+    static public func == (lhs:Size, rhs:Size) -> Bool {
+        return lhs.width == rhs.width && lhs.height == rhs.height
+    }
+    
 }

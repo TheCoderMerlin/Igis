@@ -13,7 +13,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-public struct Rect {
+public struct Rect : Equatable {
     public var topLeft : Point
     public var size : Size
 
@@ -183,5 +183,10 @@ public struct Rect {
 
         return containmentSet
     }
+
+    static public func == (lhs:Rect, rhs:Rect) -> Bool {
+        return lhs.topLeft == rhs.topLeft && lhs.size == rhs.size
+    }
+    
     
 }

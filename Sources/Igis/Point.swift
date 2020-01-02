@@ -13,7 +13,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-public struct Point {
+public struct Point : Equatable {
     public private (set) var x : Int
     public private (set) var y : Int
 
@@ -53,4 +53,9 @@ public struct Point {
     public mutating func moveTo(_ point:Point) {
         self = point
     }
+
+    static public func == (lhs:Point, rhs:Point) -> Bool {
+        return lhs.x == rhs.x && lhs.y == rhs.y
+    }
 }
+
