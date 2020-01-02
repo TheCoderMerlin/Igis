@@ -63,6 +63,16 @@ public class Canvas {
     }
 
     // MARK: ********** Internal **********
+
+    // In some cases we need integers from strings but some browsers transmit doubles
+    internal func intFromDoubleString(_ s:String) -> Int? {
+        if let d = Double(s) {
+            return Int(d)
+        } else {
+            return nil
+        }
+    }
+    
     internal func processCommands(ctx:ChannelHandlerContext, webSocketHandler:WebSocketHandler) {
         if pendingCommandList.count > 0 {
             let allCommands = pendingCommandList.joined(separator:"||")
@@ -148,10 +158,11 @@ public class Canvas {
     }
 
     internal func receptionOnClick(arguments:[String]) {
+        // In some cases (from some browsers) a Double is received
         guard arguments.count == 2,
-              let x = Int(arguments[0]),
-              let y = Int(arguments[1]) else {
-            print("ERROR: onClick requires exactly two integer arguments")
+              let x = intFromDoubleString(arguments[0]),
+              let y = intFromDoubleString(arguments[1]) else {
+            print("ERROR: onClick requires exactly two integer or double arguments")
             return
         }
         painter.onClick(location:Point(x:x, y:y))
@@ -159,9 +170,9 @@ public class Canvas {
 
     internal func receptionOnMouseDown(arguments:[String]) {
         guard arguments.count == 2,
-              let x = Int(arguments[0]),
-              let y = Int(arguments[1]) else {
-            print("ERROR: onMouseDown requires exactly two integer arguments")
+              let x = intFromDoubleString(arguments[0]),
+              let y = intFromDoubleString(arguments[1]) else {
+            print("ERROR: onMouseDown requires exactly two integer or double arguments")
             return
         }
         painter.onMouseDown(location:Point(x:x, y:y))
@@ -169,9 +180,9 @@ public class Canvas {
 
     internal func receptionOnMouseUp(arguments:[String]) {
         guard arguments.count == 2,
-              let x = Int(arguments[0]),
-              let y = Int(arguments[1]) else {
-            print("ERROR: onMouseUp requires exactly two integer arguments")
+              let x = intFromDoubleString(arguments[0]),
+              let y = intFromDoubleString(arguments[1]) else {
+            print("ERROR: onMouseUp requires exactly two integer or double arguments")
             return
         }
         painter.onMouseUp(location:Point(x:x, y:y))
@@ -179,9 +190,9 @@ public class Canvas {
 
     internal func receptionOnWindowMouseUp(arguments:[String]) {
         guard arguments.count == 2,
-              let x = Int(arguments[0]),
-              let y = Int(arguments[1]) else {
-            print("ERROR: onWindowMouseUp requires exactly two integer arguments")
+              let x = intFromDoubleString(arguments[0]),
+              let y = intFromDoubleString(arguments[1]) else {
+            print("ERROR: onWindowMouseUp requires exactly two integer or double arguments")
             return
         }
         painter.onWindowMouseUp(location:Point(x:x, y:y))
@@ -189,9 +200,9 @@ public class Canvas {
 
     internal func receptionOnMouseMove(arguments:[String]) {
         guard arguments.count == 2,
-              let x = Int(arguments[0]),
-              let y = Int(arguments[1]) else {
-            print("ERROR: onMouseMove requires exactly two integer arguments")
+              let x = intFromDoubleString(arguments[0]),
+              let y = intFromDoubleString(arguments[1]) else {
+            print("ERROR: onMouseMove requires exactly two integer or double arguments")
             return
         }
         painter.onMouseMove(location:Point(x:x, y:y))
