@@ -89,6 +89,12 @@ public struct Rect : Equatable {
         self.size = source.size
     }
 
+    public func local(to origin:Rect) -> Rect {
+        var localized = self
+        localized.topLeft.moveBy(offsetX:-origin.topLeft.x, offsetY:-origin.topLeft.y)
+        return localized
+    }
+
     public func containment(target:Point) -> ContainmentSet {
         var containmentSet = ContainmentSet()
 
