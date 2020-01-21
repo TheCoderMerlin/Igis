@@ -128,10 +128,13 @@ public struct Rect : Equatable {
             containmentSet.formUnion([.beyondFully])
         case let set where set.isSuperset(of:[.containedHorizontally, .containedVertically]):
             containmentSet.formUnion([.containedFully])
-        case let set where set.intersection([.beyondHorizontally, .beyondVertically]).isEmpty:
-            containmentSet.formUnion([.contact])
         default:
             break;
+        }
+
+        // Handle contact
+        if containmentSet.intersection([.beyondHorizontally, .beyondVertically]).isEmpty {
+            containmentSet.formUnion([.contact])
         }
 
         return containmentSet
@@ -185,10 +188,13 @@ public struct Rect : Equatable {
             containmentSet.formUnion([.containedFully])
         case let set where set.isSuperset(of:[.overlapsHorizontally, .overlapsVertically]):
             containmentSet.formUnion([.overlapsFully])
-        case let set where set.intersection([.beyondHorizontally, .beyondVertically]).isEmpty:
-            containmentSet.formUnion([.contact])
         default:
             break;
+        }
+
+        // Handle contact
+        if containmentSet.intersection([.beyondHorizontally, .beyondVertically]).isEmpty {
+            containmentSet.formUnion([.contact])
         }
 
         return containmentSet
