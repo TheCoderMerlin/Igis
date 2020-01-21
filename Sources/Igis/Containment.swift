@@ -20,6 +20,7 @@ public enum Containment {
     case containedFully           // Included in set when both containedHorizontally AND containedVertically (Points,Rects)
     case overlapsFully            // Included in set when both overlapsHorizontally AND overlapsVertically   (Rects only)
     case beyondFully              // Included in set when both beyondHorizontally AND beyondVertically       (Points,Rects)
+    case contact                  // Included in set when target is in contact with rectangle                (Points, Rects)
 
     // Horizontal cases
     case beyondLeft               // Indicates target's right side is beyond (to left of) object             (Points,Rects)
