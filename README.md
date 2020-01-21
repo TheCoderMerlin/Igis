@@ -100,8 +100,10 @@ public var top : Int
 public var right : Int
 public var bottom : Int
 
-public func containment(target:Point) -> ContainmentSet
+public func local(to origin:Rect) -> Rect 
 
+public func containment(target:Point) -> ContainmentSet
+public func containment(target:Rect) -> ContainmentSet
 
 ```
 
