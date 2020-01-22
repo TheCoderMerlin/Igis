@@ -613,7 +613,7 @@ function processCreatePattern(arguments) {
     let imageId = arguments.shift();
     let repetitionString = arguments.shift();
 
-    let img = document.getElementById(id);
+    let img = document.getElementById(imageId);
 
     let repetitionMode = "";
     switch (repetitionString) {
