@@ -370,6 +370,7 @@ function processCommand(commandMessage, commandIndex) {
 	break;
     case "fillStylePattern":
 	processFillStylePattern(arguments);
+	break;
     case "fillText":
 	processFillText(arguments);
 	break;
