@@ -39,14 +39,18 @@ public class Canvas {
 
     // MARK: ********** API **********
 
-    public func render(_ canvasObjects:CanvasObject...) {
+    public func render(_ canvasObjects:[CanvasObject]) {
         for canvasObject in canvasObjects {
             let command = canvasObject.canvasCommand()
             pendingCommandList.append(command)
         }
     }
 
-    public func setup(_ canvasIdentifiedObjects:CanvasIdentifiedObject...) {
+    public func render(_ canvasObjects:CanvasObject...) {
+        render(canvasObjects)
+    }
+
+    public func setup(_ canvasIdentifiedObjects:[CanvasIdentifiedObject]) {
         for canvasIdentifiedObject in canvasIdentifiedObjects {
             identifiedObjectDictionary[canvasIdentifiedObject.id] = canvasIdentifiedObject
             
@@ -55,6 +59,10 @@ public class Canvas {
             
             canvasIdentifiedObject.setState(.transmissionQueued)
         }
+    }
+
+    public func setup(_ canvasIdentifiedObjects:CanvasIdentifiedObject...) {
+        setup(canvasIdentifiedObjects)
     }
 
     public func canvasSetSize(size:Size) {

@@ -59,6 +59,14 @@ public struct Rect : Equatable {
         }
     }
 
+    public var centerX : Int {
+        return topLeft.x + size.width / 2
+    }
+
+    public var centerY : Int {
+        return topLeft.y + size.height / 2
+    }
+
     public init(size:Size) {
         self.topLeft = Point()
         self.size = size
