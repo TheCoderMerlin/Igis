@@ -55,6 +55,7 @@ function onLoad() {
 
     // Object dictionaries
     gradientDictionary = {};
+    patternDictionary = {};
 
     // Register events
     window.addEventListener("keydown", onKeyDown);
@@ -346,6 +347,8 @@ function processCommand(commandMessage, commandIndex) {
     case "createRadialGradient":
 	processCreateRadialGradient(arguments);
 	break;
+    case "createPattern":
+	processCreatePattern(arguments);
     case "drawImage":
 	processDrawImage(arguments);
 	break;
@@ -364,6 +367,8 @@ function processCommand(commandMessage, commandIndex) {
     case "fillStyleGradient":
 	processFillStyleGradient(arguments);
 	break;
+    case "fillStylePattern":
+	processFillStylePattern(arguments);
     case "fillText":
 	processFillText(arguments);
 	break;
@@ -596,8 +601,45 @@ function processCreateRadialGradient(arguments) {
     doSend(messageProcessed);
     let messageLoaded = "onRadialGradientLoaded|" + id;
     doSend(messageLoaded);
-    
+}
 
+function processCreatePattern(arguments) {
+    if (arguments.length != 3) {
+	logError("processCreatePattern: Requires three arguments");
+	return;
+    }
+
+    let id = arguments.shift();
+    let imageId = arguments.shift();
+    let repetitionString = arguments.shift();
+
+    let img = document.getElementById(id);
+
+    let repetitionMode = "";
+    switch (repetitionString) {
+    case "repeated":
+	repetitionMode = 'repeat';
+	break;
+    case "repeatedX":
+	repetionMode = 'repeat-x';
+	break;
+    case "repeatedY":
+	repetitionMode = 'repeat-y';
+	break;
+    case "notRepeated":
+	repetitionMode = 'no-repeat';
+	break;
+    default:
+	logError("processCreatePattern: Unexpected repeat value");
+    }
+
+    let pattern = context.createPattern(img, repetitionMode);
+    patternDictionary[id] = pattern;
+
+    let messageProcessed = "onPatternProcessed|" + id;
+    doSend(messageProcessed);
+    let messageLoaded = "onPatternLoaded|" + id;
+    doSend(messageLoaded);
 }
 
 function processCreateImage(arguments) {
@@ -726,6 +768,16 @@ function processFillStyleGradient(arguments) {
     let gradientId = arguments.shift();
     let gradient = gradientDictionary[gradientId];
     context.fillStyle = gradient;
+}
+
+function processFillStylePattern(arguments) {
+    if (arguments.length != 1) {
+	logError("processFillStylePattern: Requires one argument");
+	return;
+    }
+    let patternId = arguments.shift();
+    let pattern = patternDictionary[patternId];
+    context.fillStyle = pattern;
 }
 
 function processFillText(arguments) {

@@ -146,6 +146,12 @@ public class Canvas {
             case "onRadialGradientProcessed":
                 receptionOnRadialGradientProcessed(arguments:arguments)
 
+                // Pattern events
+            case "onPatternLoaded":
+                receptionOnPatternLoaded(arguments:arguments)
+            case "onPatternProcessed":
+                receptionOnPatternProcessed(arguments:arguments)
+
                 // Audio events
             case "onAudioError":
                 receptionOnAudioError(arguments:arguments)
@@ -331,7 +337,33 @@ public class Canvas {
         identifiedObject.setState(.ready)
     }
 
-    
+    internal func receptionOnPatternProcessed(arguments:[String]) {
+        guard arguments.count == 1,
+              let id = UUID(uuidString:arguments[0]) else {
+            print("ERROR: receptionOnPatternProcessed requires exactly one argument which must be a valid UUID.")
+            return
+        }
+
+        guard let identifiedObject = identifiedObjectDictionary[id] else {
+            print("ERROR: receptionOnPatternProcessed: Object with id \(id.uuidString) was not found.")
+            return
+        }
+        identifiedObject.setState(.processedByClient)
+    }
+
+    internal func receptionOnPatternLoaded(arguments:[String]) {
+        guard arguments.count == 1,
+              let id = UUID(uuidString:arguments[0]) else {
+            print("ERROR: receptionOnPatternLoaded requires exactly one argument which must be a valid UUID.")
+            return
+        }
+
+        guard let identifiedObject = identifiedObjectDictionary[id] else {
+            print("ERROR: receptionOnPatternLoaded: Object with id \(id.uuidString) was not found.")
+            return
+        }
+        identifiedObject.setState(.ready)
+    }
 
     internal func receptionOnAudioError(arguments:[String]) {
         guard arguments.count == 1,

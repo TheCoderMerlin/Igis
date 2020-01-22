@@ -17,6 +17,7 @@ public class FillStyle : CanvasObject {
     private enum Mode {
         case solidColor(color:Color)
         case gradient(gradientValue:Gradient)
+        case pattern(patternValue:Pattern)
     }
     private let mode : Mode
 
@@ -26,6 +27,10 @@ public class FillStyle : CanvasObject {
 
     public init(gradient:Gradient) {
         mode = .gradient(gradientValue:gradient)
+    }
+
+    public init(pattern:Pattern) {
+        mode = .pattern(patternValue:pattern)
     }
 
     internal override func canvasCommand() -> String {
@@ -38,6 +43,11 @@ public class FillStyle : CanvasObject {
                 print("WARNING: canvasCommand requested on gradient not yet ready. ID: \(gradient.id.uuidString).")
             }
             commands += "fillStyleGradient|\(gradient.id.uuidString)"
+        case .pattern(let pattern):
+            if !pattern.isReady {
+                print("WARNING: canvasCommand requested on pattern not yet read.  ID: \(pattern.id.uuidString).")
+            }
+            commands += "fillStylePattern|\(pattern.id.uuidString)"
         }
 
         return commands
