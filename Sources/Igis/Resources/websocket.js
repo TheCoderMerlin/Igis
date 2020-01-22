@@ -349,6 +349,7 @@ function processCommand(commandMessage, commandIndex) {
 	break;
     case "createPattern":
 	processCreatePattern(arguments);
+	break;
     case "drawImage":
 	processDrawImage(arguments);
 	break;
