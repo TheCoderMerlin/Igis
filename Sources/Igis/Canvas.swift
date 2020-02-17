@@ -119,6 +119,8 @@ public class Canvas {
                 // Key events
             case "onKeyDown":
                 receptionOnKeyDown(arguments:arguments)
+            case "onKeyUp":
+                receptionOnKeyUp(arguments:arguments)
 
                 // Image events
             case "onImageError":
@@ -221,6 +223,21 @@ public class Canvas {
         let code = arguments[1]
         
         painter.onKeyDown(key:key, code:code, ctrlKey:ctrlKey, shiftKey:shiftKey, altKey:altKey, metaKey:metaKey)
+    }
+
+    internal func receptionOnKeyUp(arguments:[String]) {
+        guard arguments.count == 6,
+              let ctrlKey = Bool(arguments[2]),
+              let shiftKey = Bool(arguments[3]),
+              let altKey = Bool(arguments[4]),
+              let metaKey = Bool(arguments[5]) else {
+            print("ERROR: onKeyUp requires exactly six arguments (String, String, Bool, Bool, Bool, Bool)")
+            return
+        }
+        let key = arguments[0]
+        let code = arguments[1]
+
+        painter.onKeyUp(key:key, code:code, ctrlKey:ctrlKey, shiftKey:shiftKey, altKey:altKey, metaKey:metaKey)
     }
 
     internal func receptionOnImageError(arguments:[String]) {

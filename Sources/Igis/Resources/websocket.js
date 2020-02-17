@@ -58,6 +58,7 @@ function onLoad() {
 
     // Register events
     window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
     window.addEventListener("resize", onWindowResize);
     canvas.addEventListener("click", onClick);
     canvas.addEventListener("mousedown", onMouseDown);
@@ -267,6 +268,18 @@ function onKeyDown(event) {
     let metaKey  = event.metaKey
 
     let message = "onKeyDown|"   + key + "|" + code + "|" + ctrlKey + "|" + shiftKey + "|" + altKey + "|" + metaKey;
+    doSend(message);
+}
+
+function onKeyUp(event) {
+    let key      = event.key
+    let code     = event.code
+    let ctrlKey  = event.ctrlKey
+    let shiftKey = event.shiftKey
+    let altKey   = event.altKey
+    let metaKey  = event.metaKey
+
+    let message = "onKeyUp|"   + key + "|" + code + "|" + ctrlKey + "|" + shiftKey + "|" + altKey + "|" + metaKey;
     doSend(message);
 }
 

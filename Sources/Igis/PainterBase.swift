@@ -60,4 +60,7 @@ open class PainterBase : PainterProtocol {
     open func onKeyDown(key:String, code:String, ctrlKey:Bool, shiftKey:Bool, altKey:Bool, metaKey:Bool) {
     }
 
+    open func onKeyUp(key:String, code:String, ctrlKey:Bool, shiftKey:Bool, altKey:Bool, metaKey:Bool) {
+    }
+
 }
