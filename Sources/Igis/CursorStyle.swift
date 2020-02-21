@@ -1,20 +1,20 @@
 public class CursorStyle : CanvasObject {
-    public enum Style {
-        case crosshair
-        case Eresize
-        case help
-        case move
-        case Nresize
-        case NEresize
-        case NWresize
-        case pointer
-        case progress
-        case Sresize
-        case SEresize
-        case SWresize
-        case text
-        case Wresize
-        case wait
+    public enum Style : String {
+        case crosshair = "crosshair"
+        case Eresize = "e-resize"
+        case help = "help"
+        case move = "move"
+        case Nresize = "n-resize"
+        case NEresize = "ne-resize"
+        case NWresize = "nw-resize"
+        case pointer = "pointer"
+        case progress = "progress"
+        case Sresize = "s-resize"
+        case SEresize = "se-resize"
+        case SWresize = "sw-resize"
+        case text = "text"
+        case Wresize = "w-resize"
+        case wait = "wait"
     }
     private let style : Style
 
@@ -23,7 +23,7 @@ public class CursorStyle : CanvasObject {
     }
 
     internal override func canvasCommand() -> String {
-        let commands = "cursorStyle|\(style)||"
+        let commands = "cursorStyle|\(style.rawValue)||"
         return commands
     }
 }
