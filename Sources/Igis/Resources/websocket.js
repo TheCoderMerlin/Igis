@@ -363,6 +363,9 @@ function processCommand(commandMessage, commandIndex) {
     case "createPattern":
 	processCreatePattern(arguments);
 	break;
+    case "cursorStyle":
+	processCursorStyle(arguments);
+	break;
     case "drawImage":
 	processDrawImage(arguments);
 	break;
@@ -665,6 +668,15 @@ function processCreateImage(arguments) {
     let id = arguments.shift();
     let sourceURL = arguments.shift();
     createImage(id, sourceURL);
+}
+
+function processCursorStyle(arguments) {
+    if (argumens.length != 1) {
+	logError("processCursorStyle: Requires one argument");
+	return;
+    }
+    let cursorStyle = arguments.shift();
+    document.body.style.cursor = cursorStyle;
 }
 
 function processSetAudioMode(arguments) {
