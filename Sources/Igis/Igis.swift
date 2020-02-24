@@ -96,75 +96,28 @@ public class Igis {
     } // func main
 
     private static func detectedResourcePath() -> String? {
-        // Begin with the current directory, moving upwards, until "Package.swift" is found
-        // or the root directory is reached
-        // Then, find the resource directory from that point by descending via ".build/checkouts/Igis/Sources/Igis/Resources"
-        let packageSwiftFilename = "Package.swift"
-        let buildDirectoryName = ".build"
-        let checkoutDirectoryName = "checkouts"
-        let sourcesDirectoryName = "Sources"
-        let igisDirectoryName = "Igis"
-        let resourceDirectoryName = "Resources"
-        var resourcePath : String? = nil
+        // Start with the location of the dynamic library as specified in the environment
+        // We'll either be in the .build/debug or .build/release
+        // We move up two directories and then into Sources/Igis/Resources
+        // DYLIB_Igis_PATH=/usr/local/lib/merlin/Igis-1.0.9/Igis/.build/debug
 
-        var testDirectory = URL(fileURLWithPath:FileManager.default.currentDirectoryPath, isDirectory:true)
-        var testURL = testDirectory.appendingPathComponent(packageSwiftFilename, isDirectory:false)
-        testURL.standardize()
+        guard let igisLibraryPath = ProcessInfo.processInfo.environment["DYLIB_Igis_PATH"] else {
+            print("DYLIB_Igis_PATH undefined")
+            return nil
+        }
+        var url = URL(fileURLWithPath:igisLibraryPath, isDirectory:false)   // /usr/local/lib/merlin/Igis-1.0.9/Igis/.build/debug
+        url.deleteLastPathComponent()                                       // /usr/local/lib/merlin/Igis-1.0.9/Igis/.build
+        url.deleteLastPathComponent()                                       // /usr/local/lib/merlin/Igis-1.0.9/Igis/
+        url.appendPathComponent("Sources")                                  // /usr/local/lib/merlin/Igis-1.0.9/Igis/Sources
+        url.appendPathComponent("Igis")                                     // /usr/local/lib/merlin/Igis-1.0.9/Igis/Sources/Igis
+        url.appendPathComponent("Resources")                                // /usr/local/lib/merlin/Igis-1.0.9/Igis/Sources/Igis/Resources
         
-        while !FileManager.default.fileExists(atPath:testURL.path)  && testDirectory.pathComponents.count > 1 {
-            testDirectory.deleteLastPathComponent()
-            testURL = testDirectory.appendingPathComponent(packageSwiftFilename, isDirectory:false)
-            testURL.standardize()
+        guard FileManager.default.fileExists(atPath:url.path) else {
+            print("Expected resource path not found at \(url.path)")
+            return nil
         }
 
-        // At this point, either we found the file or have reached the root directory and have no other place to look
-        if FileManager.default.fileExists(atPath:testURL.path) {
-            print("Found \(packageSwiftFilename) at: \(testURL.path)")
-
-            // At this point, we should be able to find a parallel directory ".build"
-            let buildDirectory = testDirectory.appendingPathComponent(buildDirectoryName, isDirectory:true)
-            guard FileManager.default.fileExists(atPath:buildDirectory.path) else {
-                print("\(buildDirectory.path) not found")
-                return nil
-            }
-
-            let checkoutDirectory = buildDirectory.appendingPathComponent(checkoutDirectoryName, isDirectory:true)
-            guard FileManager.default.fileExists(atPath:checkoutDirectory.path) else {
-                print("\(checkoutDirectory.path) not found")
-                return nil
-            }
-
-            let igisRepositoryDirectory = checkoutDirectory.appendingPathComponent(igisDirectoryName, isDirectory:true)
-            guard FileManager.default.fileExists(atPath:igisRepositoryDirectory.path) else {
-                print("\(igisRepositoryDirectory.path) not found")
-                return nil
-            }
-            
-
-            let sourcesDirectory = igisRepositoryDirectory.appendingPathComponent(sourcesDirectoryName, isDirectory:true)
-            guard FileManager.default.fileExists(atPath:sourcesDirectory.path) else {
-                print("\(sourcesDirectory.path) not found")
-                return nil
-            }
-
-            let igisDirectory = sourcesDirectory.appendingPathComponent(igisDirectoryName, isDirectory:true)
-            guard FileManager.default.fileExists(atPath:igisDirectory.path) else {
-                print("\(igisDirectory.path) not found")
-                return nil
-            }
-
-            let resourceDirectory = igisDirectory.appendingPathComponent(resourceDirectoryName, isDirectory:true)
-            guard FileManager.default.fileExists(atPath:resourceDirectory.path) else {
-                print("\(resourceDirectory.path) not found")
-                return nil
-            }
-            resourcePath = resourceDirectory.path
-            
-        } else {
-            print("\(packageSwiftFilename) not found")
-        }
-
-        return resourcePath
+        return url.path
     }
 
 } // class Igis
