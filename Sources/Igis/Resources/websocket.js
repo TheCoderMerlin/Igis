@@ -1,6 +1,6 @@
 /*
 IGIS - Remote graphics for Swift on Linux
-Copyright (C) 2018, 2019 Tango Golf Digital, LLC
+Copyright (C) 2018-2020 Tango Golf Digital, LLC
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -671,7 +671,7 @@ function processCreateImage(arguments) {
 }
 
 function processCursorStyle(arguments) {
-    if (argumens.length != 1) {
+    if (arguments.length != 1) {
 	logError("processCursorStyle: Requires one argument");
 	return;
     }

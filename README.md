@@ -390,3 +390,87 @@ override func render(canvas:Canvas) {
     }
 }
 ```
+
+### Keyboard Input
+Keyboard input is available from the painter methods:
+```swift
+    func onKeyDown(key:String, code:String, ctrlKey:Bool, shiftKey:Bool, altKey:Bool, metaKey:Bool)
+    func onKeyUp(key:String, code:String, ctrlKey:Bool, shiftKey:Bool, altKey:Bool, metaKey:Bool)
+```
+
+### Mouse Input
+Mouse input is availabe from the painter methods:
+```swift
+    func onClick(location:Point)
+    func onMouseDown(location:Point)
+    func onMouseUp(location:Point)
+    func onWindowMouseUp(location:Point)
+    func onMouseMove(location:Point)
+```
+
+### Cursor Style
+Cursor style may be set by rendering a CursorStyle object with the desired style.
+
+Set the new style in render()
+```swift
+override func render(canvas:Canvas) {
+    ...
+    let cursorStyle = CursorStyle(style:nextStyle)
+    canvas.render(cursorStyle)
+    ...
+}
+```
+
+Available styles:
+```swift
+    public enum Style : String {
+            // Defaults
+	    case initial
+            case auto
+            case defaultCursor
+
+ 	    // None
+	    case none
+
+            // Waiting
+            case progress
+            case wait
+
+            // Pointer types
+	    case pointer
+	    case crosshair
+	    case help
+	    case contextMenu
+	    case alias
+
+            // Text and cells
+	    case text
+	    case textVertical
+	    case cell
+
+            // Movement and dragging
+	    case notAllowed
+	    case noDrop
+
+            case allScroll
+
+            case move
+	    case copy
+
+            case resizeNorth
+	    case resizeNorthEast
+	    case resizeEast
+	    case resizeSouthEast
+	    case resizeSouth
+	    case resizeSouthWest
+	    case resizeWest
+	    case resizeNorthWest
+
+            case resizeRow
+	    case resizeColumn
+
+            // Zooming
+	    case zoomIn
+	    case zoomOut
+   }
+```			    
