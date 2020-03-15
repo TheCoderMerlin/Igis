@@ -22,6 +22,11 @@ public struct DoublePoint {
         self.y = y
     }
 
+    public init(_ point:Point) {
+        x = Double(point.x)
+        y = Double(point.y)
+    }
+
     public mutating func moveBy(offsetX:Double, offsetY:Double) {
         x += offsetX
         y += offsetY
@@ -30,5 +35,23 @@ public struct DoublePoint {
     public mutating func moveTo(x:Double, y:Double) {
         self.x = x
         self.y = y
+    }
+
+    public mutating func transformBy(_ transform:Transform) {
+        let matrix = transform.transform
+        let transformedX = matrix[0] * x + matrix[1] * y + matrix[2]
+        let transformedY = matrix[3] * x + matrix[4] * y + matrix[5]
+        x = transformedX
+        y = transformedY
+    }
+
+    public mutating func transformBy(_ transforms:[Transform]) {
+        for transform in transforms {
+            transformBy(transform)
+        }
+    }
+
+    public mutating func transformBy(_ transforms:Transform...) {
+        transformBy(transforms)
     }
 }

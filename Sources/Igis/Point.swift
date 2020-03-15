@@ -27,6 +27,11 @@ public struct Point : Equatable {
         self.y = y
     }
 
+    public init(_ doublePoint:DoublePoint) {
+        x = Int(doublePoint.x)
+        y = Int(doublePoint.y)
+    }
+
     public mutating func moveBy(offsetX:Int, offsetY:Int) {
         x += offsetX
         y += offsetY

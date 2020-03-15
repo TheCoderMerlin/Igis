@@ -26,7 +26,7 @@ public class Transform : CanvasObject {
     }
 
     private let mode : Mode
-    private let transform : Array<Double>
+    internal let transform : Array<Double>
     
     public init(mode:Mode = .toIdentity) {
         self.mode = mode
@@ -67,6 +67,5 @@ public class Transform : CanvasObject {
         commands +=  transformAsString 
         return commands
     }
-
     
 }
