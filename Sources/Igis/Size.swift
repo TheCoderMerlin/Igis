@@ -17,6 +17,11 @@ public struct Size : Equatable {
     public private (set) var width : Int
     public private (set) var height : Int
 
+    public init() {
+        self.width = 0
+        self.height = 0
+    }
+
     public init(width:Int, height:Int) {
         self.width = width
         self.height = height
@@ -39,6 +44,10 @@ public struct Size : Equatable {
         self.width = width
         self.height = height
     }
+
+    public var center : Point {
+        Point(x: width / 2, y: height / 2)
+    }    
 
     static public func == (lhs:Size, rhs:Size) -> Bool {
         return lhs.width == rhs.width && lhs.height == rhs.height

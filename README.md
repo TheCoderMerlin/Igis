@@ -15,6 +15,7 @@ public private (set) var x : Int
 public private (set) var y : Int
 
 public init(x:Int, y:Int)
+public init(doublePoint:DoublePoint)
 
 public mutating func moveBy(offsetX:Int, offsetY:Int)
 public mutating func moveBy(offset:Point)
@@ -23,16 +24,37 @@ public mutating func moveYBy(offset:Int)
 
 public mutating func moveTo(x:Int, y:Int)
 public mutating func moveTo(_ point:Point)
+
+public func negated() -> Point
+
+public func distanceSquared(target:Point) -> Int
+public func distance(target:Point) -> Double
+
+static public func Points(doublePoints:[DoublePoint]) -> [Point]
 ```
 
 ### DoublePoint
 ```swift
 // DoublePoint Definition
+public init()  
 public init(x:Double, y:Double)
+public init(point:Point)
 
 public mutating func moveBy(offsetX:Double, offsetY:Double)
+public mutating func moveBy(offset:DoublePoint)
+public mutating func moveXBy(offset:Double)
+public mutating func moveYBy(offset:Double)
 
 public mutating func moveTo(x:Double, y:Double)
+public mutating func moveTo(_ point:DoublePoint)
+
+public func negated()
+public func distanceSquared(target:DoublePoint)
+public func distance(target:DoublePoint)
+
+public func DoiublePoints(points:[Point]) -> [DoublePoint]
+
+static public func == (lhs:DoublePoint, rhs:DoublePoint) -> Bool
 ```
 
 ### Size
@@ -41,6 +63,7 @@ public mutating func moveTo(x:Double, y:Double)
 public private (set) var width : Int
 public private (set) var height : Int 
 
+public init() 
 public init(width:Int, height:Int)
 
 public mutating func enlargeBy(changeWidth:Int, changeHeight:Int)
@@ -48,6 +71,8 @@ public mutating func enlargeWidthBy(change:Int)
 public mutating func enlargeHeightBy(change:Int)
 
 public mutating func changeTo(width:Int, height:Int)
+
+public var center : Point // Calculated
 ```
 
 ### Containment
@@ -87,8 +112,10 @@ public enum Containment {
 ```swift
 // Rect Definition
 public var topLeft : Point
-public var size : Size 
+public var size : Size
+public var center : Point // Calculated
 
+public init() 
 public init(topLeft:Point, size:Size)
 public init(bottomLeft:Point, size:Size)
 public init(topRight:Point, size:Size)
@@ -105,6 +132,29 @@ public func local(to origin:Rect) -> Rect
 public func containment(target:Point) -> ContainmentSet
 public func containment(target:Rect) -> ContainmentSet
 
+```
+
+### Matrix
+```swift
+// Matrix Definition
+public typealias Vector = [Double]
+
+public init(transform:Transform)
+public init(values:[[Double]])
+
+public func row(_ rowIndex:Int) -> Vector
+public func column(_ columnIndex:Int) -> Vector
+public func dotProduct(left:Vector, right:Vector) -> Double
+
+public var description : String
+
+public func multiply(byMatrix:Matrix) -> Matrix
+public func apply(toDoublePoint:DoublePoint) -> DoublePoint
+public func apply(toPoint:Point) -> Point
+public func apply(toDoublePoints:[DoublePoint]) -> [DoublePoint]
+public func apply(toPoints:[Point]) -> [Point]
+
+static func multply(matrices:[Matrix]) -> Matrix
 ```
 
 ### Color
@@ -283,7 +333,11 @@ let transform = Transform(shear:DoublePoint(x:0.0, y:0.2))
 let transform = Transform() // or
 let transform = Transform(mode: .toIdentity)
 
+// Create a transform from a matrix
+le transform = Transform(matrix:Matrix, mode:Mode)
 
+// Mutliply transforms
+public static func multiply(transforms:[Transform], mode:Mode = .fromCurrent) -> Matrix
 ```
 
 ### Alpha
@@ -324,7 +378,10 @@ path.bezierCurveTo(controlPoint1:Point(x:1100, y:250), controlPoint2:Point(x:950
 path.arc(center:Point(x:950, y:350), radius:50, startAngle:Double.pi, endAngle:2*Double.pi, antiClockwise:true)
 path.arcTo(controlPoint1:Point(x:1200, y:300), controlPoint2:Point(x:1200, y:400), radius:50)
 path.lineTo(Point(x:850, y:500))
-path.close()       
+path.linesTo(points)
+path.close()
+
+let pathFromPoints = Path(points:[Point], fillMode:FillMode = .stroke)
 ```
 
 ### Clipping

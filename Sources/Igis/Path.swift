@@ -1,6 +1,6 @@
 /*
 IGIS - Remote graphics for Swift on Linux
-Copyright (C) 2018 Tango Golf Digital, LLC
+Copyright (C) 2018-2020 Tango Golf Digital, LLC
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -43,12 +43,37 @@ public class Path : CanvasObject {
         begin()
     }
 
+    // Creates a path by moving to the first point in the array,
+    // then drawing lines to each subsequent point,
+    // and then closing the path
+    public convenience init(points:[Point], fillMode:FillMode = .stroke) {
+        self.init(fillMode:fillMode)
+
+        precondition(points.count >= 2, "Initializing a Path with an array of points requires at least two points")
+        var pointsQueue = points
+        moveTo(pointsQueue[0])
+        pointsQueue.removeFirst()
+        linesTo(pointsQueue)
+
+        close()
+    }
+
     public func moveTo(_ point:Point) {
         actions.append(.moveTo(point:point))
     }
 
     public func lineTo(_ point:Point) {
         actions.append(.lineTo(point:point))
+    }
+
+    // Appends to an existing path by executing lineTo to each point specified
+    // in the array
+    public func linesTo(_ points:[Point]) {
+        var pointsQueue = points
+        while let point = pointsQueue.first {
+            lineTo(point)
+            pointsQueue.removeFirst()
+        }
     }
 
     public func rect(_ rect:Rect) {
