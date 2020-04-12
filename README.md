@@ -301,8 +301,10 @@ if textMetric.currentMetrics == nil {
 
 ```swift
 // TextMetric metrics can most easily be used as follows:
-let rect = metrics.actualBoundingBox(location:text.location)
-let rect = metrics.fontBoundingBox(location:text.location)   
+if let metrics = textMetric.mostRecentMetrics {   
+    let rect = metrics.actualBoundingBox(location:text.location)
+    let rect = metrics.fontBoundingBox(location:text.location)  
+}
 ```
 
 ### Rectangle
