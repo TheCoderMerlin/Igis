@@ -162,6 +162,14 @@ public class Canvas {
             case "onAudioProcessed":
                 receptionOnAudioProcessed(arguments:arguments)
 
+                // Text events
+            case "onTextMetricLoaded":
+                receptionOnTextMetricLoaded(arguments:arguments)
+            case "onTextMetricProcessed":
+                receptionOnTextMetricProcessed(arguments:arguments)
+            case "onTextMetricReady":
+                receptionOnTextMetricReady(arguments:arguments)
+
                 // Resize events
             case "onCanvasResize":
                 receptionOnCanvasResize(arguments:arguments)
@@ -422,6 +430,89 @@ public class Canvas {
             return
         }
         identifiedObject.setState(.processedByClient)
+    }
+
+    internal func receptionOnTextMetricLoaded(arguments:[String]) {
+        guard arguments.count == 1,
+              let id = UUID(uuidString:arguments[0]) else {
+            print("ERROR: receptionOnTextMetricLoaded requires exactly one argument which must be a valid UUID.")
+            return
+        }
+
+        guard let identifiedObject = identifiedObjectDictionary[id] else {
+            print("ERROR: receptionOnTextMetricLoaded: Object with id \(id.uuidString) was not found.")
+            return
+        }
+        identifiedObject.setState(.ready)
+    }
+
+    internal func receptionOnTextMetricProcessed(arguments:[String]) {
+        guard arguments.count == 1,
+              let id = UUID(uuidString:arguments[0]) else {
+            print("ERROR: receptionOnTextMetricProcessed requires exactly one argument which must be a valid UUID.")
+            return
+        }
+
+        guard let identifiedObject = identifiedObjectDictionary[id] else {
+            print("ERROR: receptionOnImageProcessed: Object with id \(id.uuidString) was not found.")
+            return
+        }
+        identifiedObject.setState(.processedByClient)
+    }
+
+    internal func receptionOnTextMetricReady(arguments:[String]) {
+        guard arguments.count == 13 else {
+            print("ERROR: receptionOnTextMetricReady requires exactly 13 arguments")
+            return
+        }
+
+        guard let id = UUID(uuidString:arguments[0]) else {
+            print("ERROR: receptionOnTextMetricReady argument 1 must be a UUID")
+            return
+        }
+
+        guard let width                     = Double(arguments[ 1]),
+              let actualBoundingBoxLeft     = Double(arguments[ 2]),
+              let actualBoundingBoxRight    = Double(arguments[ 3]),
+              let fontBoundingBoxAscent     = Double(arguments[ 4]),
+              let fontBoundingBoxDescent    = Double(arguments[ 5]),
+              let actualBoundingBoxAscent   = Double(arguments[ 6]),
+              let actualBoundingBoxDescent  = Double(arguments[ 7]),
+              let emHeightAscent            = Double(arguments[ 8]),
+              let emHeightDescent           = Double(arguments[ 9]),
+              let hangingBaseline           = Double(arguments[10]),
+              let alphabeticBaseline        = Double(arguments[11]),
+              let ideographicBaseline       = Double(arguments[12])
+        else {
+            print("ERROR: receptionOnTextMetricReady arguments 2 through 13 must be Doubles")
+            return
+        }
+
+        let metrics = TextMetric.Metrics(
+          width: width,
+          actualBoundingBoxLeft: actualBoundingBoxLeft,
+          actualBoundingBoxRight: actualBoundingBoxRight,
+          fontBoundingBoxAscent: fontBoundingBoxAscent,
+          fontBoundingBoxDescent: fontBoundingBoxDescent,
+          actualBoundingBoxAscent: actualBoundingBoxAscent,
+          actualBoundingBoxDescent: actualBoundingBoxDescent,
+          emHeightAscent: emHeightAscent,
+          emHeightDescent: emHeightDescent,
+          hangingBaseline: hangingBaseline,
+          alphabeticBaseline: alphabeticBaseline,
+          ideographicBaseline: ideographicBaseline)
+
+        guard let identifiedObject = identifiedObjectDictionary[id] else {
+            print("ERROR: receptionOnTextMetricReady: Object with id \(id.uuidString) was not found.")
+            return
+        }
+
+        guard let textMetric = identifiedObject as? TextMetric else {
+            print("ERROR: receptionOnTextMetricReady: Object with id \(id.uuidString) is not a TextMetric object.")
+            return
+        }
+
+        textMetric.setMetrics(metrics:metrics)
     }
 
     internal func receptionOnCanvasResize(arguments:[String]) {

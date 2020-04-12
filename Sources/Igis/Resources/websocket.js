@@ -220,6 +220,18 @@ function createAudio(id, sourceURL, shouldLoop) {
     doSend(message);
 }
 
+function createTextMetric(id) {
+    let divTextMetrics = document.getElementById("divTextMetrics")
+    let textMetric = document.createElement("textMetric")
+    textMetric.id = id
+    divTextMetrics.appendChild(textMetric)
+
+    let messageProcessed = "onTextMetricProcessed|" + id;
+    doSend(messageProcessed);
+    let messageLoaded = "onTextMetricLoaded|" + id;
+    doSend(messageLoaded);
+}
+
 // Canvas
 function onClick(event) {
     var rect = event.target.getBoundingClientRect();
@@ -363,6 +375,9 @@ function processCommand(commandMessage, commandIndex) {
     case "createPattern":
 	processCreatePattern(arguments);
 	break;
+    case "createTextMetric":
+	processCreateTextMetric(arguments);
+	break;
     case "cursorStyle":
 	processCursorStyle(arguments);
 	break;
@@ -443,6 +458,9 @@ function processCommand(commandMessage, commandIndex) {
 	break;
     case "textBaseline":
 	processTextBaseline(arguments);
+	break;
+    case "textMetric":
+	processTextMetric(arguments);
 	break;
     case "transform":
 	processTransform(arguments);
@@ -669,6 +687,16 @@ function processCreateImage(arguments) {
     let sourceURL = arguments.shift();
     createImage(id, sourceURL);
 }
+
+function processCreateTextMetric(arguments) {
+    if (arguments.length != 1) {
+	logError("processCreateTextMetric: Requires one argument");
+	return;
+    }
+    let id = arguments.shift();
+    createTextMetric(id);
+}
+
 
 function processCursorStyle(arguments) {
     if (arguments.length != 1) {
@@ -1022,6 +1050,32 @@ function processTextBaseline(arguments) {
 	logError("processTextBaseline: Unexpected argument");
 	break;
     }
+}
+
+function processTextMetric(arguments) {
+    if (arguments.length != 2) {
+	logError("processTextMetric: Requires two arguments");
+	return;
+    }
+    let id = arguments.shift();
+    let text = arguments.shift();
+
+    let metrics = context.measureText(text);
+
+    let message = "onTextMetricReady|" + id   + "|" + //  0
+	metrics.width                         + "|" + //  1
+	metrics.actualBoundingBoxLeft         + "|" + //  2
+	metrics.actualBoundingBoxRight        + "|" + //  3
+	metrics.fontBoundingBoxAscent         + "|" + //  4
+	metrics.fontBoundingBoxDescent        + "|" + //  5
+	metrics.actualBoundingBoxAscent       + "|" + //  6
+	metrics.actualBoundingBoxDescent      + "|" + //  7
+	metrics.emHeightAscent                + "|" + //  8
+	metrics.emHeightDescent               + "|" + //  9
+	metrics.hangingBaseline               + "|" + // 10
+	metrics.alphabeticBaseline            + "|" + // 11
+	metrics.ideographicBaseline;                  // 12
+    doSend(message);
 }
 
 function processTransform(arguments) {
