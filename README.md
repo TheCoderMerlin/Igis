@@ -275,6 +275,35 @@ helloWorld.font = "50pt Arial bold"
 let helloWorld = Text(location:Point(x:100, y:100), text:"Hello, World!", fillMode:.stroke) 
 helloWorld.font = "50pt Arial bold"
 ```
+### TextMetric
+TextMetric provides metrics regarding text and enables the determination of the bounding rect of arbitrary text, whether or not it is actually rendered.
+```swift
+// TextMetric definition
+// Create a new TextMetric object from the specified text 
+public init(text:String)
+// Optional:
+font = "10pt Arial"
+alignment = .left | .center | .right
+baseline = .top | .hanging | .middle | .alphabetic | .ideographic | .bottom
+
+// Create a new TextMetric object from the specified Text object
+// This has the benefit of also setting the font, alignment, and baseline, if specified in the text object
+public init(fromText:Text)
+```
+
+```swift
+// TextMetric metrics are updated soon after they are rendered
+// There's no point in rendering a TextMetric if it's already been rendered and hasn't changed
+if textMetric.currentMetrics == nil {  
+    canvas.render(textMetric) 
+}
+```
+
+```swift
+// TextMetric metrics can most easily be used as follows:
+let rect = metrics.actualBoundingBox(location:text.location)
+let rect = metrics.fontBoundingBox(location:text.location)   
+```
 
 ### Rectangle
 ```swift
