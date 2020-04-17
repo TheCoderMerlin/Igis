@@ -1210,13 +1210,23 @@ nav li[class] {
 </h1>
 
 <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">enum</span> <span class="type">Mode</span></code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>The <code>Mode</code> is used to determine whether this is a <code>linear</code> or <code>radial</code> <code>Gradient</code>.</p>
+
+</div>
+<div class="discussion">
+    <html><body><p>NB: <a href="Gradient"><code>Gradient</code></a> coordinates are global and are not relative to the rendered
+object's coordinates.</p>
+ </body></html>
+</div>
 <section id="relationships">
     <h2 hidden>Relationships</h2>
         
         <h3>Member Of</h3>
 <dl>
     <dt class="class"><code><a href="Gradient">Gradient</a></code></dt>
-<dd></dd>
+<dd><p>A <code>Gradient</code> can be used to create a <code>FillStyle</code> for filling various objects.</p>
+</dd>
 </dl>
 </section>
     <section id="enumeration cases">
@@ -1227,12 +1237,20 @@ nav li[class] {
         <code>linear</code>
     </h3>
     <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">linear</span>(<span class="variable">start</span>: <a href="Point"><span class="type">Point</span></a>, <span class="variable">end</span>: <a href="Point"><span class="type">Point</span></a>)</code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Creates a gradient along the line connecting the two given coordinates</p>
+
+</div>
 </div>
 <div role="article" class="enumeration" id="gradient.mode.radial">
     <h3>
         <code>radial</code>
     </h3>
     <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">radial</span>(<span class="variable">center1</span>: <a href="Point"><span class="type">Point</span></a>, <span class="variable">radius1</span>: <span class="type">Double</span>, <span class="variable">center2</span>: <a href="Point"><span class="type">Point</span></a>, <span class="variable">radius2</span>: <span class="type">Double</span>)</code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Creates a radial gradient using the size and coordnates of two circles</p>
+
+</div>
 </div>
     </section>
 
@@ -1243,7 +1261,7 @@ nav li[class] {
 
     <footer>
         <p>
-    Generated on <time datetime="2020-04-15T00:46:02-0500">April 15, 2020</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a>.
+    Generated on <time datetime="2020-04-16T23:05:19-0500">April 16, 2020</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a>.
 </p>
     </footer>
 </body>

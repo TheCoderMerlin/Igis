@@ -1210,13 +1210,66 @@ nav li[class] {
 </h1>
 
 <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">class</span> <span class="type">Gradient</span>: <a href="CanvasIdentifiedObject"><span class="type">CanvasIdentifiedObject</span></a></code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>A <code>Gradient</code> can be used to create a <code>FillStyle</code> for filling various objects.</p>
+
+</div>
+<div class="discussion">
+    <html><body><p><code>Gradient</code>s have two flavors:</p>
+ </body></html>
+<html><body><ol>
+<li>Linear</li>
+<li>Radial</li>
+</ol>
+ </body></html>
+<html><body><h3>Usage:</h3>
+ </body></html>
+<html><body><p>There are several steps required to use a gradient:</p>
+ </body></html>
+<html><body><ol>
+<li>Create the Gradient object</li>
+<li>Add two or more ColorStops</li>
+<li>Setup the Gradient object</li>
+<li>Use the Gradient to initialize a StrokeStyle or FillStyle</li>
+<li>Because the Gradient is a CanvasIdentifiedObject, be sure it <code>isReady</code>
+prior to rendering</li>
+<li>Render the associated FillStyle prior to the object(s) to be filled
+with the gradient</li>
+</ol>
+ </body></html>
+<html><body><h3>Example:</h3>
+ </body></html>
+<html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">gradient</span> : <span class="type">Gradient</span>
+
+<span class="keyword">init</span>() {
+    <span class="variable">gradient</span> = <span class="variable">Gradient</span>(<span class="variable">mode</span>:.<span class="variable">linear</span>(<span class="variable">start</span>:<a href="Point"><span class="type">Point</span></a>(<span class="variable">x</span>:<span class="number literal">0</span>, <span class="variable">y</span>:<span class="number literal">60</span>), <span class="variable">end</span>:<a href="Point"><span class="type">Point</span></a>(<span class="variable">x</span>:<span class="number literal">320</span>, <span class="variable">y</span>:<span class="number literal">60</span>)))
+    <span class="variable">gradient</span>.<span class="type">addColorStop</span>(<span class="variable">ColorStop</span>(<span class="variable">position</span>:<span class="number literal">0.0</span>, <span class="variable">color</span>:<a href="Color"><span class="type">Color</span></a>(.<span class="variable">red</span>)))
+	<span class="variable">gradient</span>.<span class="type">addColorStop</span>(<span class="variable">ColorStop</span>(<span class="variable">position</span>:<span class="number literal">0.25</span>, <span class="variable">color</span>:<a href="Color"><span class="type">Color</span></a>(.<span class="variable">yellow</span>)))
+    <span class="variable">gradient</span>.<span class="type">addColorStop</span>(<span class="variable">ColorStop</span>(<span class="variable">position</span>:<span class="number literal">0.5</span>, <span class="variable">color</span>:<a href="Color"><span class="type">Color</span></a>(.<span class="variable">green</span>)))
+    <span class="variable">gradient</span>.<span class="type">addColorStop</span>(<span class="variable">ColorStop</span>(<span class="variable">position</span>:<span class="number literal">0.5</span>, <span class="variable">color</span>:<a href="Color"><span class="type">Color</span></a>(.<span class="variable">green</span>)))
+    <span class="variable">gradient</span>.<span class="type">addColorStop</span>(<span class="variable">ColorStop</span>(<span class="variable">position</span>:<span class="number literal">0.5</span>, <span class="variable">color</span>:<a href="Color"><span class="type">Color</span></a>(.<span class="variable">green</span>)))
+}
+
+<span class="attribute">override</span> <span class="keyword">func</span> <span class="function">setup</span>(<span class="variable">canvas</span>:<a href="Canvas"><span class="type">Canvas</span></a>) {
+    <span class="variable">canvas</span>.<span class="type">setup</span>(<span class="variable">gradient</span>) 
+}
+
+<span class="attribute">override</span> <span class="keyword">func</span> <span class="function">render</span>(<span class="variable">canvas</span>:<a href="Canvas"><span class="type">Canvas</span></a>) {
+    <span class="keyword">if</span> <span class="variable">gradient</span>.<span class="type">isReady</span> {
+	    <span class="keyword">let</span> <span class="variable">fillStyle</span> = <span class="variable">FillStyle</span>(<span class="variable">gradient</span>:<span class="type">gradient</span>)
+	    <span class="variable">canvas</span>.<span class="type">render</span>(<span class="variable">fillStyle</span>, <span class="variable">rectangle</span>)
+	}
+}
+</code></pre></body></html>
+</div>
 <section id="relationships">
     <h2 hidden>Relationships</h2>
         
         <h3>Nested Types</h3>
 <dl>
     <dt class="enumeration"><code><a href="Gradient_Mode">Gradient.Mode</a></code></dt>
-<dd></dd>
+<dd><p>The <code>Mode</code> is used to determine whether this is a <code>linear</code> or <code>radial</code> <code>Gradient</code>.</p>
+</dd>
 </dl>
 <h3>Superclass</h3>
 <dl>
@@ -1232,6 +1285,29 @@ nav li[class] {
         <code>init(mode:​)</code>
     </h3>
     <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">mode</span>: <span class="type">Mode</span>)</code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Creates a new <code>Gradient</code></p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>mode</th>
+    <td><code class="type">Mode</code></td></td>
+    <td><p>Specifies the <code>Gradient</code> mode (linear or radial)</p>
+</td>
+</tr>
+  </tbody>
+</table>
 </div>
     </section>
     <section id="properties">
@@ -1248,6 +1324,14 @@ nav li[class] {
         <code>color​Stops</code>
     </h3>
     <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">colorStops</span>: [<a href="ColorStop"><span class="type">ColorStop</span></a>]</code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Maintains a list of colorStops for this Gradient.</p>
+
+</div>
+<div class="discussion">
+    <html><body><p>NB: This cannot be changed after setup() has been invoked.</p>
+ </body></html>
+</div>
 </div>
     </section>
     <section id="methods">
@@ -1258,6 +1342,29 @@ nav li[class] {
         <code>add​Color​Stop(_:​)</code>
     </h3>
     <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">addColorStop</span>(<span class="keyword">_</span> <span class="variable">colorStop</span>: <a href="ColorStop"><span class="type">ColorStop</span></a>)</code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Adds a <code>ColorStop</code> to the <code>Gradient</code>.</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>color​Stop</th>
+    <td><code class="type">Color​Stop</code></td></td>
+    <td><p>The <code>ColorStop</code> to be added</p>
+</td>
+</tr>
+  </tbody>
+</table>
 </div>
     </section>
 
@@ -1268,7 +1375,7 @@ nav li[class] {
 
     <footer>
         <p>
-    Generated on <time datetime="2020-04-15T00:46:02-0500">April 15, 2020</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a>.
+    Generated on <time datetime="2020-04-16T23:05:19-0500">April 16, 2020</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a>.
 </p>
     </footer>
 </body>
