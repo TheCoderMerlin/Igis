@@ -25,5 +25,8 @@ let package = Package(
             dependencies: ["NIO",
                            "NIOHTTP1",
                            "NIOWebSocket"]),
+        .testTarget(
+          name: "IgisTests",
+          dependencies: ["Igis"]),
     ]
 )

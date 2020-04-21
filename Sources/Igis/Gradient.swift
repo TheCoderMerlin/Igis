@@ -16,7 +16,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import Foundation
 
 
-/// A `Gradient` can be used to create a `FillStyle` for filling various objects.
+/// A `Gradient` is used to create a `FillStyle` for filling various objects.
 ///
 /// `Gradient`s have two flavors:
 /// 1. Linear

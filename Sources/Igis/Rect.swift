@@ -1,6 +1,6 @@
 /*
 IGIS - Remote graphics for Swift on Linux
-Copyright (C) 2018 Tango Golf Digital, LLC
+Copyright (C) 2018-2020 Tango Golf Digital, LLC
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -13,49 +13,95 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+/// A `Rect` represents a rectangle in a two-dimensional plane.  
 public struct Rect : Equatable {
     public var topLeft : Point
     public var size : Size
 
+    /// The rect at the origin with zero size
+    static public let zero = Rect(topLeft:Point(), size:Size())
+
+    /// The coordinate along the x-axis at the left of rect
+    /// This value is modifiable and will alter only the left coordinate,
+    /// thus, the size will change
     public var left : Int {
         get {
             return topLeft.x
         }
         set (newLeft) {
             let delta = newLeft - topLeft.x
-            topLeft.moveXBy(offset:delta)
-            size.enlargeWidthBy(change:-delta)
+            topLeft.x += delta
+            size.width -= delta
         }
     }
 
+    /// The coordinate along the y-axis at the top of rect
+    /// This value is modifiable and will alter only the top coordinate,
+    /// thus, the size will change
     public var top : Int {
         get {
             return topLeft.y
         }
         set (newTop) {
             let delta = newTop - topLeft.y
-            topLeft.moveYBy(offset:delta)
-            size.enlargeHeightBy(change:-delta)
+            topLeft.y += delta
+            size.height -= delta
         }
     }
 
+    /// The coordinate along the x-axis at the right of rect
+    /// This value is modifiable and will alter only the right coordinate,
+    /// thus, the size will change
     public var right : Int {
         get {
             return topLeft.x + size.width
         }
         set (newRight) {
             let delta = newRight - (topLeft.x + size.width)
-            size.enlargeWidthBy(change:delta)
+            size.width += delta
         }
     }
 
+    /// The coordinate along the y-axis at the bottom of rect
+    /// This value is modifiable and will alter only the bottom coordinate,
+    /// thus, the size will change
     public var bottom : Int {
         get {
             return topLeft.y + size.height
         }
         set (newBottom) {
             let delta = newBottom - (topLeft.y + size.height)
-            size.enlargeHeightBy(change:delta)
+            size.height += delta
+        }
+    }
+
+    public var topRight : Point {
+        get {
+            return Point(x:right, y:top)
+        }
+        set (newTopRight) {
+            right = newTopRight.x
+            top   = newTopRight.y
+        }
+    }
+
+    public var bottomLeft : Point {
+        get {
+            return Point(x:left, y:bottom)
+        }
+        set (newBottomLeft) {
+            left    = newBottomLeft.x
+            bottom  = newBottomLeft.y
+        }
+    }
+
+    public var bottomRight : Point {
+        get {
+            return Point(x:right, y:bottom)
+        }
+        set (newBottomRight) {
+            right   = newBottomRight.x
+            bottom  = newBottomRight.y
         }
     }
 
@@ -101,14 +147,9 @@ public struct Rect : Equatable {
         self.size = size
     }
 
-    public init(source:Rect) {
-        self.topLeft = source.topLeft
-        self.size = source.size
-    }
-
     public func local(to origin:Rect) -> Rect {
         var localized = self
-        localized.topLeft.moveBy(offsetX:-origin.topLeft.x, offsetY:-origin.topLeft.y)
+        localized.topLeft -= origin.topLeft
         return localized
     }
 
@@ -217,6 +258,27 @@ public struct Rect : Equatable {
         return containmentSet
     }
 
+    /// Expands the rect by the amount specified while preserving the center point
+    /// (negative numbers reduce the dimensions)
+    /// - Parameters:
+    ///   - change: The amount by which to increase all dimensions
+    public mutating func inflate(by change:Int) {
+        inflate(by:Size(width:change, height:change))
+    }
+
+    /// Expands the rect by the amount specified while preserving the center point
+    /// (negative numbers reduce the dimensions)
+    /// - Parameters:
+    ///   - change: The amount by which to increase each dimension
+    public mutating func inflate(by change:Size) {
+        size.width += change.width * 2
+        topLeft.x  -= change.width
+
+        size.height += change.height * 2
+        topLeft.y   -= change.height
+    }
+    
+    /// Equivalence operator for two `Rect`s
     static public func == (lhs:Rect, rhs:Rect) -> Bool {
         return lhs.topLeft == rhs.topLeft && lhs.size == rhs.size
     }

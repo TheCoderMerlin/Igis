@@ -125,8 +125,8 @@ public class Matrix : CustomStringConvertible {
 
     // Applies the matrix to the provided Point and returns the result
     public func apply(toPoint:Point) -> Point {
-        let applied = apply(toDoublePoint:DoublePoint(point:toPoint))
-        return Point(doublePoint:applied)
+        let applied = apply(toDoublePoint:DoublePoint(toPoint))
+        return Point(applied)
     }
 
     // Applies the matrix to the provided array of DoublePoint and returns the result

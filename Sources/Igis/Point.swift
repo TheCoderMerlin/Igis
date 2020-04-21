@@ -15,57 +15,44 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
 
+/// A `Point` represents a location in a two-dimensional plane.
 public struct Point : Equatable {
-    public private (set) var x : Int
-    public private (set) var y : Int
+    /// The coordinate along the x-axis
+    public var x : Int
+    /// The coordinate along the y-axis
+    public var y : Int
 
+    /// The point (x:0, y:0)
+    static public let zero = Point(x: 0, y: 0)
+
+    /// Creates a new `Point` located at (x:0, y:0)
     public init() {
         self.x = 0
         self.y = 0
     }
-    
+
+    /// Creates a new `Point` from the specified coordinates
+    /// - Parameters:
+    ///   - x: The x coordinate
+    ///   - y: The y coordinate
     public init(x:Int, y:Int) {
         self.x = x
         self.y = y
     }
 
-    public init(doublePoint:DoublePoint) {
+    /// Creates a new `Point` from the specified `DoublePoint`
+    /// - Parameters:
+    ///   - doublePoint: The source of the new coordinates
+    public init(_ doublePoint:DoublePoint) {
         self.x = Int(doublePoint.x)
         self.y = Int(doublePoint.y)
     }
 
-    public mutating func moveBy(offsetX:Int, offsetY:Int) {
-        x += offsetX
-        y += offsetY
-    }
-
-    public mutating func moveBy(offset:Point) {
-        x += offset.x
-        y += offset.y
-    }
-
-    public mutating func moveXBy(offset:Int) {
-        x += offset
-    }
-
-    public mutating func moveYBy(offset:Int) {
-        y += offset
-    }
-
-    public mutating func moveTo(x:Int, y:Int) {
-        self.x = x
-        self.y = y
-    }
-
-    public mutating func moveTo(_ point:Point) {
-        self = point
-    }
-
-    public func negated() -> Point {
-        return Point(x:-x, y:-y)
-    }
-
-    public func distanceSquared(target:Point) -> Int {
+    /// Calculates the square of the distance between this point and another
+    /// - Parameters:
+    ///   - target: The target point to which to calculate the distance
+    /// - Returns: The square of the distance to a target point
+    public func distanceSquared(to target:Point) -> Int {
         let xDistance = target.x - x
         let xDistanceSquared = xDistance * xDistance
         
@@ -75,17 +62,47 @@ public struct Point : Equatable {
         return xDistanceSquared + yDistanceSquared
     }
 
-    public func distance(target:Point) -> Double {
-        return sqrt(Double(distanceSquared(target:target)))
+    /// Calculates the distance between this point and another
+    /// - Parameters:
+    ///   - target: The target point to which to calculate the distance
+    /// - Returns: The distance to a target point
+    public func distance(to target: Point) -> Double {
+        return sqrt(Double(distanceSquared(to:target)))
     }
 
-    
-    static public func Points(doublePoints:[DoublePoint]) -> [Point] {
-        return doublePoints.map {Point(doublePoint:$0)}
+    /// Converts an array of `DoublePoint`s to an array of `Point`s
+    static public func Points(_ doublePoints: [DoublePoint]) -> [Point] {
+        return doublePoints.map {Point($0)}
     }
 
-    static public func == (lhs:Point, rhs:Point) -> Bool {
-        return lhs.x == rhs.x && lhs.y == rhs.y
+    /// Equivalence operator for two `Point`s
+    static public func == (left: Point, right: Point) -> Bool {
+        return left.x == right.x && left.y == right.y
+    }
+
+    /// Addition operator for two `Point`s
+    static public func + (left: Point, right: Point) -> Point {
+        return Point(x: left.x + right.x, y: left.y + right.y)
+    }
+
+    /// Compound addition operator for two `Point`s
+    static public func += (left: inout Point, right: Point) {
+        left = left + right
+    }
+
+    /// Negation operator for a `Point`
+    static public prefix func - (point:Point) -> Point {
+        return Point(x: -point.x, y: -point.y)
+    }
+
+    /// Subtraction operator for two `Point`s
+    static public func - (left: Point, right: Point) -> Point {
+        return left + -right
+    }
+
+    /// Compound subtration operator for two `Point`s
+    static public func -= (left: inout Point, right: Point) {
+        left = left - right
     }
 }
 

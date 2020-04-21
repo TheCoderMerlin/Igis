@@ -58,6 +58,23 @@ public class Path : CanvasObject {
         close()
     }
 
+    // Creates a path for a rounded rectangle and then closes the path
+    public convenience init(rect:Rect, radius:Int, fillMode:FillMode = .stroke) {
+        self.init(fillMode:fillMode)
+
+        moveTo(Point(x:rect.left + radius, y:rect.top))
+        lineTo(Point(x:rect.right - radius, y:rect.top))
+        quadraticCurveTo(controlPoint:rect.topRight, endPoint:Point(x:rect.right, y:rect.top + radius))
+        lineTo(Point(x:rect.right, y:rect.bottom - radius))
+        quadraticCurveTo(controlPoint:rect.bottomRight, endPoint:Point(x:rect.right - radius, y:rect.bottom))
+        lineTo(Point(x:rect.left + radius, y:rect.bottom))
+        quadraticCurveTo(controlPoint:rect.bottomLeft, endPoint:Point(x:rect.left, y:rect.bottom - radius))
+        lineTo(Point(x:rect.left, y:rect.top + radius))
+        quadraticCurveTo(controlPoint:rect.topLeft, endPoint:Point(x:rect.left + radius, y:rect.top))
+        
+        close()
+    }
+
     public func moveTo(_ point:Point) {
         actions.append(.moveTo(point:point))
     }
