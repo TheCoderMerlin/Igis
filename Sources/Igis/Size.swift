@@ -13,6 +13,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import Foundation
 
 /// A `Size` represents dimensions in a two-dimensional plane.
 public struct Size : Equatable {
@@ -53,7 +54,26 @@ public struct Size : Equatable {
     /// and the point located at size
     public var center : Point {
         Point(x: width / 2, y: height / 2)
-    }    
+    }
+    
+    /// Calculates a new Size of certain percentage between this Size and another
+    /// - Parameters:
+    ///   - target: the target size to which to calculate the new Size between
+    ///   - percent: value between 0 and 1 representing percentage
+    /// - Returns: A new size of percent between this size and a target size
+    public func lerp(to target:Size, percent:Double) -> Size {
+        return Size(width:width+Int(Double(target.width-width)*percent), height:height+Int(Double(target.height-height)*percent))
+    }
+
+    /// Calculates the distance between this size and another
+    /// - Parameters:
+    ///   - target: The target size to which to calculate the distance
+    /// - Returns: The distance to a target size
+    public func distance(to target:Size) -> Double {
+        let widthSquared = pow(Double(target.width-width), 2)
+        let heightSquared = pow(Double(target.height-height), 2)
+        return sqrt(widthSquared + heightSquared)
+    }
 
     /// Equivalence operator for two `Size`s
     static public func == (lhs:Size, rhs:Size) -> Bool {
