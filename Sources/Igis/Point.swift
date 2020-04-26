@@ -50,8 +50,8 @@ public struct Point : Equatable {
 
     /// Calculates a new Point of certain percentage between this point and another
     /// - Parameters:
-    ///   - target: the target point to which to calculate the new Point between
-    ///   - percent: value between 0 and 1 representing percentage
+    ///   - target: The target point to which to calculate the new Point between
+    ///   - percent: Value between 0 and 1 representing percentage
     /// - Returns: A new point of percent between this point and a target point
     public func lerp(to target:Point, percent:Double) -> Point {
         return self + Point(x:Int(Double(target.x-x)*percent), y:Int(Double(target.y-y)*percent))
