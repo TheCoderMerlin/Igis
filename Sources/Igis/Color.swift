@@ -1,6 +1,6 @@
 /*
 IGIS - Remote graphics for Swift on Linux
-Copyright (C) 2018 Tango Golf Digital, LLC
+Copyright (C) 2018,2020 Tango Golf Digital, LLC
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -16,6 +16,24 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 public class Color {
     public let style : String
+
+    /// The red RGB value of the color
+    public var red : UInt8 {
+        let hex = String(style.suffix(6).prefix(2))
+        return Color.decDigits(hex)
+    }
+    
+    /// The green RGB value of the color
+    public var green : UInt8 {
+        let hex = String(style.suffix(4).prefix(2))
+        return Color.decDigits(hex)
+    }
+
+    /// The blue RGB value of the color
+    public var blue : UInt8 {
+        let hex = String(style.suffix(2))
+        return Color.decDigits(hex)
+    }
 
     public enum Name : String, CaseIterable {
         case aliceblue = "#F0F8FF"
@@ -158,12 +176,25 @@ public class Color {
         case yellowgreen = "#9ACD32"
     }
 
-    public init (red:UInt8, green:UInt8, blue:UInt8) {
+    public required init (red:UInt8, green:UInt8, blue:UInt8) {
         style = "#" + Color.hexDigits(red) + Color.hexDigits(green) + Color.hexDigits(blue)
     }
 
     public init(_ name:Name) {
         style = name.rawValue
+    }
+
+    // Calculates a new Color of certain percentage between this Color and another
+    /// - Parameters:
+    ///   - target: The target Color to which to calculate the new Color between
+    ///   - percent: Value between 0 and 1 representing percentage
+    /// - Returns: A new Color of percent between this Color and a target Color
+
+    public func lerp(to target:Color, percent:Double) -> Self {
+        let newRed = Double(red) + (Double(target.red) - Double(red)) * percent
+        let newGreen = Double(green) + (Double(target.green) - Double(green)) * percent
+        let newBlue = Double(blue) * (Double(target.blue) - Double(blue)) * percent
+        return type(of:self).init(red:Color.forceUInt8(newRed), green:Color.forceUInt8(newGreen), blue:Color.forceUInt8(newBlue))
     }
 
     internal static func hexDigits(_ color:UInt8) -> String {
@@ -174,4 +205,19 @@ public class Color {
         return hexadecimal
     }
 
+    internal static func decDigits(_ color:String) -> UInt8 {
+        guard let decimal = UInt8(color, radix:16) else {
+            fatalError("hex value of \(color) doesn't conform to UInt8")
+        }
+        return decimal
+    }
+
+    internal static func forceUInt8(_ color:Double) -> UInt8 {
+        if color > Double(UInt8.max) {
+            return UInt8.max
+        } else if color < Double(UInt8.min) {
+            return UInt8.min
+        }
+        return UInt8(color)
+    }
 }
