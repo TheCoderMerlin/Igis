@@ -81,32 +81,32 @@ public class Canvas {
         }
     }
     
-    internal func processCommands(ctx:ChannelHandlerContext, webSocketHandler:WebSocketHandler) {
+    internal func processCommands(context: ChannelHandlerContext, webSocketHandler:WebSocketHandler) {
         if pendingCommandList.count > 0 {
             let allCommands = pendingCommandList.joined(separator:"||")
-            webSocketHandler.send(ctx:ctx, text:allCommands)
+            webSocketHandler.send(context: context, text:allCommands)
             pendingCommandList.removeAll()
         } else {
             let secondsSincePreviousPing = -Int(mostRecentPingTime.timeIntervalSinceNow)
             if (secondsSincePreviousPing > Canvas.minimumSecondsBeforePing) {
-                webSocketHandler.send(ctx:ctx, text:"ping")
+                webSocketHandler.send(context: context, text:"ping")
                 mostRecentPingTime = Date()
             }
         }
     }
     
-    internal func ready(ctx:ChannelHandlerContext, webSocketHandler:WebSocketHandler) {
+    internal func ready(context: ChannelHandlerContext, webSocketHandler:WebSocketHandler) {
         painter.setup(canvas:self)
-        processCommands(ctx:ctx, webSocketHandler:webSocketHandler)
+        processCommands(context: context, webSocketHandler:webSocketHandler)
     }
 
-    internal func recurring(ctx:ChannelHandlerContext, webSocketHandler:WebSocketHandler) {
+    internal func recurring(context: ChannelHandlerContext, webSocketHandler:WebSocketHandler) {
         painter.calculate(canvasId:self.canvasId, canvasSize:canvasSize)
         painter.render(canvas:self)
-        processCommands(ctx:ctx, webSocketHandler:webSocketHandler)
+        processCommands(context: context, webSocketHandler:webSocketHandler)
     }
 
-    internal func reception(ctx:ChannelHandlerContext, webSocketHandler:WebSocketHandler, text:String) {
+    internal func reception(context: ChannelHandlerContext, webSocketHandler:WebSocketHandler, text:String) {
         var commandAndArguments = text.components(separatedBy:"|")
         if commandAndArguments.count > 0 {
             let command = commandAndArguments.removeFirst()
@@ -540,7 +540,7 @@ public class Canvas {
     internal func nextRecurringInterval() -> TimeAmount {
         let framesPerSecond = painter.framesPerSecond()
         let intervalInSeconds = 1.0 / Double(framesPerSecond)
-        let intervalInMilliSeconds = Int(intervalInSeconds * 1_000)
+        let intervalInMilliSeconds = Int64(intervalInSeconds * 1_000)
         return .milliseconds(intervalInMilliSeconds)
     }
     

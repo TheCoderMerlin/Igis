@@ -31,75 +31,73 @@ public final class WebSocketHandler: ChannelInboundHandler {
         self.canvas = canvas
     }
 
-    public func handlerAdded(ctx: ChannelHandlerContext) {
+    public func handlerAdded(context: ChannelHandlerContext) {
         let interval = canvas.nextRecurringInterval()
-        ctx.eventLoop.scheduleTask(in: interval, {self.recurringCallback(ctx: ctx)})
-        canvas.ready(ctx:ctx, webSocketHandler:self)
+        context.eventLoop.scheduleTask(in: interval, {self.recurringCallback(context: context)})
+        canvas.ready(context:context, webSocketHandler:self)
     }
 
-    public func channelRead(ctx: ChannelHandlerContext, data: NIOAny) {
+    public func channelRead(context: ChannelHandlerContext, data: NIOAny) {
         let frame = self.unwrapInboundIn(data)
 
         switch frame.opcode {
         case .connectionClose:
-            self.receivedClose(ctx: ctx, frame: frame)
+            self.receivedClose(context: context, frame: frame)
         case .ping:
-            self.pong(ctx: ctx, frame: frame)
-        case .unknownControl, .unknownNonControl:
-            self.closeOnError(ctx: ctx)
+            self.pong(context: context, frame: frame)
         case .text:
             var data = frame.unmaskedData
             let text = data.readString(length: data.readableBytes) ?? ""
-            canvas.reception(ctx:ctx, webSocketHandler:self, text:text)
+            canvas.reception(context: context, webSocketHandler:self, text:text)
         default:
             // We ignore all other frames.
             break
         }
     }
 
-    public func recurringCallback(ctx: ChannelHandlerContext) {
+    public func recurringCallback(context: ChannelHandlerContext) {
         let interval = canvas.nextRecurringInterval()
-        ctx.eventLoop.scheduleTask(in: interval, {self.recurringCallback(ctx: ctx)})
-        canvas.recurring(ctx:ctx, webSocketHandler:self)
+        context.eventLoop.scheduleTask(in: interval, {self.recurringCallback(context: context)})
+        canvas.recurring(context:context, webSocketHandler:self)
     }
 
-    public func channelReadComplete(ctx: ChannelHandlerContext) {
-        ctx.flush()
+    public func channelReadComplete(context: ChannelHandlerContext) {
+        context.flush()
     }
 
-    public func send(ctx: ChannelHandlerContext, text:String) {
-        guard ctx.channel.isActive else { return }
+    public func send(context: ChannelHandlerContext, text:String) {
+        guard context.channel.isActive else { return }
         guard !self.awaitingClose else { return }
 
-        var buffer = ctx.channel.allocator.buffer(capacity: text.utf8.count)
-        buffer.write(string: text)
+        var buffer = context.channel.allocator.buffer(capacity: text.utf8.count)
+        buffer.writeString(text)
 
         let frame = WebSocketFrame(fin:true, opcode:.text, data:buffer)
-        ctx.writeAndFlush(self.wrapOutboundOut(frame)).whenFailure { (_:Error) in
-            ctx.close(promise:nil)
+        context.writeAndFlush(self.wrapOutboundOut(frame)).whenFailure { (_:Error) in
+            context.close(promise:nil)
         }
     }
 
-    private func receivedClose(ctx: ChannelHandlerContext, frame: WebSocketFrame) {
+    private func receivedClose(context: ChannelHandlerContext, frame: WebSocketFrame) {
         // Handle a received close frame. In websockets, we're just going to send the close
         // frame and then close, unless we already sent our own close frame.
         if awaitingClose {
             // Cool, we started the close and were waiting for the user. We're done.
-            ctx.close(promise: nil)
+            context.close(promise: nil)
         } else {
             // This is an unsolicited close. We're going to send a response frame and
             // then, when we've sent it, close up shop. We should send back the close code the remote
             // peer sent us, unless they didn't send one at all.
             var data = frame.unmaskedData
-            let closeDataCode = data.readSlice(length: 2) ?? ctx.channel.allocator.buffer(capacity: 0)
+            let closeDataCode = data.readSlice(length: 2) ?? context.channel.allocator.buffer(capacity: 0)
             let closeFrame = WebSocketFrame(fin: true, opcode: .connectionClose, data: closeDataCode)
-            _ = ctx.write(self.wrapOutboundOut(closeFrame)).map { () in
-                ctx.close(promise: nil)
+            _ = context.write(self.wrapOutboundOut(closeFrame)).map { () in
+                context.close(promise: nil)
             }
         }
     }
 
-    private func pong(ctx: ChannelHandlerContext, frame: WebSocketFrame) {
+    private func pong(context: ChannelHandlerContext, frame: WebSocketFrame) {
         var frameData = frame.data
         let maskingKey = frame.maskKey
 
@@ -108,17 +106,17 @@ public final class WebSocketHandler: ChannelInboundHandler {
         }
 
         let responseFrame = WebSocketFrame(fin: true, opcode: .pong, data: frameData)
-        ctx.write(self.wrapOutboundOut(responseFrame), promise: nil)
+        context.write(self.wrapOutboundOut(responseFrame), promise: nil)
     }
 
-    private func closeOnError(ctx: ChannelHandlerContext) {
+    private func closeOnError(context: ChannelHandlerContext) {
         // We have hit an error, we want to close. We do that by sending a close frame and then
         // shutting down the write side of the connection.
-        var data = ctx.channel.allocator.buffer(capacity: 2)
+        var data = context.channel.allocator.buffer(capacity: 2)
         data.write(webSocketErrorCode: .protocolError)
         let frame = WebSocketFrame(fin: true, opcode: .connectionClose, data: data)
-        ctx.write(self.wrapOutboundOut(frame)).whenComplete {
-            ctx.close(mode: .output, promise: nil)
+        context.write(self.wrapOutboundOut(frame)).whenComplete { (_: Result<Void, Error>) in
+            context.close(mode: .output, promise: nil)
         }
         awaitingClose = true
     }

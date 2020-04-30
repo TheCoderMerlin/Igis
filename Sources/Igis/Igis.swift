@@ -49,10 +49,10 @@ public class Igis {
     public func run(painterType:PainterProtocol.Type) throws {
         let group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
 
-        let upgrader = WebSocketUpgrader(shouldUpgrade: { (head: HTTPRequestHead) in HTTPHeaders() },
-                                         upgradePipelineHandler: { (channel: Channel, _: HTTPRequestHead) in
-                                             return channel.pipeline.add(handler: WebSocketHandler(canvas:Canvas(painter:painterType.init())))
-                                         })
+        let upgrader = NIOWebSocketServerUpgrader(shouldUpgrade: {  (channel: Channel, head: HTTPRequestHead) in channel.eventLoop.makeSucceededFuture(HTTPHeaders()) },
+                                                  upgradePipelineHandler: { (channel: Channel, _: HTTPRequestHead) in
+                                                      return channel.pipeline.addHandler(WebSocketHandler(canvas:Canvas(painter:painterType.init())))
+                                                  })
 
         let bootstrap = ServerBootstrap(group: group)
         // Specify backlog and enable SO_REUSEADDR for the server itself
@@ -62,14 +62,14 @@ public class Igis {
         // Set the handlers that are applied to the accepted Channels
           .childChannelInitializer { channel in
               let httpHandler = HTTPHandler(resourceDirectory:self.resourceDirectory)
-              let config: HTTPUpgradeConfiguration = (
+              let config: NIOHTTPServerUpgradeConfiguration = (
                 upgraders: [ upgrader ], 
                 completionHandler: { _ in 
-                    channel.pipeline.remove(handler: httpHandler, promise: nil)
+                    channel.pipeline.removeHandler(httpHandler, promise: nil)
                 }
               )
-              return channel.pipeline.configureHTTPServerPipeline(withServerUpgrade: config).then {
-                  channel.pipeline.add(handler: httpHandler)
+              return channel.pipeline.configureHTTPServerPipeline(withServerUpgrade: config).flatMap {
+                  channel.pipeline.addHandler(httpHandler)
               }
           }
 
