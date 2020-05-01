@@ -34,7 +34,8 @@ public class Path : CanvasObject {
         actions.append(.beginPath)
     }
 
-    
+
+    /// Creates a new, empty `Path`
     public init(fillMode:FillMode = .stroke) {
         self.fillMode = fillMode
         
@@ -43,9 +44,18 @@ public class Path : CanvasObject {
         begin()
     }
 
-    // Creates a path by moving to the first point in the array,
-    // then drawing lines to each subsequent point,
-    // and then closing the path
+    /// Creates a new copy of the specified path
+    public init(source:Path) {
+        self.fillMode = source.fillMode
+        self.actions  = source.actions
+
+        super.init()
+    }
+    
+
+    /// Creates a `Path` by moving to the first point in the array,
+    /// then drawing lines to each subsequent point,
+    /// and then closing the path
     public convenience init(points:[Point], fillMode:FillMode = .stroke) {
         self.init(fillMode:fillMode)
 
@@ -58,8 +68,12 @@ public class Path : CanvasObject {
         close()
     }
 
-    // Creates a path for a rounded rectangle and then closes the path
-    public convenience init(rect:Rect, radius:Int, fillMode:FillMode = .stroke) {
+    /// Creates a `Path` for a rounded rectangle and then closes the path
+    /// - Parameters:
+    ///   - rect: The `Rect` for which to generate the `Path`
+    ///   - radius: The radius for each corner; 0 indicates no rounding
+    ///   - fillMode:  The fillMode to use when rendering the `Path`
+    public convenience init(rect:Rect, radius:Int = 0, fillMode:FillMode = .stroke) {
         self.init(fillMode:fillMode)
 
         moveTo(Point(x:rect.left + radius, y:rect.top))
@@ -119,7 +133,8 @@ public class Path : CanvasObject {
         actions.append(.closePath)
     }
 
-    internal override func canvasCommand() -> String {
+    /// Returns all pathCommands in the path which does not include rendering
+    internal func pathCommands() -> String {
         var actionStrings = [String]()
 
         for action in actions {
@@ -145,7 +160,12 @@ public class Path : CanvasObject {
             }
         }
 
-        var commands = actionStrings.joined(separator:"||")
+        let commands = actionStrings.joined(separator:"||")
+        return commands
+    }
+
+    internal override func canvasCommand() -> String {
+        var commands = pathCommands()
         switch fillMode {
             case .stroke:
                 commands += "||stroke"

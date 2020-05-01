@@ -15,21 +15,30 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
 
-public class Clip : CanvasObject {
+public class ClipPath : CanvasObject {
 
     public enum WindingRule {
         case nonZero
         case evenOdd
     }
-    
+
+    private let path : Path
     public let windingRule : WindingRule
 
-    public init(windingRule:WindingRule = .nonZero) {
+    /// Creates a new `Clip` with an embedded path
+    /// - Parameters:
+    ///   - path: A `Path` (which will be copied) and should be closed
+    ///   - windingRule: The `WindingRule` to be used for calculating the `Clip`
+    public init(path:Path, windingRule:WindingRule = .nonZero) {
+        self.path        = Path(source:path)
         self.windingRule = windingRule
     }
 
     internal override func canvasCommand() -> String {
-        var commands = "clip|"
+        var commands = path.pathCommands()
+        commands += "||"
+        
+        commands += "clip|"
         switch windingRule {
         case .nonZero:
             commands += "nonzero"

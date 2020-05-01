@@ -75,6 +75,30 @@ public struct Rect : Equatable {
         }
     }
 
+
+    /// The width of the rectangle
+    /// This value is modifiable and will alter the right coodinate
+    public var width : Int {
+        get {
+            return size.width
+        }
+        set (newWidth) {
+            size.width = newWidth
+        }
+    }
+
+
+    /// The height of the rectangle
+    /// This value is modifiable and will alter the bottom coordinate
+    public var height : Int {
+        get {
+            return size.height
+        }
+        set (newHeight) {
+            size.height = newHeight
+        }
+    }
+
     public var topRight : Point {
         get {
             return Point(x:right, y:top)
@@ -258,12 +282,54 @@ public struct Rect : Equatable {
         return containmentSet
     }
 
+    /// Union of this `Rect` with the specified target `Rect` 
+    /// - Returns: A new `Rect` exactly large enough to contain
+    ///            both rectangles
+    public func unioned(with other:Rect) -> Rect {
+        let leftMost  = min(self.left, other.left)
+        let rightMost = max(self.right, other.right)
+
+        let topMost    = min(self.top, other.top)
+        let bottomMost = max(self.bottom, other.bottom)
+
+        let unionTopLeft = Point(x:leftMost, y:topMost)
+        let unionSize    = Size(width:rightMost - leftMost,
+                                height:bottomMost - topMost)
+
+        let unionRect = Rect(topLeft:unionTopLeft, size:unionSize)
+        return unionRect
+    }
+
+    /// Returns a new rect expanded by the amount specified while
+    /// preserving the center point (negative numbers reduce the dimensions)
+    /// - Parameters:
+    ///   - change: The amount by which to increase each dimension
+    /// - Returns: The inflated rect
+    public func inflated(by change:Int) -> Rect {
+        return inflated(by:Size(width:change, height:change))
+    }
+    
     /// Expands the rect by the amount specified while preserving the center point
     /// (negative numbers reduce the dimensions)
     /// - Parameters:
     ///   - change: The amount by which to increase all dimensions
     public mutating func inflate(by change:Int) {
-        inflate(by:Size(width:change, height:change))
+        let inflatedRect = inflated(by:change)
+        topLeft = inflatedRect.topLeft
+        size    = inflatedRect.size
+    }
+
+    /// Returns a new rect expanded by the amount specified while
+    /// preserving the center point (negative numbers reduce the dimensions)
+    /// - Parameters:
+    ///   - change: The amount by which to increase each dimension
+    /// - Returns: The inflated rect
+    public func inflated(by change:Size) -> Rect {
+        let rect = Rect(topLeft:Point(x:topLeft.x - change.width,
+                                      y:topLeft.y - change.height),
+                        size:Size(width:size.width + change.width * 2,
+                                  height:size.height + change.height * 2))
+        return rect
     }
 
     /// Expands the rect by the amount specified while preserving the center point
@@ -271,11 +337,9 @@ public struct Rect : Equatable {
     /// - Parameters:
     ///   - change: The amount by which to increase each dimension
     public mutating func inflate(by change:Size) {
-        size.width += change.width * 2
-        topLeft.x  -= change.width
-
-        size.height += change.height * 2
-        topLeft.y   -= change.height
+        let inflatedRect = inflated(by:change)
+        topLeft = inflatedRect.topLeft
+        size    = inflatedRect.size
     }
     
     /// Equivalence operator for two `Rect`s

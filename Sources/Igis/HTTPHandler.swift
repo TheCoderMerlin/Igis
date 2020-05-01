@@ -44,14 +44,14 @@ final class HTTPHandler: ChannelInboundHandler, RemovableChannelHandler {
 
         // The URI will (should) point to the desired resource, a file located in the "Resources" directory
         guard let url = URL(string:head.uri) else {
-            print("Specified url is not valid: \(head.uri)")
+            print("WARNING: Specified url is not valid: \(head.uri)")
             self.respondError(context: context, status:.notFound)
             return
         }
         let fileURL = resourceDirectory.appendingPathComponent(url.path, isDirectory: false).standardizedFileURL
         let filePath = fileURL.path
         guard FileManager.default.fileExists(atPath:filePath) else {
-            print("Requested missing file at \(filePath)")
+            print("WARNING: Requested missing file at \(filePath)")
             self.respondError(context: context, status:.notFound)
             return
         }
@@ -67,7 +67,7 @@ final class HTTPHandler: ChannelInboundHandler, RemovableChannelHandler {
         case "js":
             mimeType = "text/javascript"
         default:
-            print("Unexpected file suffix in \(filePath)")
+            print("WARNING: Unexpected file suffix in \(filePath)")
             self.respondError(context: context, status:.notImplemented)
             return
         }
@@ -78,7 +78,7 @@ final class HTTPHandler: ChannelInboundHandler, RemovableChannelHandler {
         do {
             contents = try String(contentsOf:fileURL, encoding:.utf8)
         } catch (let error) {
-            print("Failed to load file \(filePath) because \(error)")
+            print("WARNING: Failed to load file \(filePath) because \(error)")
             self.respondError(context: context, status:.internalServerError)
             return
         }
