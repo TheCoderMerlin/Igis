@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Igis - Layout.ChildAttribute</title>
+    <base href="/Igis/"/>
+    <link rel="stylesheet" type="text/css" href="all.css" media="all" />
+</head>
+<body>
+    <header>
+        <a href="/Igis/">
+            <strong>
+                Igis
+            </strong>
+            <span>Documentation</span>
+        </a>
+        <sup>Beta</sup>
+    </header>
+
+    <!--
+    <form class="search">
+        <input type="search" placeholder="Search" />
+    </form>
+    -->
+
+    <nav>
+        <div class="wrapper">
+            <h2>On This Page</h2>
+            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Member Of</a></li></ul></li><li><a href="#enumeration cases">Enumeration Cases</a><ul><li class="case"><a href="#layout.childattribute.maxwidth">max​Width</a></li><li class="case"><a href="#layout.childattribute.maxheight">max​Height</a></li><li class="case"><a href="#layout.childattribute.fullwidth">full​Width</a></li><li class="case"><a href="#layout.childattribute.fullheight">full​Height</a></li><li class="case"><a href="#layout.childattribute.topmost">top​Most</a></li><li class="case"><a href="#layout.childattribute.bottommost">bottom​Most</a></li><li class="case"><a href="#layout.childattribute.leftmost">left​Most</a></li><li class="case"><a href="#layout.childattribute.rightmost">right​Most</a></li></ul></li></ol>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h1>
+    <small>Enumeration</small>
+    <code class="name">Layout.​Child​Attribute</code>
+</h1>
+
+<html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">enum</span> <span class="type">ChildAttribute</span></code></pre></body></html>
+<section id="relationships">
+    <h2 hidden>Relationships</h2>
+        
+        <h3>Member Of</h3>
+<dl>
+    <dt class="class"><code><a href="Layout">Layout</a></code></dt>
+<dd><p><code>Layout</code> provides the ability to layout a series of <code>Rect</code>s using
+specified rules.  The order of each <code>Rect</code> is always preserved.</p>
+</dd>
+</dl>
+</section>
+    <section id="enumeration cases">
+        <h2>Enumeration Cases</h2>
+
+        <div role="article" class="enumeration" id="layout.childattribute.maxwidth">
+    <h3>
+        <code>max​Width</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">maxWidth</span></code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Calculcates the maximum width of all <code>Rect</code>s</p>
+
+</div>
+</div>
+<div role="article" class="enumeration" id="layout.childattribute.maxheight">
+    <h3>
+        <code>max​Height</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">maxHeight</span></code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Calculcates the maximum height of all <code>Rect</code>s</p>
+
+</div>
+</div>
+<div role="article" class="enumeration" id="layout.childattribute.fullwidth">
+    <h3>
+        <code>full​Width</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">fullWidth</span></code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Calculates the full width of all <code>Rect</code>s
+(width from left-most to right-most)</p>
+
+</div>
+</div>
+<div role="article" class="enumeration" id="layout.childattribute.fullheight">
+    <h3>
+        <code>full​Height</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">fullHeight</span></code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Calculates the full height of all <code>Rect</code>s
+(height from top-most to bottom-most)</p>
+
+</div>
+</div>
+<div role="article" class="enumeration" id="layout.childattribute.topmost">
+    <h3>
+        <code>top​Most</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">topMost</span></code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Calculates the top-most top of all <code>Rect</code>s</p>
+
+</div>
+</div>
+<div role="article" class="enumeration" id="layout.childattribute.bottommost">
+    <h3>
+        <code>bottom​Most</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">bottomMost</span></code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Calculates the bottom-most bottom of all <code>Rect</code>s</p>
+
+</div>
+</div>
+<div role="article" class="enumeration" id="layout.childattribute.leftmost">
+    <h3>
+        <code>left​Most</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">leftMost</span></code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Calculates the left-most left of all <code>Rect</code>s</p>
+
+</div>
+</div>
+<div role="article" class="enumeration" id="layout.childattribute.rightmost">
+    <h3>
+        <code>right​Most</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">rightMost</span></code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Calculates the right-most right of all <code>Rect</code>s</p>
+
+</div>
+</div>
+    </section>
+
+
+
+        </article>
+    </main>
+
+    <footer>
+        <p>
+    Generated on <time datetime="2020-05-01T17:05:03-0500">May 1, 2020</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.2</span>.
+</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Igis - ClipPath</title>
+    <base href="/Igis/"/>
+    <link rel="stylesheet" type="text/css" href="all.css" media="all" />
+</head>
+<body>
+    <header>
+        <a href="/Igis/">
+            <strong>
+                Igis
+            </strong>
+            <span>Documentation</span>
+        </a>
+        <sup>Beta</sup>
+    </header>
+
+    <!--
+    <form class="search">
+        <input type="search" placeholder="Search" />
+    </form>
+    -->
+
+    <nav>
+        <div class="wrapper">
+            <h2>On This Page</h2>
+            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Nested Types</a></li><li><a href="#relationships">Superclass</a></li></ul></li><li><a href="#initializers">Initializers</a><ul><li class="initializer"><a href="#clippath.init(path:windingrule:)">init(path:​winding​Rule:​)</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="property"><a href="#clippath.windingrule">winding​Rule</a></li></ul></li></ol>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h1>
+    <small>Class</small>
+    <code class="name">Clip​Path</code>
+</h1>
+
+<html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">class</span> <span class="type">ClipPath</span>: <a href="CanvasObject"><span class="type">CanvasObject</span></a></code></pre></body></html>
+<section id="relationships">
+    <h2 hidden>Relationships</h2>
+        
+        <h3>Nested Types</h3>
+<dl>
+    <dt class="enumeration"><code><a href="ClipPath_WindingRule">ClipPath.WindingRule</a></code></dt>
+<dd></dd>
+</dl>
+<h3>Superclass</h3>
+<dl>
+    <dt class="class"><code><a href="CanvasObject">CanvasObject</a></code></dt>
+<dd></dd>
+</dl>
+</section>
+    <section id="initializers">
+        <h2>Initializers</h2>
+
+        <div role="article" class="class" id="clippath.init(path:windingrule:)">
+    <h3>
+        <code>init(path:​winding​Rule:​)</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">path</span>: <a href="Path"><span class="type">Path</span></a>, <span class="variable">windingRule</span>: <span class="type">WindingRule</span> = .<span class="variable">nonZero</span>)</code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Creates a new <code>Clip</code> with an embedded path</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>path</th>
+    <td><code class="type">Path</code></td></td>
+    <td><p>A <code>Path</code> (which will be copied) and should be closed</p>
+</td>
+</tr>
+<tr>
+    <th>winding​Rule</th>
+    <td><code class="type">Winding​Rule</code></td></td>
+    <td><p>The <code>WindingRule</code> to be used for calculating the <code>Clip</code></p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+    </section>
+    <section id="properties">
+        <h2>Properties</h2>
+
+        <div role="article" class="class" id="clippath.windingrule">
+    <h3>
+        <code>winding​Rule</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">windingRule</span>: <span class="type">WindingRule</span></code></pre></body></html>
+</div>
+    </section>
+
+
+
+        </article>
+    </main>
+
+    <footer>
+        <p>
+    Generated on <time datetime="2020-05-01T17:05:03-0500">May 1, 2020</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.2</span>.
+</p>
+    </footer>
+</body>
+</html>

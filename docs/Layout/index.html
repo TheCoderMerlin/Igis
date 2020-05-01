@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Igis - Layout</title>
+    <base href="/Igis/"/>
+    <link rel="stylesheet" type="text/css" href="all.css" media="all" />
+</head>
+<body>
+    <header>
+        <a href="/Igis/">
+            <strong>
+                Igis
+            </strong>
+            <span>Documentation</span>
+        </a>
+        <sup>Beta</sup>
+    </header>
+
+    <!--
+    <form class="search">
+        <input type="search" placeholder="Search" />
+    </form>
+    -->
+
+    <nav>
+        <div class="wrapper">
+            <h2>On This Page</h2>
+            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Nested Types</a></li></ul></li><li><a href="#methods">Methods</a><ul><li class="method"><a href="#layout.property(attribute:childrects:)">property(attribute:​child​Rects:​)</a></li><li class="method"><a href="#layout.apply(rule:childrects:)">apply(rule:​child​Rects:​)</a></li></ul></li></ol>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h1>
+    <small>Class</small>
+    <code class="name">Layout</code>
+</h1>
+
+<html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">class</span> <span class="type">Layout</span></code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p><code>Layout</code> provides the ability to layout a series of <code>Rect</code>s using
+specified rules.  The order of each <code>Rect</code> is always preserved.</p>
+
+</div>
+<section id="relationships">
+    <h2 hidden>Relationships</h2>
+        
+        <h3>Nested Types</h3>
+<dl>
+    <dt class="enumeration"><code><a href="Layout_ChildAttribute">Layout.ChildAttribute</a></code></dt>
+<dd></dd>
+<dt class="enumeration"><code><a href="Layout_ChildRule">Layout.ChildRule</a></code></dt>
+<dd></dd>
+</dl>
+</section>
+    <section id="methods">
+        <h2>Methods</h2>
+
+        <div role="article" class="class" id="layout.property(attribute:childrects:)">
+    <h3>
+        <code>property(attribute:​child​Rects:​)</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">property</span>(<span class="variable">attribute</span>: <span class="type">ChildAttribute</span>, <span class="variable">childRects</span>: [<a href="Rect"><span class="type">Rect</span></a>]) -&gt; <span class="type">Int</span></code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Analyzes the childRects and calculates the specified property of the collection</p>
+
+</div>
+</div>
+<div role="article" class="class" id="layout.apply(rule:childrects:)">
+    <h3>
+        <code>apply(rule:​child​Rects:​)</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">apply</span>(<span class="variable">rule</span>: <span class="type">ChildRule</span>, <span class="variable">childRects</span>: [<a href="Rect"><span class="type">Rect</span></a>]) -&gt; [<a href="Rect"><span class="type">Rect</span></a>]</code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Applies the specified rule to the collection of <code>Rect</code>s and returns
+a new collection, maintaining the original order</p>
+
+</div>
+</div>
+    </section>
+
+
+
+        </article>
+    </main>
+
+    <footer>
+        <p>
+    Generated on <time datetime="2020-05-01T17:05:03-0500">May 1, 2020</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.2</span>.
+</p>
+    </footer>
+</body>
+</html>
