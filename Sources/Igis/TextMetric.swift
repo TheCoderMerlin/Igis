@@ -31,19 +31,19 @@ public class TextMetric : CanvasIdentifiedObject {
         public let width : Double
         public let actualBoundingBoxLeft : Double
         public let actualBoundingBoxRight : Double
-        public let fontBoundingBoxAscent : Double
-        public let fontBoundingBoxDescent : Double
+        public let fontBoundingBoxAscent : Double?    // Not yet available in all browsers
+        public let fontBoundingBoxDescent : Double?   // Not yet available in all browsers
         public let actualBoundingBoxAscent : Double
         public let actualBoundingBoxDescent : Double
-        public let emHeightAscent : Double
-        public let emHeightDescent : Double
-        public let hangingBaseline : Double
-        public let alphabeticBaseline : Double
-        public let ideographicBaseline : Double
+        public let emHeightAscent : Double?           // Not yet available in all browsers
+        public let emHeightDescent : Double?          // Not yet available in all browsers
+        public let hangingBaseline : Double?          // Not yet available in all browsers
+        public let alphabeticBaseline : Double?       // Not yet available in all browsers
+        public let ideographicBaseline : Double?      // Not yet available in all browsers
 
         // Returns the actual bounding box used for the text at the specified location
         public func actualBoundingBox(location:Point = Point()) -> Rect {
-            let left   =  Double(location.x) - actualBoundingBoxLeft
+            let left   =  Double(location.x) - abs(actualBoundingBoxLeft)   // Some browsers (Firefox 75.0) specify a negative value
             let top    =  Double(location.y) - actualBoundingBoxAscent
             let right  =  Double(location.x) + actualBoundingBoxRight
             let bottom =  Double(location.y) + actualBoundingBoxDescent
@@ -56,15 +56,22 @@ public class TextMetric : CanvasIdentifiedObject {
         // Returns the font bounding box used for the text at the specified location
         // (This is more useful for user-entered text where the height of the line may change
         //  depending upon the characters entered)
-        public func fontBoundingBox(location:Point = Point()) -> Rect {
-            let left   =  Double(location.x) - actualBoundingBoxLeft
-            let top    =  Double(location.y) - fontBoundingBoxAscent
-            let right  =  Double(location.x) + actualBoundingBoxRight
-            let bottom =  Double(location.y) + fontBoundingBoxDescent
+        // NB: Some of the metrics are not yet universally available in all browsers,
+        // in such cases the return value will be nil
+        public func fontBoundingBox(location:Point = Point()) -> Rect? {
+            if let fontBoundingBoxAscent = fontBoundingBoxAscent,
+               let fontBoundingBoxDescent = fontBoundingBoxDescent {
+                let left   =  Double(location.x) - abs(actualBoundingBoxLeft) // Some browsers (Firefox 75.0) specify a negative value
+                let top    =  Double(location.y) - fontBoundingBoxAscent
+                let right  =  Double(location.x) + actualBoundingBoxRight
+                let bottom =  Double(location.y) + fontBoundingBoxDescent
 
-            let rect = Rect(topLeft:Point(x:Int(left), y:Int(top)),
-                            size:Size(width:(Int(right - left)), height:(Int(bottom - top))))
-            return rect
+                let rect = Rect(topLeft:Point(x:Int(left), y:Int(top)),
+                                size:Size(width:(Int(right - left)), height:(Int(bottom - top))))
+                return rect
+            } else {
+                return nil
+            }
         }
 
     }

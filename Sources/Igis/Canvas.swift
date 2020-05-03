@@ -474,19 +474,21 @@ public class Canvas {
         guard let width                     = Double(arguments[ 1]),
               let actualBoundingBoxLeft     = Double(arguments[ 2]),
               let actualBoundingBoxRight    = Double(arguments[ 3]),
-              let fontBoundingBoxAscent     = Double(arguments[ 4]),
-              let fontBoundingBoxDescent    = Double(arguments[ 5]),
               let actualBoundingBoxAscent   = Double(arguments[ 6]),
-              let actualBoundingBoxDescent  = Double(arguments[ 7]),
-              let emHeightAscent            = Double(arguments[ 8]),
-              let emHeightDescent           = Double(arguments[ 9]),
-              let hangingBaseline           = Double(arguments[10]),
-              let alphabeticBaseline        = Double(arguments[11]),
-              let ideographicBaseline       = Double(arguments[12])
+              let actualBoundingBoxDescent  = Double(arguments[ 7])
         else {
-            print("ERROR: receptionOnTextMetricReady arguments 2 through 13 must be Doubles")
+            print("ERROR: receptionOnTextMetricReady arguments (width, actualBoundBoxLeft/Right, actualBoundingBoxAscent/Descent must be Doubles")
             return
         }
+
+        // The following are not yet available in all browswers
+        let fontBoundingBoxAscent     = Double(arguments[ 4])
+        let fontBoundingBoxDescent    = Double(arguments[ 5])
+        let emHeightAscent            = Double(arguments[ 8])
+        let emHeightDescent           = Double(arguments[ 9])
+        let hangingBaseline           = Double(arguments[10])
+        let alphabeticBaseline        = Double(arguments[11])
+        let ideographicBaseline       = Double(arguments[12])
 
         let metrics = TextMetric.Metrics(
           width: width,
