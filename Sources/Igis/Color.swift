@@ -13,8 +13,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-
-public class Color {
+public final class Color {
     public let style : String
 
     /// The red RGB value of the color
@@ -184,19 +183,6 @@ public class Color {
         style = name.rawValue
     }
 
-    // Calculates a new Color of certain percentage between this Color and another
-    /// - Parameters:
-    ///   - target: The target Color to which to calculate the new Color between
-    ///   - percent: Value between 0 and 1 representing percentage
-    /// - Returns: A new Color of percent between this Color and a target Color
-
-    public func lerp(to target:Color, percent:Double) -> Self {
-        let newRed = Double(red) + (Double(target.red) - Double(red)) * percent
-        let newGreen = Double(green) + (Double(target.green) - Double(green)) * percent
-        let newBlue = Double(blue) * (Double(target.blue) - Double(blue)) * percent
-        return type(of:self).init(red:Color.forceUInt8(newRed), green:Color.forceUInt8(newGreen), blue:Color.forceUInt8(newBlue))
-    }
-
     internal static func hexDigits(_ color:UInt8) -> String {
         var hexadecimal = String(color, radix:16)
         if hexadecimal.count < 2 {
@@ -210,14 +196,5 @@ public class Color {
             fatalError("hex value of \(color) doesn't conform to UInt8")
         }
         return decimal
-    }
-
-    internal static func forceUInt8(_ color:Double) -> UInt8 {
-        if color > Double(UInt8.max) {
-            return UInt8.max
-        } else if color < Double(UInt8.min) {
-            return UInt8.min
-        }
-        return UInt8(color)
     }
 }

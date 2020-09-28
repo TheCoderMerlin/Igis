@@ -47,16 +47,7 @@ public struct Point : Equatable {
         self.x = Int(doublePoint.x)
         self.y = Int(doublePoint.y)
     }
-
-    /// Calculates a new Point of certain percentage between this point and another
-    /// - Parameters:
-    ///   - target: The target point to which to calculate the new Point between
-    ///   - percent: Value between 0 and 1 representing percentage
-    /// - Returns: A new point of percent between this point and a target point
-    public func lerp(to target:Point, percent:Double) -> Point {
-        return self + Point(x:Int(Double(target.x-x)*percent), y:Int(Double(target.y-y)*percent))
-    }
-
+    
     /// Calculates the square of the distance between this point and another
     /// - Parameters:
     ///   - target: The target point to which to calculate the distance
