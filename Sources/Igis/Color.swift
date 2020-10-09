@@ -14,7 +14,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 
-public class Color {
+public final class Color {
     public let style : String
 
     /// The red RGB value of the color

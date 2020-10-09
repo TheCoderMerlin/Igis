@@ -15,7 +15,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
 
-public class Alpha : CanvasObject {
+public final class Alpha : CanvasObject {
     public let alphaValue : Double
 
     public init(alphaValue:Double) {
