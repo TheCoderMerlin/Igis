@@ -16,7 +16,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 const maximumFrameQueueCount = 60
 
 var webSocketPath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf("/")) + "/websocket"
-var webSocketURL = "ws://" + window.location.hostname +  webSocketPath
+var webSocketURL = "wss://" + window.location.hostname +  webSocketPath
 var webSocket;
 var isConnected;
 
