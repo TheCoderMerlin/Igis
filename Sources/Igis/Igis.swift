@@ -33,7 +33,9 @@ public class Igis {
             fatalError("resourcePath not specified, and environment variable 'IGIS_RESOURCE_PATH' not set")
         }
         self.resourceDirectory = URL(fileURLWithPath:self.resourcePath.expandingTildeInPath, isDirectory:true)
-        print("Loading resources from \(resourceDirectory.path)")
+        if !Self.isMerlinMissionManagerMode() {
+            print("Loading resources from \(resourceDirectory.path)")
+        }
 
         self.localHost = localHost ?? ProcessInfo.processInfo.environment["IGIS_LOCAL_HOST"]
         guard self.localHost != nil else {
@@ -44,6 +46,10 @@ public class Igis {
         guard self.localPort != nil else {
             fatalError("localPort not specified and environment variable 'IGIS_LOCAL_PORT' not set or invalid")
         }
+    }
+
+    static func isMerlinMissionManagerMode() -> Bool {
+        return ProcessInfo.processInfo.environment["merlinMissionManagerMode"] == "IGIS"
     }
 
     public func run(painterType:PainterProtocol.Type) throws {
@@ -87,12 +93,17 @@ public class Igis {
         guard let localAddress = channel.localAddress else {
             fatalError("Address was unable to bind. Please check that the socket was not closed or that the address family was understood.")
         }
-        print("Server started and listening on \(localAddress)")
+
+        if !Self.isMerlinMissionManagerMode() {
+            print("Server started and listening on \(localAddress)")
+        }
 
         // This will never unblock as we don't close the ServerChannel
         try channel.closeFuture.wait()
 
-        print("Server closed")
+        if !Self.isMerlinMissionManagerMode() {
+            print("Server closed")
+        }
     } // func main
 
     private static func detectedResourcePath() -> String? {
