@@ -1,6 +1,6 @@
 /*
 IGIS - Remote graphics for Swift on Linux
-Copyright (C) 2018-2020 Tango Golf Digital, LLC
+Copyright (C) 2018-2021 Tango Golf Digital, LLC
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -135,11 +135,11 @@ function onUpdateFrame(timestamp) {
     renderedFramesPerSecond = statisticsFramesRenderedCount / elapsedMilliseconds * 1000;
     enqueuedFramesPerSecond = statisticsEnqueuedFrameCount / elapsedMilliseconds * 1000;
     emptyFramesPerSecond = statisticsEmptyFrameCount / elapsedMilliseconds * 1000;
-    logStatistics("Rendered FPS: " + renderedFramesPerSecond.toFixed(2) +
-		  " Enqueued FPS: " + enqueuedFramesPerSecond.toFixed(2) +
-		  " Empty FPS: " + emptyFramesPerSecond.toFixed(2) +
-		  " Max Frame Queue: " + statisticsMaxFrameQueueCount +
-          	  " Discarded Frame Count: " + statisticsFramesDiscardedCount);
+    logStatistics("<p>Rendered FPS: " + renderedFramesPerSecond.toFixed(2) + "</p>" +
+		  " <p>Enqueued FPS: " + enqueuedFramesPerSecond.toFixed(2) + "</p>" +
+		  " <p>Empty FPS: " + emptyFramesPerSecond.toFixed(2) + "</p>" + 
+		  " <p>Max Frame Queue: " + statisticsMaxFrameQueueCount + "</p>" +
+          	  " <p>Discarded Frame Count: " + statisticsFramesDiscardedCount) + "</p>";
 
     // Request next update frame event if still connected
     if (isConnected) {
@@ -380,6 +380,9 @@ function processCommand(commandMessage, commandIndex) {
 	break;
     case "cursorStyle":
 	processCursorStyle(arguments);
+	break;
+    case "displayStatistics":
+	processDisplayStatistics(arguments);
 	break;
     case "drawImage":
 	processDrawImage(arguments);
@@ -707,6 +710,21 @@ function processCursorStyle(arguments) {
     document.body.style.cursor = cursorStyle;
 }
 
+function processDisplayStatistics(arguments) {
+    if (arguments.length != 1) {
+	logError("processDisplayStatistics: Requires one argument");
+	return;
+    }
+
+    let displayStatistics = arguments.shift() === "true";
+
+    if (displayStatistics) {
+	divStatistics.classList.add("visible");
+    } else {
+	divStatistics.classList.remove("visible");
+    }
+}
+
 function processSetAudioMode(arguments) {
     if (arguments.length != 2) {
 	logError("processSetAudioMode: Requires two arguments");
@@ -721,13 +739,15 @@ function processSetAudioMode(arguments) {
 	audio.play().then(function() {
 
 	}).catch(function(error) {
+	    var enablePlayButtonContainer = document.getElementById("enablePlayButtonContainer");
 	    var enablePlayButton = document.getElementById("enablePlayButton");
-	    enablePlayButton.style = "display:block;";
+	    enablePlayButtonContainer.classList.add("visible");
 
 	    var callback = function() {
 		audio.play();
 		enablePlayButton.removeEventListener('click', callback);
-		enablePlayButton.style = "display:none;";
+		enablePlayButtonContainer.classList.remove("visible");
+		console.log("hide");
 	    };
 
  	    enablePlayButton.addEventListener('click', callback);
@@ -735,7 +755,6 @@ function processSetAudioMode(arguments) {
     } else if (mode == "pause") {
 	audio.pause();
     }
-    
 }
 
 function processDrawImage(arguments) {
