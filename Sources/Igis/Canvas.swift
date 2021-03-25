@@ -1,6 +1,6 @@
 /*
 IGIS - Remote graphics for Swift on Linux
-Copyright (C) 2018, 2019 Tango Golf Digital, LLC
+Copyright (C) 2018-2021 Tango Golf Digital, LLC
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -67,6 +67,11 @@ public class Canvas {
 
     public func canvasSetSize(size:Size) {
         let command = "canvasSetSize|\(size.width)|\(size.height)"
+        pendingCommandList.append(command)
+    }
+
+    public func displayStatistics(_ displayStatistics:Bool = true) {
+        let command = "displayStatistics|\(displayStatistics)"
         pendingCommandList.append(command)
     }
 
