@@ -155,7 +155,7 @@ public func apply(toPoint:Point) -> Point
 public func apply(toDoublePoints:[DoublePoint]) -> [DoublePoint]
 public func apply(toPoints:[Point]) -> [Point]
 
-static func multply(matrices:[Matrix]) -> Matrix
+static func multiply(matrices:[Matrix]) -> Matrix
 ```
 
 ### Color
