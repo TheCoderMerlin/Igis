@@ -172,7 +172,9 @@ function onError(event) {
 }
 
 function doSend(message) {
-    webSocket.send(message);
+    if (isConnected) {
+	webSocket.send(message);
+    }
 }
 
 // Images
