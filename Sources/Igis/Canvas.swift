@@ -162,6 +162,7 @@ public class Canvas {
         }
     }
 
+    // ***** MARK: Event reception (mouse and keyboard) *****
     internal func receptionOnClick(arguments:[String]) {
         // In some cases (from some browsers) a Double is received
         guard arguments.count == 2,
@@ -243,6 +244,7 @@ public class Canvas {
         painter.onKeyUp(key:key, code:code, ctrlKey:ctrlKey, shiftKey:shiftKey, altKey:altKey, metaKey:metaKey)
     }
 
+    // ***** MARK: IdentifiedObject handling *****
     internal func getIdentifiedObject(arguments:[String]) -> CanvasIdentifiedObject? {
         guard arguments.count == 1,
               let id = UUID(uuidString:arguments[0]) else {
@@ -333,6 +335,7 @@ public class Canvas {
         textMetric.setMetrics(metrics:metrics)
     }
 
+    // ***** MARK: canvas/window resize events *****
     internal func receptionOnCanvasResize(arguments:[String]) {
         guard arguments.count == 2,
               let width = Double(arguments[0]),
@@ -361,5 +364,4 @@ public class Canvas {
         let intervalInMilliSeconds = Int64(intervalInSeconds * 1_000)
         return .milliseconds(intervalInMilliSeconds)
     }
-    
 }
