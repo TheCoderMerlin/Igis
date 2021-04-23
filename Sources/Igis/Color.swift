@@ -147,6 +147,7 @@ public final class Color {
         case plum = "#DDA0DD"
         case powderblue = "#B0E0E6"
         case purple = "#800080"
+        case rebeccapurple = "#663399"
         case red = "#FF0000"
         case rosybrown = "#BC8F8F"
         case royalblue = "#4169E1"
@@ -174,6 +175,16 @@ public final class Color {
         case whitesmoke = "#F5F5F5"
         case yellow = "#FFFF00"
         case yellowgreen = "#9ACD32"
+
+        static let aqua = Name.cyan
+        static let darkgrey = Name.darkgray
+        static let darkslategrey = Name.darkslategray
+        static let dimgrey = Name.dimgray
+        static let fuchsia = Name.magenta
+        static let grey = Name.gray
+        static let lightgrey = Name.lightgray
+        static let lightslategrey = Name.lightslategray
+        static let slategrey = Name.slategray
     }
 
     public required init (red:UInt8, green:UInt8, blue:UInt8) {

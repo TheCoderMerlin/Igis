@@ -67,5 +67,4 @@ public struct Size : Equatable {
     static public func == (lhs:Size, rhs:Size) -> Bool {
         return lhs.width == rhs.width && lhs.height == rhs.height
     }
-    
 }

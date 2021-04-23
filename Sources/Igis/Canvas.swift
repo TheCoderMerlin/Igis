@@ -135,43 +135,19 @@ public class Canvas {
             case "onKeyUp":
                 receptionOnKeyUp(arguments:arguments)
 
-                // Image events
-            case "onImageError":
-                receptionOnImageError(arguments:arguments)
-            case "onImageLoaded":
-                receptionOnImageLoaded(arguments:arguments)
-            case "onImageProcessed":
-                receptionOnImageProcessed(arguments:arguments)
-
-                // Gradient events
-            case "onLinearGradientLoaded":
-                receptionOnLinearGradientLoaded(arguments:arguments)
-            case "onRadialGradientLoaded":
-                receptionOnRadialGradientLoaded(arguments:arguments)
-            case "onLinearGradientProcessed":
-                receptionOnLinearGradientProcessed(arguments:arguments)
-            case "onRadialGradientProcessed":
-                receptionOnRadialGradientProcessed(arguments:arguments)
-
-                // Pattern events
-            case "onPatternLoaded":
-                receptionOnPatternLoaded(arguments:arguments)
-            case "onPatternProcessed":
-                receptionOnPatternProcessed(arguments:arguments)
-
-                // Audio events
-            case "onAudioError":
-                receptionOnAudioError(arguments:arguments)
-            case "onAudioLoaded":
-                receptionOnAudioLoaded(arguments:arguments)
-            case "onAudioProcessed":
-                receptionOnAudioProcessed(arguments:arguments)
+                // IdentifiedObject events
+            case "onImageError", "onAudioError":
+                receptionOnIdentifiedObjectError(arguments:arguments)
+            case "onImageLoaded", "onAudioLoaded",
+                 "onLinearGradientLoaded", "onRadialGradientLoaded",
+                 "onPatternLoaded", "onTextMetricLoaded":
+                receptionOnIdentifiedObjectLoaded(arguments:arguments)
+            case "onImageProcessed", "onAudioProcessed",
+                 "onLinearGradientProcessed", "onRadialGradientProcessed",
+                 "onPatternProcessed", "onTextMetricProcessed":
+                receptionOnIdentifiedObjectProcessed(arguments:arguments)
 
                 // Text events
-            case "onTextMetricLoaded":
-                receptionOnTextMetricLoaded(arguments:arguments)
-            case "onTextMetricProcessed":
-                receptionOnTextMetricProcessed(arguments:arguments)
             case "onTextMetricReady":
                 receptionOnTextMetricReady(arguments:arguments)
 
@@ -186,6 +162,7 @@ public class Canvas {
         }
     }
 
+    // ***** MARK: Event reception (mouse and keyboard) *****
     internal func receptionOnClick(arguments:[String]) {
         // In some cases (from some browsers) a Double is received
         guard arguments.count == 2,
@@ -267,202 +244,38 @@ public class Canvas {
         painter.onKeyUp(key:key, code:code, ctrlKey:ctrlKey, shiftKey:shiftKey, altKey:altKey, metaKey:metaKey)
     }
 
-    internal func receptionOnImageError(arguments:[String]) {
+    // ***** MARK: IdentifiedObject handling *****
+    internal func getIdentifiedObject(arguments:[String]) -> CanvasIdentifiedObject? {
         guard arguments.count == 1,
               let id = UUID(uuidString:arguments[0]) else {
-            print("ERROR: receptionInImageError: requires exactly one argment which must be a valid UUID.")
-            return
+            print("ERROR: getIdentifiedObject: requires exactly one argument which must be a valid UUID.")
+            return nil
+        }
+        
+        guard let identifiedObject = identifiedObjectDictionary[id] else {
+            print("ERROR: getIdentifiedObject: Object with id \(id.uuidString) was not found.")
+            return nil
         }
 
-        guard let identifiedObject = identifiedObjectDictionary[id] else {
-            print("ERROR: receptionOnImageError: Object with id \(id.uuidString) was not found.")
-            return
-        }
-        identifiedObject.setState(.resourceError)
+        return identifiedObject
     }
 
-    internal func receptionOnImageLoaded(arguments:[String]) {
-        guard arguments.count == 1,
-              let id = UUID(uuidString:arguments[0]) else {
-            print("ERROR: receptionOnImageLoaded requires exactly one argument which must be a valid UUID.")
-            return
+    internal func receptionOnIdentifiedObjectError(arguments:[String]) {
+        if let identifiedObject = getIdentifiedObject(arguments:arguments) {
+            identifiedObject.setState(.resourceError)
         }
-
-        guard let identifiedObject = identifiedObjectDictionary[id] else {
-            print("ERROR: receptionOnImageLoaded: Object with id \(id.uuidString) was not found.")
-            return
-        }
-        identifiedObject.setState(.ready)
     }
 
-    internal func receptionOnImageProcessed(arguments:[String]) {
-        guard arguments.count == 1,
-              let id = UUID(uuidString:arguments[0]) else {
-            print("ERROR: receptionOnImageProcessed requires exactly one argument which must be a valid UUID.")
-            return
+    internal func receptionOnIdentifiedObjectLoaded(arguments:[String]) {
+        if let identifiedObject = getIdentifiedObject(arguments:arguments) {
+            identifiedObject.setState(.ready)
         }
-
-        guard let identifiedObject = identifiedObjectDictionary[id] else {
-            print("ERROR: receptionOnImageProcessed: Object with id \(id.uuidString) was not found.")
-            return
-        }
-        identifiedObject.setState(.processedByClient)
     }
 
-    
-    internal func receptionOnLinearGradientProcessed(arguments:[String]) {
-        guard arguments.count == 1,
-              let id = UUID(uuidString:arguments[0]) else {
-            print("ERROR: receptionOnLinearGradientProcessed requires exactly one argument which must be a valid UUID.")
-            return
+    internal func receptionOnIdentifiedObjectProcessed(arguments:[String]) {
+        if let identifiedObject = getIdentifiedObject(arguments:arguments) {
+            identifiedObject.setState(.processedByClient)
         }
-
-        guard let identifiedObject = identifiedObjectDictionary[id] else {
-            print("ERROR: receptionOnLinearGradientProcessed: Object with id \(id.uuidString) was not found.")
-            return
-        }
-        identifiedObject.setState(.processedByClient)
-    }
-
-    internal func receptionOnLinearGradientLoaded(arguments:[String]) {
-        guard arguments.count == 1,
-              let id = UUID(uuidString:arguments[0]) else {
-            print("ERROR: receptionOnLinearGradientLoaded requires exactly one argument which must be a valid UUID.")
-            return
-        }
-
-        guard let identifiedObject = identifiedObjectDictionary[id] else {
-            print("ERROR: receptionOnLinearGradientLoaded: Object with id \(id.uuidString) was not found.")
-            return
-        }
-        identifiedObject.setState(.ready)
-    }
-
-    
-    internal func receptionOnRadialGradientProcessed(arguments:[String]) {
-        guard arguments.count == 1,
-              let id = UUID(uuidString:arguments[0]) else {
-            print("ERROR: receptionOnRadialGradientProcessed requires exactly one argument which must be a valid UUID.")
-            return
-        }
-
-        guard let identifiedObject = identifiedObjectDictionary[id] else {
-            print("ERROR: receptionOnRadialGradientProcessed: Object with id \(id.uuidString) was not found.")
-            return
-        }
-        identifiedObject.setState(.processedByClient)
-    }
-
-    internal func receptionOnRadialGradientLoaded(arguments:[String]) {
-        guard arguments.count == 1,
-              let id = UUID(uuidString:arguments[0]) else {
-            print("ERROR: receptionOnRadialGradientLoaded requires exactly one argument which must be a valid UUID.")
-            return
-        }
-
-        guard let identifiedObject = identifiedObjectDictionary[id] else {
-            print("ERROR: receptionOnRadialGradientLoaded: Object with id \(id.uuidString) was not found.")
-            return
-        }
-        identifiedObject.setState(.ready)
-    }
-
-    internal func receptionOnPatternProcessed(arguments:[String]) {
-        guard arguments.count == 1,
-              let id = UUID(uuidString:arguments[0]) else {
-            print("ERROR: receptionOnPatternProcessed requires exactly one argument which must be a valid UUID.")
-            return
-        }
-
-        guard let identifiedObject = identifiedObjectDictionary[id] else {
-            print("ERROR: receptionOnPatternProcessed: Object with id \(id.uuidString) was not found.")
-            return
-        }
-        identifiedObject.setState(.processedByClient)
-    }
-
-    internal func receptionOnPatternLoaded(arguments:[String]) {
-        guard arguments.count == 1,
-              let id = UUID(uuidString:arguments[0]) else {
-            print("ERROR: receptionOnPatternLoaded requires exactly one argument which must be a valid UUID.")
-            return
-        }
-
-        guard let identifiedObject = identifiedObjectDictionary[id] else {
-            print("ERROR: receptionOnPatternLoaded: Object with id \(id.uuidString) was not found.")
-            return
-        }
-        identifiedObject.setState(.ready)
-    }
-
-    internal func receptionOnAudioError(arguments:[String]) {
-        guard arguments.count == 1,
-              let id = UUID(uuidString:arguments[0]) else {
-            print("ERROR: receptionOnAudioError: requires exactly one argment which must be a valid UUID.")
-            return
-        }
-
-        guard let identifiedObject = identifiedObjectDictionary[id] else {
-            print("ERROR: receptionOnAudioError: Object with id \(id.uuidString) was not found.")
-            return
-        }
-        identifiedObject.setState(.resourceError)
-    }
-
-    internal func receptionOnAudioLoaded(arguments:[String]) {
-        guard arguments.count == 1,
-              let id = UUID(uuidString:arguments[0]) else {
-            print("ERROR: receptionOnAudioLoaded requires exactly one argument which must be a valid UUID.")
-            return
-        }
-
-        guard let identifiedObject = identifiedObjectDictionary[id] else {
-            print("ERROR: receptionOnAudioLoaded: Object with id \(id.uuidString) was not found.")
-            return
-        }
-        identifiedObject.setState(.ready)
-    }
-
-    internal func receptionOnAudioProcessed(arguments:[String]) {
-        guard arguments.count == 1,
-              let id = UUID(uuidString:arguments[0]) else {
-            print("ERROR: receptionOnAudioProcessed requires exactly one argument which must be a valid UUID.")
-            return
-        }
-
-        guard let identifiedObject = identifiedObjectDictionary[id] else {
-            print("ERROR: receptionOnImageProcessed: Object with id \(id.uuidString) was not found.")
-            return
-        }
-        identifiedObject.setState(.processedByClient)
-    }
-
-    internal func receptionOnTextMetricLoaded(arguments:[String]) {
-        guard arguments.count == 1,
-              let id = UUID(uuidString:arguments[0]) else {
-            print("ERROR: receptionOnTextMetricLoaded requires exactly one argument which must be a valid UUID.")
-            return
-        }
-
-        guard let identifiedObject = identifiedObjectDictionary[id] else {
-            print("ERROR: receptionOnTextMetricLoaded: Object with id \(id.uuidString) was not found.")
-            return
-        }
-        identifiedObject.setState(.ready)
-    }
-
-    internal func receptionOnTextMetricProcessed(arguments:[String]) {
-        guard arguments.count == 1,
-              let id = UUID(uuidString:arguments[0]) else {
-            print("ERROR: receptionOnTextMetricProcessed requires exactly one argument which must be a valid UUID.")
-            return
-        }
-
-        guard let identifiedObject = identifiedObjectDictionary[id] else {
-            print("ERROR: receptionOnImageProcessed: Object with id \(id.uuidString) was not found.")
-            return
-        }
-        identifiedObject.setState(.processedByClient)
     }
 
     internal func receptionOnTextMetricReady(arguments:[String]) {
@@ -513,7 +326,7 @@ public class Canvas {
             print("ERROR: receptionOnTextMetricReady: Object with id \(id.uuidString) was not found.")
             return
         }
-
+        
         guard let textMetric = identifiedObject as? TextMetric else {
             print("ERROR: receptionOnTextMetricReady: Object with id \(id.uuidString) is not a TextMetric object.")
             return
@@ -522,6 +335,7 @@ public class Canvas {
         textMetric.setMetrics(metrics:metrics)
     }
 
+    // ***** MARK: canvas/window resize events *****
     internal func receptionOnCanvasResize(arguments:[String]) {
         guard arguments.count == 2,
               let width = Double(arguments[0]),
@@ -550,5 +364,4 @@ public class Canvas {
         let intervalInMilliSeconds = Int64(intervalInSeconds * 1_000)
         return .milliseconds(intervalInMilliSeconds)
     }
-    
 }

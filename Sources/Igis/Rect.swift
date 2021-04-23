@@ -346,6 +346,4 @@ public struct Rect : Equatable {
     static public func == (lhs:Rect, rhs:Rect) -> Bool {
         return lhs.topLeft == rhs.topLeft && lhs.size == rhs.size
     }
-    
-    
 }

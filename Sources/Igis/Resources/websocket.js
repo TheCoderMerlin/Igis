@@ -57,16 +57,6 @@ function onLoad() {
     gradientDictionary = {};
     patternDictionary = {};
 
-    // Register events
-    window.addEventListener("keydown", onKeyDown);
-    window.addEventListener("keyup", onKeyUp);
-    window.addEventListener("resize", onWindowResize);
-    canvas.addEventListener("click", onClick);
-    canvas.addEventListener("mousedown", onMouseDown);
-    canvas.addEventListener("mouseup", onMouseUp);
-    canvas.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onWindowMouseUp); // Used to handle events outside browser
-
     // Frame Queue
     frameQueue = [];
 
@@ -104,6 +94,16 @@ function onOpen(event) {
     // Notify sizes
     notifyWindowSize(window.innerWidth, window.innerHeight);
     notifyCanvasSize(canvas.getAttribute("width"), canvas.getAttribute("height"));
+
+    // Register events
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
+    window.addEventListener("resize", onWindowResize);
+    canvas.addEventListener("click", onClick);
+    canvas.addEventListener("mousedown", onMouseDown);
+    canvas.addEventListener("mouseup", onMouseUp);
+    canvas.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onWindowMouseUp); // Used to handle events outside browser
 
     // Request update frame event
     window.requestAnimationFrame(onUpdateFrame);
@@ -149,7 +149,18 @@ function onUpdateFrame(timestamp) {
 
 function onClose(event) {
     isConnected = false;
-    logMessage("DISCONNECTED. Code: " + event.code + " Reason: " + event.reason);
+
+    // Unregister events
+    window.removeEventListener("keydown", onKeyDown);
+    window.removeEventListener("keyup", onKeyUp);
+    window.removeEventListener("resize", onWindowResize);
+    canvas.removeEventListener("click", onClick);
+    canvas.removeEventListener("mousedown", onMouseDown);
+    canvas.removeEventListener("mouseup", onMouseUp);
+    canvas.removeEventListener("mousemove", onMouseMove);
+    window.removeEventListener("mouseup", onWindowMouseUp); // Used to handle events outside browser
+
+    logMessage("DISCONNECTED \n\tCode: " + event.code + " \n\tReason: " + event.reason);
 }
 
 function onMessage(event) {
@@ -161,7 +172,9 @@ function onError(event) {
 }
 
 function doSend(message) {
-    webSocket.send(message);
+    if (isConnected) {
+	webSocket.send(message);
+    }
 }
 
 // Images
@@ -280,7 +293,7 @@ function onKeyDown(event) {
     let altKey   = event.altKey
     let metaKey  = event.metaKey
 
-    let message = "onKeyDown|"   + key + "|" + code + "|" + ctrlKey + "|" + shiftKey + "|" + altKey + "|" + metaKey;
+    let message = "onKeyDown|" + key + "|" + code + "|" + ctrlKey + "|" + shiftKey + "|" + altKey + "|" + metaKey;
     doSend(message);
 }
 
@@ -292,7 +305,7 @@ function onKeyUp(event) {
     let altKey   = event.altKey
     let metaKey  = event.metaKey
 
-    let message = "onKeyUp|"   + key + "|" + code + "|" + ctrlKey + "|" + shiftKey + "|" + altKey + "|" + metaKey;
+    let message = "onKeyUp|" + key + "|" + code + "|" + ctrlKey + "|" + shiftKey + "|" + altKey + "|" + metaKey;
     doSend(message);
 }
 

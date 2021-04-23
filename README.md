@@ -12,21 +12,12 @@ In order to use the library, use the project IgisShellD as a starting point.
 ### Point
 ```swift
 // Point Definition
-public private (set) var x : Int
-public private (set) var y : Int
+public var x : Int
+public var y : Int
 
+public init()
 public init(x:Int, y:Int)
 public init(doublePoint:DoublePoint)
-
-public mutating func moveBy(offsetX:Int, offsetY:Int)
-public mutating func moveBy(offset:Point)
-public mutating func moveXBy(offset:Int)
-public mutating func moveYBy(offset:Int)
-
-public mutating func moveTo(x:Int, y:Int)
-public mutating func moveTo(_ point:Point)
-
-public func negated() -> Point
 
 public func distanceSquared(target:Point) -> Int
 public func distance(target:Point) -> Double
@@ -37,41 +28,26 @@ static public func Points(doublePoints:[DoublePoint]) -> [Point]
 ### DoublePoint
 ```swift
 // DoublePoint Definition
-public init()  
+public init()
 public init(x:Double, y:Double)
 public init(point:Point)
 
-public mutating func moveBy(offsetX:Double, offsetY:Double)
-public mutating func moveBy(offset:DoublePoint)
-public mutating func moveXBy(offset:Double)
-public mutating func moveYBy(offset:Double)
-
-public mutating func moveTo(x:Double, y:Double)
-public mutating func moveTo(_ point:DoublePoint)
-
-public func negated()
 public func distanceSquared(target:DoublePoint)
 public func distance(target:DoublePoint)
 
 public func DoiublePoints(points:[Point]) -> [DoublePoint]
-
-static public func == (lhs:DoublePoint, rhs:DoublePoint) -> Bool
 ```
 
 ### Size
 ```swift
 // Size Definition
-public private (set) var width : Int
-public private (set) var height : Int 
+public var width : Int
+public height : Int 
 
 public init() 
 public init(width:Int, height:Int)
 
-public mutating func enlargeBy(changeWidth:Int, changeHeight:Int)
-public mutating func enlargeWidthBy(change:Int)
-public mutating func enlargeHeightBy(change:Int)
-
-public mutating func changeTo(width:Int, height:Int)
+public mutating func enlarge(change:Int)
 
 public var center : Point // Calculated
 ```
@@ -84,6 +60,7 @@ public enum Containment {
     case containedFully           // Included in set when both containedHorizontally AND containedVertically (Points,Rects)
     case overlapsFully            // Included in set when both overlapsHorizontally AND overlapsVertically   (Rects only)
     case beyondFully              // Included in set when both beyondHorizontally AND beyondVertically       (Points,Rects)
+	case contact                  // Included in set when target is in contact with rectangle                (Points, Rects)
 
     // Horizontal cases
     case beyondLeft               // Indicates target's right side is beyond (to left of) object             (Points,Rects)
@@ -121,17 +98,23 @@ public init(topLeft:Point, size:Size)
 public init(bottomLeft:Point, size:Size)
 public init(topRight:Point, size:Size)
 public init(bottomRight:Point, size:Size)
-public init(source:Rect)
 
-public var left : Int
-public var top : Int
-public var right : Int
-public var bottom : Int
+public var left : Int   // Calculated
+public var top : Int    // Calculated
+public var right : Int  // Calculated
+public var bottom : Int // calculated
 
 public func local(to origin:Rect) -> Rect 
 
 public func containment(target:Point) -> ContainmentSet
 public func containment(target:Rect) -> ContainmentSet
+
+public func unioned(other:Rect) -> Rect
+
+public func inflated(change:Int) -> Rect
+public mutating func inflate(change:Int)
+public func inflated(change:Size) -> Rect
+public mutating func inflate(change:Size)
 
 ```
 
@@ -162,10 +145,13 @@ static func multiply(matrices:[Matrix]) -> Matrix
 ```swift
 // Color Definition
 public init (red:UInt8, green:UInt8, blue:UInt8)
-
 public init(_ name:Name)
+
+public var red : UInt8 // Calculated
+public var green : UInt8 // Calculated
+public var blue : UInt8 // Calculated
 ```
-Note:  Color names are from [w3 org](https://www.w3.org/TR/css-color-3/#svg-color).  If a name is not available it has an available synonym.  For example "grey" can be found by using "gray", and "aqua" can be found by using "cyan".
+Note:  Color names are from [w3 org](https://www.w3.org/TR/css-color-3/#svg-color).
 
 ### Gradients
 Gradients must be setup before being rendered.
@@ -184,7 +170,6 @@ public init(mode:Mode)
 func addColorStop(_ colorStop:ColorStop)
 ```
 
-
 ### StrokeStyle
 ```swift
 // StrokeStyle Definition
@@ -197,6 +182,7 @@ public init(gradient:Gradient)
 // FillStyle Definition
  public init(color:Color)
  public init(gradient:Gradient)
+ public init(pattern:Pattern)
  ```
 
 ### Painting 
@@ -417,11 +403,11 @@ let pathFromPoints = Path(points:[Point], fillMode:FillMode = .stroke)
 ```
 
 ### Clipping
-Drawing may be clipped to a path by first rendering the path and then
+Drawing may be clipped to a path by rendering a clipPath.
 
 ```swift
-let clip = Clip(windingRule:.evenOdd) // or
-let clip = Clip(windingRule:.nonZero)
+let clip = clipPath(path:Path(), windingRule:.evenOdd) // or
+let clip = clipPath(path:Path(), windingRule:.nonZero)
 ```
 
 ### Turtle Graphics
@@ -434,25 +420,19 @@ Note:  It's OK to mix objects and turtle graphics.
 public init(canvasSize:Size)
 
 public func forward(steps:Int) // Move forward the specified number of steps
-
 public func backward(steps:Int) // Move backward the specified number of steps
 
 public func left(degrees:Double) // Turn left (counter-clockwise) the specified number of degrees
-
 public func right(degrees:Double) // Turn right (clockwise) the specified number of degrees
 
 public func penUp() // Lift the pen.  Subsequent movement will not be visible.
-
 public func penDown() // Drop the pen.  Subsequent movement will be visible.
 
 public func penColor(color:Color) // Set the color of the pen
-
 public func penWidth(width:Int) // Set the width of the pen
 
 public func push() // Push the current position, angle, and pen attributes onto the stack
-
 public func pop() // Pop the previously pushed position, angle, and pen attributes
-
 public func home() // Return to the home position
 ```
 
@@ -513,40 +493,40 @@ override func render(canvas:Canvas) {
 Available styles:
 ```swift
     public enum Style : String {
-            // Defaults
+        // Defaults
 	    case initial
-            case auto
-            case defaultCursor
+        case auto
+        case defaultCursor
 
  	    // None
 	    case none
 
-            // Waiting
-            case progress
-            case wait
+        // Waiting
+        case progress
+        case wait
 
-            // Pointer types
+	    // Pointer types
 	    case pointer
 	    case crosshair
 	    case help
 	    case contextMenu
 	    case alias
 
-            // Text and cells
+        // Text and cells
 	    case text
 	    case textVertical
 	    case cell
 
-            // Movement and dragging
+        // Movement and dragging
 	    case notAllowed
 	    case noDrop
 
-            case allScroll
+        case allScroll
 
-            case move
+        case move
 	    case copy
 
-            case resizeNorth
+        case resizeNorth
 	    case resizeNorthEast
 	    case resizeEast
 	    case resizeSouthEast
@@ -555,11 +535,11 @@ Available styles:
 	    case resizeWest
 	    case resizeNorthWest
 
-            case resizeRow
+        case resizeRow
 	    case resizeColumn
 
-            // Zooming
+        // Zooming
 	    case zoomIn
 	    case zoomOut
    }
-```			    
+```
