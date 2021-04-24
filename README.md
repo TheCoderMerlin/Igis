@@ -35,7 +35,7 @@ public init(point:Point)
 public func distanceSquared(target:DoublePoint)
 public func distance(target:DoublePoint)
 
-public func DoiublePoints(points:[Point]) -> [DoublePoint]
+public func DoublePoints(points:[Point]) -> [DoublePoint]
 ```
 
 ### Size
