@@ -1,6 +1,6 @@
 /*
 IGIS - Remote graphics for Swift on Linux
-Copyright (C) 2018-2020 CoderMerlin.com
+Copyright (C) 2018-2021 CoderMerlin.com
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -15,15 +15,20 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 /// A `Rect` represents a rectangle in a two-dimensional plane.  
 public struct Rect : Equatable {
+    /// The topLeft coordinate of the rect.
+    /// This value is modifiable and will alter the position.
     public var topLeft : Point
+    
+    /// The size of the rect.
+    /// This value is modifiable.
     public var size : Size
 
-    /// The rect at the origin with zero size
+    /// The rect at the origin with zero size.
     static public let zero = Rect(topLeft:Point(), size:Size())
 
-    /// The coordinate along the x-axis at the left of rect
+    /// The coordinate along the x-axis at the left of rect.
     /// This value is modifiable and will alter only the left coordinate,
-    /// thus, the size will change
+    /// thus, the size will change.
     public var left : Int {
         get {
             return topLeft.x
@@ -35,9 +40,9 @@ public struct Rect : Equatable {
         }
     }
 
-    /// The coordinate along the y-axis at the top of rect
+    /// The coordinate along the y-axis at the top of rect.
     /// This value is modifiable and will alter only the top coordinate,
-    /// thus, the size will change
+    /// thus, the size will change.
     public var top : Int {
         get {
             return topLeft.y
@@ -49,9 +54,9 @@ public struct Rect : Equatable {
         }
     }
 
-    /// The coordinate along the x-axis at the right of rect
+    /// The coordinate along the x-axis at the right of rect.
     /// This value is modifiable and will alter only the right coordinate,
-    /// thus, the size will change
+    /// thus, the size will change.
     public var right : Int {
         get {
             return topLeft.x + size.width
@@ -62,9 +67,9 @@ public struct Rect : Equatable {
         }
     }
 
-    /// The coordinate along the y-axis at the bottom of rect
+    /// The coordinate along the y-axis at the bottom of rect.
     /// This value is modifiable and will alter only the bottom coordinate,
-    /// thus, the size will change
+    /// thus, the size will change.
     public var bottom : Int {
         get {
             return topLeft.y + size.height
@@ -75,9 +80,8 @@ public struct Rect : Equatable {
         }
     }
 
-
-    /// The width of the rectangle
-    /// This value is modifiable and will alter the right coodinate
+    /// The width of the rectangle.
+    /// This value is modifiable and will alter the right coodinate.
     public var width : Int {
         get {
             return size.width
@@ -87,9 +91,8 @@ public struct Rect : Equatable {
         }
     }
 
-
-    /// The height of the rectangle
-    /// This value is modifiable and will alter the bottom coordinate
+    /// The height of the rectangle.
+    /// This value is modifiable and will alter the bottom coordinate.
     public var height : Int {
         get {
             return size.height
@@ -99,46 +102,76 @@ public struct Rect : Equatable {
         }
     }
 
+    /// The topRight corner of the rectangle.
+    /// This value is modifiable and will alter the position.
     public var topRight : Point {
         get {
             return Point(x:right, y:top)
         }
         set (newTopRight) {
-            right = newTopRight.x
-            top   = newTopRight.y
+            topLeft.x = newTopRight.x - width
+            topLeft.y = newTopRight.y
         }
     }
 
+    /// The bottomLeft coordinate of the rect.
+    /// This value is modifiable and will alter the position.
     public var bottomLeft : Point {
         get {
             return Point(x:left, y:bottom)
         }
         set (newBottomLeft) {
-            left    = newBottomLeft.x
-            bottom  = newBottomLeft.y
+            topLeft.x = newBottomLeft.x
+            topLeft.y = newBottomLeft.y - height
         }
     }
 
+    /// The bottomRight coordinate of the rect.
+    /// This value is modifiable and will alter the position.
     public var bottomRight : Point {
         get {
             return Point(x:right, y:bottom)
         }
         set (newBottomRight) {
-            right   = newBottomRight.x
-            bottom  = newBottomRight.y
+            topLeft.x = newBottomRight.x - width
+            topLeft.y = newBottomRight.y - height
         }
     }
 
+    /// The center x-value coordinate of the rect.
+    /// This value is modifiable and will alter the position along
+    /// the x-coordinate.
     public var centerX : Int {
-        return topLeft.x + size.width / 2
+        get {
+            return topLeft.x + size.width / 2
+        }
+        set (newCenterX) {
+            topLeft.x = newCenterX - size.width / 2
+        }
     }
 
+    /// The center y-value coordinate of the rect.
+    /// This value is modifiable and will alter the position along
+    /// the y-coordinate.
     public var centerY : Int {
-        return topLeft.y + size.height / 2
+        get {
+            return topLeft.y + size.height / 2
+        }
+        set (newCenterY) {
+            topLeft.y = newCenterY - size.height / 2
+        }
     }
 
+    /// The center coordinate of the rect.
+    /// This value is modifiable and will alter the position.
     public var center : Point {
-        Point(x: centerX, y: centerY)
+        get {
+            Point(x: centerX, y: centerY)
+        }
+        set (newCenter) {
+            centerX = newCenter.x
+            centerY = newCenter.y
+        }
     }
 
     public init() {
@@ -146,12 +179,7 @@ public struct Rect : Equatable {
         self.size = Size()
     }
 
-    public init(size:Size) {
-        self.topLeft = Point()
-        self.size = size
-    }
-
-    public init(topLeft:Point, size:Size) {
+    public init(topLeft:Point=Point(), size:Size) {
         self.topLeft = topLeft
         self.size = size
     }
@@ -221,7 +249,6 @@ public struct Rect : Equatable {
 
         return containmentSet
     }
-
 
     public func containment(target:Rect) -> ContainmentSet {
         var containmentSet = ContainmentSet()

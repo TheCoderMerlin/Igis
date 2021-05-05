@@ -24,6 +24,11 @@ public struct Size : Equatable {
     /// The size (width:0, height:0)
     static public let zero = Size(width: 0, height: 0)
 
+    /// The aspect ratio of this size (width / height).
+    public var aspectRatio : Double {
+        return Double(width) / Double(height)
+    }
+
     /// Create a new `Size` of (width:0, height:0)
     public init() {
         self.width = 0
@@ -54,15 +59,6 @@ public struct Size : Equatable {
         Point(x: width / 2, y: height / 2)
     }
     
-    /// Calculates a new Size of certain percentage between this Size and another
-    /// - Parameters:
-    ///   - target: The target size to which to calculate the new Size between
-    ///   - percent: Value between 0 and 1 representing percentage
-    /// - Returns: A new size of percent between this size and a target size
-    public func lerp(to target:Size, percent:Double) -> Size {
-        return Size(width:width+Int(Double(target.width-width)*percent), height:height+Int(Double(target.height-height)*percent))
-    }
-
     /// Equivalence operator for two `Size`s
     static public func == (lhs:Size, rhs:Size) -> Bool {
         return lhs.width == rhs.width && lhs.height == rhs.height

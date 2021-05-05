@@ -1,6 +1,6 @@
 /*
 IGIS - Remote graphics for Swift on Linux
-Copyright (C) 2020 CoderMerlin.com
+Copyright (C) 2020-2021 CoderMerlin.com
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -30,7 +30,6 @@ public class Layout  {
         /// (height from top-most to bottom-most)
         case fullHeight
         
-        
         /// Calculates the top-most top of all `Rect`s
         case topMost
         /// Calculates the bottom-most bottom of all `Rect`s
@@ -49,19 +48,23 @@ public class Layout  {
 
         /// Sets the top of all `Rect`s as specified
         case alignTops(top:Int)
+        /// Sets the center-y of all `Rect`s as specified
+        case alignCenterY(centerY:Int)
         /// Sets the bottom of all `Rect`s as specified
         case alignBottoms(bottom:Int)
         /// Sets the left of all `Rect`s as specified
         case alignLefts(left:Int)
+        /// Sets the center-x of all `Rect`s as specified
+        case alignCenterX(centerX:Int)
         /// Sets the right of all `Rect`s as specified
         case alignRights(right:Int)
 
         /// Distributes the `Rect`s horizontally beginning at the
-        /// specified *left* placing *padding* between each `Rect`
-        case distributeHorizontally(left:Int, padding:Int)
+        /// specified *left* with *spacing* between each `Rect`
+        case distributeHorizontally(left:Int, spacing:Int)
         /// Distrbutes the `Rect`s vertically beginning at the
-        /// specified *top* placing *padding* between each `Rect`
-        case distributeVertically(top:Int, padding:Int)
+        /// specified *top* with *spacing* between each `Rect`
+        case distributeVertically(top:Int, spacing:Int)
     }
 
     /// Applies the specified change and returns a new altered `Rect` reflecting that change
@@ -73,6 +76,12 @@ public class Layout  {
 
     /// Analyzes the childRects and calculates the specified property of the collection
     public static func property(attribute:ChildAttribute, childRects:[Rect]) -> Int {
+        // check that childRects exist, otherwise its possible to exceed Int bounds
+        // while calculating with an empty array.
+        guard childRects.count > 0 else {
+            return 0
+        }
+        
         switch attribute {
         case .maxWidth:
             return childRects.reduce(Int.min) {max($0, $1.size.width)}
@@ -110,35 +119,36 @@ public class Layout  {
             newChildRects = childRects.map {newAltered($0, by: {(r) in r.height = height})}
             
         case .alignTops(let top):
-            newChildRects = childRects.map {newAltered($0, by: {(r) in r.top = top})}
+            newChildRects = childRects.map {newAltered($0, by: {(r) in r.topLeft.y = top})}
+        case .alignCenterY(let centerY):
+            newChildRects = childRects.map {newAltered($0, by: {(r) in r.centerY = centerY})}
         case .alignBottoms(let bottom):
-            newChildRects = childRects.map {newAltered($0, by: {(r) in r.bottom = bottom})}
+            newChildRects = childRects.map {newAltered($0, by: {(r) in r.bottomLeft.y = bottom})}
         case .alignLefts(let left):
-            newChildRects = childRects.map {newAltered($0, by: {(r) in r.left = left})}
+            newChildRects = childRects.map {newAltered($0, by: {(r) in r.topLeft.x = left})}
+        case .alignCenterX(let centerX):
+            newChildRects = childRects.map {newAltered($0, by: {(r) in r.centerX = centerX})}
         case .alignRights(let right):
-            newChildRects = childRects.map {newAltered($0, by: {(r) in r.right = right})}
+            newChildRects = childRects.map {newAltered($0, by: {(r) in r.topRight.x = right})}
 
-        case .distributeHorizontally(let left, let padding):
+        case .distributeHorizontally(let left, let spacing):
             var currentLeft = left
             var calculatingRects = [Rect]()
             for childRect in childRects {
                 calculatingRects.append(newAltered(childRect, by: {(r) in r.topLeft = Point(x:currentLeft, y:r.top)}))
-                currentLeft += childRect.size.width + padding
+                currentLeft += childRect.size.width + spacing
             }
             newChildRects = calculatingRects
-        case .distributeVertically(let top, let padding):
+        case .distributeVertically(let top, let spacing):
             var currentTop = top
             var calculatingRects = [Rect]()
             for childRect in childRects {
                 calculatingRects.append(newAltered(childRect, by: {(r) in r.topLeft = Point(x:r.left, y:currentTop)}))
-                currentTop += childRect.size.height + padding
+                currentTop += childRect.size.height + spacing
             }
             newChildRects = calculatingRects
         }
         
         return newChildRects
     }
-
-    
-    
 }
