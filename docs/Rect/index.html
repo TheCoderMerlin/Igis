@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Igis - Rect</title>
-    <base href="/Igis/"/>
-    <link rel="stylesheet" type="text/css" href="all.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/Igis/all.css" media="all" />
 </head>
 <body>
     <header>
@@ -27,7 +26,7 @@
     <nav>
         <div class="wrapper">
             <h2>On This Page</h2>
-            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Conforms To</a></li></ul></li><li><a href="#initializers">Initializers</a><ul><li class="initializer"><a href="#rect.init()">init()</a></li><li class="initializer"><a href="#rect.init(size:)">init(size:​)</a></li><li class="initializer"><a href="#rect.init(topleft:size:)">init(top​Left:​size:​)</a></li><li class="initializer"><a href="#rect.init(bottomleft:size:)">init(bottom​Left:​size:​)</a></li><li class="initializer"><a href="#rect.init(topright:size:)">init(top​Right:​size:​)</a></li><li class="initializer"><a href="#rect.init(bottomright:size:)">init(bottom​Right:​size:​)</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="property"><a href="#rect.topleft">top​Left</a></li><li class="property"><a href="#rect.size">size</a></li><li class="property"><a href="#rect.zero">zero</a></li><li class="property"><a href="#rect.left">left</a></li><li class="property"><a href="#rect.top">top</a></li><li class="property"><a href="#rect.right">right</a></li><li class="property"><a href="#rect.bottom">bottom</a></li><li class="property"><a href="#rect.width">width</a></li><li class="property"><a href="#rect.height">height</a></li><li class="property"><a href="#rect.topright">top​Right</a></li><li class="property"><a href="#rect.bottomleft">bottom​Left</a></li><li class="property"><a href="#rect.bottomright">bottom​Right</a></li><li class="property"><a href="#rect.centerx">center​X</a></li><li class="property"><a href="#rect.centery">center​Y</a></li><li class="property"><a href="#rect.center">center</a></li></ul></li><li><a href="#methods">Methods</a><ul><li class="method"><a href="#rect.local(to:)">local(to:​)</a></li><li class="method"><a href="#rect.containment(target:)">containment(target:​)</a></li><li class="method"><a href="#rect.containment(target:)">containment(target:​)</a></li><li class="method"><a href="#rect.unioned(with:)">unioned(with:​)</a></li><li class="method"><a href="#rect.inflated(by:)">inflated(by:​)</a></li><li class="method"><a href="#rect.inflate(by:)">inflate(by:​)</a></li><li class="method"><a href="#rect.inflated(by:)">inflated(by:​)</a></li><li class="method"><a href="#rect.inflate(by:)">inflate(by:​)</a></li><li class="method"><a href="#rect.==(lhs:rhs:)">==(lhs:​rhs:​)</a></li></ul></li></ol>
+            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Conforms To</a></li></ul></li><li><a href="#initializers">Initializers</a><ul><li class="initializer"><a href="#rect.init()">init()</a></li><li class="initializer"><a href="#rect.init(topleft:size:)">init(top​Left:​size:​)</a></li><li class="initializer"><a href="#rect.init(bottomleft:size:)">init(bottom​Left:​size:​)</a></li><li class="initializer"><a href="#rect.init(topright:size:)">init(top​Right:​size:​)</a></li><li class="initializer"><a href="#rect.init(bottomright:size:)">init(bottom​Right:​size:​)</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#rect.topleft">top​Left</a></li><li class="variable"><a href="#rect.size">size</a></li><li class="variable"><a href="#rect.zero">zero</a></li><li class="variable"><a href="#rect.left">left</a></li><li class="variable"><a href="#rect.top">top</a></li><li class="variable"><a href="#rect.right">right</a></li><li class="variable"><a href="#rect.bottom">bottom</a></li><li class="variable"><a href="#rect.width">width</a></li><li class="variable"><a href="#rect.height">height</a></li><li class="variable"><a href="#rect.topright">top​Right</a></li><li class="variable"><a href="#rect.bottomleft">bottom​Left</a></li><li class="variable"><a href="#rect.bottomright">bottom​Right</a></li><li class="variable"><a href="#rect.centerx">center​X</a></li><li class="variable"><a href="#rect.centery">center​Y</a></li><li class="variable"><a href="#rect.center">center</a></li></ul></li><li><a href="#methods">Methods</a><ul><li class="function"><a href="#rect.local(to:)">local(to:​)</a></li><li class="function"><a href="#rect.containment(target:)">containment(target:​)</a></li><li class="function"><a href="#rect.containment(target:)">containment(target:​)</a></li><li class="function"><a href="#rect.unioned(with:)">unioned(with:​)</a></li><li class="function"><a href="#rect.inflated(by:)">inflated(by:​)</a></li><li class="function"><a href="#rect.inflate(by:)">inflate(by:​)</a></li><li class="function"><a href="#rect.inflated(by:)">inflated(by:​)</a></li><li class="function"><a href="#rect.inflate(by:)">inflate(by:​)</a></li></ul></li><li><a href="#operators">Operators</a><ul><li class="function"><a href="#rect.==">==</a></li></ul></li></ol>
         </div>
     </nav>
 
@@ -38,14 +37,54 @@
     <code class="name">Rect</code>
 </h1>
 
-<html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">struct</span> <span class="type">Rect</span>: <span class="type">Equatable</span></code></pre></body></html>
+<div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">struct</span> <span class="type">Rect</span> : <span class="type">Equatable</span> </code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>A <code>Rect</code> represents a rectangle in a two-dimensional plane.</p>
 
 </div>
 <section id="relationships">
     <h2 hidden>Relationships</h2>
-        
+        <figure>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: %165 Pages: 1 -->
+<svg width="872pt" height="116pt"
+ viewBox="0.00 0.00 872.00 116.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
+<title>%165</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 868,-112 868,4 -4,4"/>
+<!-- Rect -->
+<g id="node1" class="node structure current">
+<title>Rect</title>
+<g id="a_node1"><a xlink:href="/Igis/Rect" xlink:title="Rect">
+<path fill="none" stroke="black" stroke-width="3" d="M528,-108C528,-108 336,-108 336,-108 330,-108 324,-102 324,-96 324,-96 324,-84 324,-84 324,-78 330,-72 336,-72 336,-72 528,-72 528,-72 534,-72 540,-78 540,-84 540,-84 540,-96 540,-96 540,-102 534,-108 528,-108"/>
+<text text-anchor="middle" x="432" y="-86.3" font-family="Menlo" font-size="14.00">Rect</text>
+</a>
+</g>
+</g>
+<!-- Equatable -->
+<g id="node2" class="node unknown">
+<title>Equatable</title>
+<path fill="none" stroke="black" d="M528,-36C528,-36 336,-36 336,-36 330,-36 324,-30 324,-24 324,-24 324,-12 324,-12 324,-6 330,0 336,0 336,0 528,0 528,0 534,0 540,-6 540,-12 540,-12 540,-24 540,-24 540,-30 534,-36 528,-36"/>
+<text text-anchor="middle" x="432" y="-14.3" font-family="Menlo" font-size="14.00">Equatable</text>
+</g>
+<!-- Rect&#45;&gt;Equatable -->
+<g id="edge1" class="edge conformsTo">
+<title>Rect&#45;&gt;Equatable</title>
+<path fill="none" stroke="black" d="M432,-71.7C432,-63.98 432,-54.71 432,-46.11"/>
+<polygon fill="black" stroke="black" points="435.5,-46.1 432,-36.1 428.5,-46.1 435.5,-46.1"/>
+</g>
+</g>
+</svg>
+
+
+    <figcaption hidden>Inheritance graph for Rect.</figcaption>
+</figure>
         <h3>Conforms To</h3>
 <dl>
     <dt class="unknown"><code>Equatable</code></dt>
@@ -54,201 +93,285 @@
     <section id="initializers">
         <h2>Initializers</h2>
 
-        <div role="article" class="structure" id="rect.init()">
+        <div role="article" class="initializer" id="rect.init()">
     <h3>
         <code>init()</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">init</span>()</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">init</span>() </code></pre>
 </div>
-<div role="article" class="structure" id="rect.init(size:)">
-    <h3>
-        <code>init(size:​)</code>
-    </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">size</span>: <a href="Size"><span class="type">Size</span></a>)</code></pre></body></html>
 </div>
-<div role="article" class="structure" id="rect.init(topleft:size:)">
+<div role="article" class="initializer" id="rect.init(topleft:size:)">
     <h3>
         <code>init(top​Left:​size:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">topLeft</span>: <a href="Point"><span class="type">Point</span></a>, <span class="variable">size</span>: <a href="Size"><span class="type">Size</span></a>)</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">topLeft</span>:<span class="type">Point</span>=<span class="variable">Point</span>(), <span class="variable">size</span>:<span class="type">Size</span>) </code></pre>
 </div>
-<div role="article" class="structure" id="rect.init(bottomleft:size:)">
+</div>
+<div role="article" class="initializer" id="rect.init(bottomleft:size:)">
     <h3>
         <code>init(bottom​Left:​size:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">bottomLeft</span>: <a href="Point"><span class="type">Point</span></a>, <span class="variable">size</span>: <a href="Size"><span class="type">Size</span></a>)</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">bottomLeft</span>:<span class="type">Point</span>, <span class="variable">size</span>:<span class="type">Size</span>) </code></pre>
 </div>
-<div role="article" class="structure" id="rect.init(topright:size:)">
+</div>
+<div role="article" class="initializer" id="rect.init(topright:size:)">
     <h3>
         <code>init(top​Right:​size:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">topRight</span>: <a href="Point"><span class="type">Point</span></a>, <span class="variable">size</span>: <a href="Size"><span class="type">Size</span></a>)</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">topRight</span>:<span class="type">Point</span>, <span class="variable">size</span>:<span class="type">Size</span>) </code></pre>
 </div>
-<div role="article" class="structure" id="rect.init(bottomright:size:)">
+</div>
+<div role="article" class="initializer" id="rect.init(bottomright:size:)">
     <h3>
         <code>init(bottom​Right:​size:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">bottomRight</span>: <a href="Point"><span class="type">Point</span></a>, <span class="variable">size</span>: <a href="Size"><span class="type">Size</span></a>)</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">bottomRight</span>:<span class="type">Point</span>, <span class="variable">size</span>:<span class="type">Size</span>) </code></pre>
+</div>
 </div>
     </section>
     <section id="properties">
         <h2>Properties</h2>
 
-        <div role="article" class="structure" id="rect.topleft">
+        <div role="article" class="variable" id="rect.topleft">
     <h3>
         <code>top​Left</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">topLeft</span>: <a href="Point"><span class="type">Point</span></a></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">topLeft</span> : <span class="type">Point</span></code></pre>
 </div>
-<div role="article" class="structure" id="rect.size">
+<div class="summary" role="doc-abstract">
+    <p>The topLeft coordinate of the rect.
+This value is modifiable and will alter the position.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="rect.size">
     <h3>
         <code>size</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">size</span>: <a href="Size"><span class="type">Size</span></a></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">size</span> : <span class="type">Size</span></code></pre>
 </div>
-<div role="article" class="structure" id="rect.zero">
+<div class="summary" role="doc-abstract">
+    <p>The size of the rect.
+This value is modifiable.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="rect.zero">
     <h3>
         <code>zero</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">zero</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">static</span> <span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">zero</span> </code></pre>
+</div>
 <div class="summary" role="doc-abstract">
-    <p>The rect at the origin with zero size</p>
+    <p>The rect at the origin with zero size.</p>
 
 </div>
 </div>
-<div role="article" class="structure" id="rect.left">
+<div role="article" class="variable" id="rect.left">
     <h3>
         <code>left</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">left</span>: <span class="type">Int</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">left</span> : <span class="type">Int</span> </code></pre>
+</div>
 <div class="summary" role="doc-abstract">
-    <p>The coordinate along the x-axis at the left of rect
+    <p>The coordinate along the x-axis at the left of rect.
 This value is modifiable and will alter only the left coordinate,
-thus, the size will change</p>
+thus, the size will change.</p>
 
 </div>
 </div>
-<div role="article" class="structure" id="rect.top">
+<div role="article" class="variable" id="rect.top">
     <h3>
         <code>top</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">top</span>: <span class="type">Int</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">top</span> : <span class="type">Int</span> </code></pre>
+</div>
 <div class="summary" role="doc-abstract">
-    <p>The coordinate along the y-axis at the top of rect
+    <p>The coordinate along the y-axis at the top of rect.
 This value is modifiable and will alter only the top coordinate,
-thus, the size will change</p>
+thus, the size will change.</p>
 
 </div>
 </div>
-<div role="article" class="structure" id="rect.right">
+<div role="article" class="variable" id="rect.right">
     <h3>
         <code>right</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">right</span>: <span class="type">Int</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">right</span> : <span class="type">Int</span> </code></pre>
+</div>
 <div class="summary" role="doc-abstract">
-    <p>The coordinate along the x-axis at the right of rect
+    <p>The coordinate along the x-axis at the right of rect.
 This value is modifiable and will alter only the right coordinate,
-thus, the size will change</p>
+thus, the size will change.</p>
 
 </div>
 </div>
-<div role="article" class="structure" id="rect.bottom">
+<div role="article" class="variable" id="rect.bottom">
     <h3>
         <code>bottom</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">bottom</span>: <span class="type">Int</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">bottom</span> : <span class="type">Int</span> </code></pre>
+</div>
 <div class="summary" role="doc-abstract">
-    <p>The coordinate along the y-axis at the bottom of rect
+    <p>The coordinate along the y-axis at the bottom of rect.
 This value is modifiable and will alter only the bottom coordinate,
-thus, the size will change</p>
+thus, the size will change.</p>
 
 </div>
 </div>
-<div role="article" class="structure" id="rect.width">
+<div role="article" class="variable" id="rect.width">
     <h3>
         <code>width</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">width</span>: <span class="type">Int</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">width</span> : <span class="type">Int</span> </code></pre>
+</div>
 <div class="summary" role="doc-abstract">
-    <p>The width of the rectangle
-This value is modifiable and will alter the right coodinate</p>
+    <p>The width of the rectangle.
+This value is modifiable and will alter the right coodinate.</p>
 
 </div>
 </div>
-<div role="article" class="structure" id="rect.height">
+<div role="article" class="variable" id="rect.height">
     <h3>
         <code>height</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">height</span>: <span class="type">Int</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">height</span> : <span class="type">Int</span> </code></pre>
+</div>
 <div class="summary" role="doc-abstract">
-    <p>The height of the rectangle
-This value is modifiable and will alter the bottom coordinate</p>
+    <p>The height of the rectangle.
+This value is modifiable and will alter the bottom coordinate.</p>
 
 </div>
 </div>
-<div role="article" class="structure" id="rect.topright">
+<div role="article" class="variable" id="rect.topright">
     <h3>
         <code>top​Right</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">topRight</span>: <a href="Point"><span class="type">Point</span></a></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">topRight</span> : <span class="type">Point</span> </code></pre>
 </div>
-<div role="article" class="structure" id="rect.bottomleft">
+<div class="summary" role="doc-abstract">
+    <p>The topRight corner of the rectangle.
+This value is modifiable and will alter the position.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="rect.bottomleft">
     <h3>
         <code>bottom​Left</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">bottomLeft</span>: <a href="Point"><span class="type">Point</span></a></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">bottomLeft</span> : <span class="type">Point</span> </code></pre>
 </div>
-<div role="article" class="structure" id="rect.bottomright">
+<div class="summary" role="doc-abstract">
+    <p>The bottomLeft coordinate of the rect.
+This value is modifiable and will alter the position.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="rect.bottomright">
     <h3>
         <code>bottom​Right</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">bottomRight</span>: <a href="Point"><span class="type">Point</span></a></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">bottomRight</span> : <span class="type">Point</span> </code></pre>
 </div>
-<div role="article" class="structure" id="rect.centerx">
+<div class="summary" role="doc-abstract">
+    <p>The bottomRight coordinate of the rect.
+This value is modifiable and will alter the position.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="rect.centerx">
     <h3>
         <code>center​X</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">centerX</span>: <span class="type">Int</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">centerX</span> : <span class="type">Int</span> </code></pre>
 </div>
-<div role="article" class="structure" id="rect.centery">
+<div class="summary" role="doc-abstract">
+    <p>The center x-value coordinate of the rect.
+This value is modifiable and will alter the position along
+the x-coordinate.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="rect.centery">
     <h3>
         <code>center​Y</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">centerY</span>: <span class="type">Int</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">centerY</span> : <span class="type">Int</span> </code></pre>
 </div>
-<div role="article" class="structure" id="rect.center">
+<div class="summary" role="doc-abstract">
+    <p>The center y-value coordinate of the rect.
+This value is modifiable and will alter the position along
+the y-coordinate.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="rect.center">
     <h3>
         <code>center</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">center</span>: <a href="Point"><span class="type">Point</span></a></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">center</span> : <span class="type">Point</span> </code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The center coordinate of the rect.
+This value is modifiable and will alter the position.</p>
+
+</div>
 </div>
     </section>
     <section id="methods">
         <h2>Methods</h2>
 
-        <div role="article" class="structure" id="rect.local(to:)">
+        <div role="article" class="function" id="rect.local(to:)">
     <h3>
         <code>local(to:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">local</span>(<span class="variable">to</span> <span class="variable">origin</span>: <a href="Rect"><span class="type">Rect</span></a>) -&gt; <a href="Rect"><span class="type">Rect</span></a></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">local</span>(<span class="variable">to</span> <span class="variable">origin</span>:<span class="type">Rect</span>) -&gt; <span class="type">Rect</span> </code></pre>
 </div>
-<div role="article" class="structure" id="rect.containment(target:)">
+</div>
+<div role="article" class="function" id="rect.containment(target:)">
     <h3>
         <code>containment(target:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">containment</span>(<span class="variable">target</span>: <a href="Point"><span class="type">Point</span></a>) -&gt; <a href="ContainmentSet"><span class="type">ContainmentSet</span></a></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">containment</span>(<span class="variable">target</span>:<span class="type">Point</span>) -&gt; <span class="type">ContainmentSet</span> </code></pre>
 </div>
-<div role="article" class="structure" id="rect.containment(target:)">
+</div>
+<div role="article" class="function" id="rect.containment(target:)">
     <h3>
         <code>containment(target:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">containment</span>(<span class="variable">target</span>: <a href="Rect"><span class="type">Rect</span></a>) -&gt; <a href="ContainmentSet"><span class="type">ContainmentSet</span></a></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">containment</span>(<span class="variable">target</span>:<span class="type">Rect</span>) -&gt; <span class="type">ContainmentSet</span> </code></pre>
 </div>
-<div role="article" class="structure" id="rect.unioned(with:)">
+</div>
+<div role="article" class="function" id="rect.unioned(with:)">
     <h3>
         <code>unioned(with:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">unioned</span>(<span class="variable">with</span> <span class="variable">other</span>: <a href="Rect"><span class="type">Rect</span></a>) -&gt; <a href="Rect"><span class="type">Rect</span></a></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">unioned</span>(<span class="variable">with</span> <span class="variable">other</span>:<span class="type">Rect</span>) -&gt; <span class="type">Rect</span> </code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Union of this <code>Rect</code> with the specified target <code>Rect</code></p>
 
@@ -257,11 +380,13 @@ This value is modifiable and will alter the bottom coordinate</p>
   <p>A new <code>Rect</code> exactly large enough to contain both rectangles</p>
 
 </div>
-<div role="article" class="structure" id="rect.inflated(by:)">
+<div role="article" class="function" id="rect.inflated(by:)">
     <h3>
         <code>inflated(by:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">inflated</span>(<span class="variable">by</span> <span class="variable">change</span>: <span class="type">Int</span>) -&gt; <a href="Rect"><span class="type">Rect</span></a></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">inflated</span>(<span class="variable">by</span> <span class="variable">change</span>:<span class="type">Int</span>) -&gt; <span class="type">Rect</span> </code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Returns a new rect expanded by the amount specified while
 preserving the center point (negative numbers reduce the dimensions)</p>
@@ -280,7 +405,7 @@ preserving the center point (negative numbers reduce the dimensions)</p>
   <tbody>
     <tr>
     <th>change</th>
-    <td><code class="type">Int</code></td></td>
+    <td><code class="type">Int</code></td>
     <td><p>The amount by which to increase each dimension</p>
 </td>
 </tr>
@@ -290,11 +415,13 @@ preserving the center point (negative numbers reduce the dimensions)</p>
   <p>The inflated rect</p>
 
 </div>
-<div role="article" class="structure" id="rect.inflate(by:)">
+<div role="article" class="function" id="rect.inflate(by:)">
     <h3>
         <code>inflate(by:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="attribute">mutating</span> <span class="keyword">func</span> <span class="function">inflate</span>(<span class="variable">by</span> <span class="variable">change</span>: <span class="type">Int</span>)</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="attribute">mutating</span> <span class="keyword">func</span> <span class="function">inflate</span>(<span class="variable">by</span> <span class="variable">change</span>:<span class="type">Int</span>) </code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Expands the rect by the amount specified while preserving the center point
 (negative numbers reduce the dimensions)</p>
@@ -313,18 +440,20 @@ preserving the center point (negative numbers reduce the dimensions)</p>
   <tbody>
     <tr>
     <th>change</th>
-    <td><code class="type">Int</code></td></td>
+    <td><code class="type">Int</code></td>
     <td><p>The amount by which to increase all dimensions</p>
 </td>
 </tr>
   </tbody>
 </table>
 </div>
-<div role="article" class="structure" id="rect.inflated(by:)">
+<div role="article" class="function" id="rect.inflated(by:)">
     <h3>
         <code>inflated(by:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">inflated</span>(<span class="variable">by</span> <span class="variable">change</span>: <a href="Size"><span class="type">Size</span></a>) -&gt; <a href="Rect"><span class="type">Rect</span></a></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">inflated</span>(<span class="variable">by</span> <span class="variable">change</span>:<span class="type">Size</span>) -&gt; <span class="type">Rect</span> </code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Returns a new rect expanded by the amount specified while
 preserving the center point (negative numbers reduce the dimensions)</p>
@@ -343,7 +472,7 @@ preserving the center point (negative numbers reduce the dimensions)</p>
   <tbody>
     <tr>
     <th>change</th>
-    <td><code class="type">Size</code></td></td>
+    <td><code class="type">Size</code></td>
     <td><p>The amount by which to increase each dimension</p>
 </td>
 </tr>
@@ -353,11 +482,13 @@ preserving the center point (negative numbers reduce the dimensions)</p>
   <p>The inflated rect</p>
 
 </div>
-<div role="article" class="structure" id="rect.inflate(by:)">
+<div role="article" class="function" id="rect.inflate(by:)">
     <h3>
         <code>inflate(by:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="attribute">mutating</span> <span class="keyword">func</span> <span class="function">inflate</span>(<span class="variable">by</span> <span class="variable">change</span>: <a href="Size"><span class="type">Size</span></a>)</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="attribute">mutating</span> <span class="keyword">func</span> <span class="function">inflate</span>(<span class="variable">by</span> <span class="variable">change</span>:<span class="type">Size</span>) </code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Expands the rect by the amount specified while preserving the center point
 (negative numbers reduce the dimensions)</p>
@@ -376,18 +507,24 @@ preserving the center point (negative numbers reduce the dimensions)</p>
   <tbody>
     <tr>
     <th>change</th>
-    <td><code class="type">Size</code></td></td>
+    <td><code class="type">Size</code></td>
     <td><p>The amount by which to increase each dimension</p>
 </td>
 </tr>
   </tbody>
 </table>
 </div>
-<div role="article" class="structure" id="rect.==(lhs:rhs:)">
+    </section>
+    <section id="operators">
+        <h2>Operators</h2>
+
+        <div role="article" class="function" id="rect.==">
     <h3>
-        <code>==(lhs:​rhs:​)</code>
+        <code>==</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">static</span> <span class="keyword">public</span> <span class="keyword">func</span> ==(<span class="variable">lhs</span>: <a href="Rect"><span class="type">Rect</span></a>, <span class="variable">rhs</span>: <a href="Rect"><span class="type">Rect</span></a>) -&gt; <span class="type">Bool</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">static</span> <span class="keyword">public</span> <span class="keyword">func</span> == (<span class="variable">lhs</span>:<span class="type">Rect</span>, <span class="variable">rhs</span>:<span class="type">Rect</span>) -&gt; <span class="type">Bool</span> </code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Equivalence operator for two <code>Rect</code>s</p>
 
@@ -402,7 +539,7 @@ preserving the center point (negative numbers reduce the dimensions)</p>
 
     <footer>
         <p>
-    Generated on <time datetime="2020-05-01T17:05:03-0500">May 1, 2020</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.2</span>.
+    Generated on <time datetime="2021-05-05T17:43:32-0500">May 5, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.6</span>.
 </p>
     </footer>
 </body>

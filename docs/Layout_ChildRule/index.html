@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Igis - Layout.ChildRule</title>
-    <base href="/Igis/"/>
-    <link rel="stylesheet" type="text/css" href="all.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/Igis/all.css" media="all" />
 </head>
 <body>
     <header>
@@ -27,7 +26,7 @@
     <nav>
         <div class="wrapper">
             <h2>On This Page</h2>
-            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Member Of</a></li></ul></li><li><a href="#enumeration cases">Enumeration Cases</a><ul><li class="case"><a href="#layout.childrule.alignwidths">align​Widths</a></li><li class="case"><a href="#layout.childrule.alignheights">align​Heights</a></li><li class="case"><a href="#layout.childrule.aligntops">align​Tops</a></li><li class="case"><a href="#layout.childrule.alignbottoms">align​Bottoms</a></li><li class="case"><a href="#layout.childrule.alignlefts">align​Lefts</a></li><li class="case"><a href="#layout.childrule.alignrights">align​Rights</a></li><li class="case"><a href="#layout.childrule.distributehorizontally">distribute​Horizontally</a></li><li class="case"><a href="#layout.childrule.distributevertically">distribute​Vertically</a></li></ul></li></ol>
+            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Member Of</a></li></ul></li><li><a href="#enumeration cases">Enumeration Cases</a><ul><li class="case"><a href="#layout.childrule.alignwidths">align​Widths</a></li><li class="case"><a href="#layout.childrule.alignheights">align​Heights</a></li><li class="case"><a href="#layout.childrule.aligntops">align​Tops</a></li><li class="case"><a href="#layout.childrule.aligncentery">align​Center​Y</a></li><li class="case"><a href="#layout.childrule.alignbottoms">align​Bottoms</a></li><li class="case"><a href="#layout.childrule.alignlefts">align​Lefts</a></li><li class="case"><a href="#layout.childrule.aligncenterx">align​Center​X</a></li><li class="case"><a href="#layout.childrule.alignrights">align​Rights</a></li><li class="case"><a href="#layout.childrule.distributehorizontally">distribute​Horizontally</a></li><li class="case"><a href="#layout.childrule.distributevertically">distribute​Vertically</a></li></ul></li></ol>
         </div>
     </nav>
 
@@ -38,13 +37,15 @@
     <code class="name">Layout.​Child​Rule</code>
 </h1>
 
-<html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">enum</span> <span class="type">ChildRule</span></code></pre></body></html>
+<div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">enum</span> <span class="type">ChildRule</span> </code></pre>
+</div>
 <section id="relationships">
     <h2 hidden>Relationships</h2>
         
         <h3>Member Of</h3>
 <dl>
-    <dt class="class"><code><a href="Layout">Layout</a></code></dt>
+    <dt class="class"><code><a href="/Igis/Layout">Layout</a></code></dt>
 <dd><p><code>Layout</code> provides the ability to layout a series of <code>Rect</code>s using
 specified rules.  The order of each <code>Rect</code> is always preserved.</p>
 </dd>
@@ -53,85 +54,125 @@ specified rules.  The order of each <code>Rect</code> is always preserved.</p>
     <section id="enumeration cases">
         <h2>Enumeration Cases</h2>
 
-        <div role="article" class="enumeration" id="layout.childrule.alignwidths">
+        <div role="article" class="case" id="layout.childrule.alignwidths">
     <h3>
         <code>align​Widths</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">alignWidths</span>(<span class="variable">width</span>: <span class="type">Int</span>)</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">case</span> <span class="variable">alignWidths</span>(<span class="variable">width</span>:<span class="type">Int</span>)</code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Sets the width of all <code>Rect</code>s as specified</p>
 
 </div>
 </div>
-<div role="article" class="enumeration" id="layout.childrule.alignheights">
+<div role="article" class="case" id="layout.childrule.alignheights">
     <h3>
         <code>align​Heights</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">alignHeights</span>(<span class="variable">height</span>: <span class="type">Int</span>)</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">case</span> <span class="variable">alignHeights</span>(<span class="variable">height</span>:<span class="type">Int</span>)</code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Sets the height of all <code>Rect</code>s as specified</p>
 
 </div>
 </div>
-<div role="article" class="enumeration" id="layout.childrule.aligntops">
+<div role="article" class="case" id="layout.childrule.aligntops">
     <h3>
         <code>align​Tops</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">alignTops</span>(<span class="variable">top</span>: <span class="type">Int</span>)</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">case</span> <span class="variable">alignTops</span>(<span class="variable">top</span>:<span class="type">Int</span>)</code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Sets the top of all <code>Rect</code>s as specified</p>
 
 </div>
 </div>
-<div role="article" class="enumeration" id="layout.childrule.alignbottoms">
+<div role="article" class="case" id="layout.childrule.aligncentery">
+    <h3>
+        <code>align​Center​Y</code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">case</span> <span class="variable">alignCenterY</span>(<span class="variable">centerY</span>:<span class="type">Int</span>)</code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Sets the center-y of all <code>Rect</code>s as specified</p>
+
+</div>
+</div>
+<div role="article" class="case" id="layout.childrule.alignbottoms">
     <h3>
         <code>align​Bottoms</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">alignBottoms</span>(<span class="variable">bottom</span>: <span class="type">Int</span>)</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">case</span> <span class="variable">alignBottoms</span>(<span class="variable">bottom</span>:<span class="type">Int</span>)</code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Sets the bottom of all <code>Rect</code>s as specified</p>
 
 </div>
 </div>
-<div role="article" class="enumeration" id="layout.childrule.alignlefts">
+<div role="article" class="case" id="layout.childrule.alignlefts">
     <h3>
         <code>align​Lefts</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">alignLefts</span>(<span class="variable">left</span>: <span class="type">Int</span>)</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">case</span> <span class="variable">alignLefts</span>(<span class="variable">left</span>:<span class="type">Int</span>)</code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Sets the left of all <code>Rect</code>s as specified</p>
 
 </div>
 </div>
-<div role="article" class="enumeration" id="layout.childrule.alignrights">
+<div role="article" class="case" id="layout.childrule.aligncenterx">
+    <h3>
+        <code>align​Center​X</code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">case</span> <span class="variable">alignCenterX</span>(<span class="variable">centerX</span>:<span class="type">Int</span>)</code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Sets the center-x of all <code>Rect</code>s as specified</p>
+
+</div>
+</div>
+<div role="article" class="case" id="layout.childrule.alignrights">
     <h3>
         <code>align​Rights</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">alignRights</span>(<span class="variable">right</span>: <span class="type">Int</span>)</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">case</span> <span class="variable">alignRights</span>(<span class="variable">right</span>:<span class="type">Int</span>)</code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Sets the right of all <code>Rect</code>s as specified</p>
 
 </div>
 </div>
-<div role="article" class="enumeration" id="layout.childrule.distributehorizontally">
+<div role="article" class="case" id="layout.childrule.distributehorizontally">
     <h3>
         <code>distribute​Horizontally</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">distributeHorizontally</span>(<span class="variable">left</span>: <span class="type">Int</span>, <span class="variable">padding</span>: <span class="type">Int</span>)</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">case</span> <span class="variable">distributeHorizontally</span>(<span class="variable">left</span>:<span class="type">Int</span>, <span class="variable">spacing</span>:<span class="type">Int</span>)</code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Distributes the <code>Rect</code>s horizontally beginning at the
-specified <em>left</em> placing <em>padding</em> between each <code>Rect</code></p>
+specified <em>left</em> with <em>spacing</em> between each <code>Rect</code></p>
 
 </div>
 </div>
-<div role="article" class="enumeration" id="layout.childrule.distributevertically">
+<div role="article" class="case" id="layout.childrule.distributevertically">
     <h3>
         <code>distribute​Vertically</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">distributeVertically</span>(<span class="variable">top</span>: <span class="type">Int</span>, <span class="variable">padding</span>: <span class="type">Int</span>)</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">case</span> <span class="variable">distributeVertically</span>(<span class="variable">top</span>:<span class="type">Int</span>, <span class="variable">spacing</span>:<span class="type">Int</span>)</code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Distrbutes the <code>Rect</code>s vertically beginning at the
-specified <em>top</em> placing <em>padding</em> between each <code>Rect</code></p>
+specified <em>top</em> with <em>spacing</em> between each <code>Rect</code></p>
 
 </div>
 </div>
@@ -144,7 +185,7 @@ specified <em>top</em> placing <em>padding</em> between each <code>Rect</code></
 
     <footer>
         <p>
-    Generated on <time datetime="2020-05-01T17:05:03-0500">May 1, 2020</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.2</span>.
+    Generated on <time datetime="2021-05-05T17:43:30-0500">May 5, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.6</span>.
 </p>
     </footer>
 </body>

@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Igis - Gradient.Mode</title>
-    <base href="/Igis/"/>
-    <link rel="stylesheet" type="text/css" href="all.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/Igis/all.css" media="all" />
 </head>
 <body>
     <header>
@@ -38,22 +37,24 @@
     <code class="name">Gradient.​Mode</code>
 </h1>
 
-<html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">enum</span> <span class="type">Mode</span></code></pre></body></html>
+<div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">enum</span> <span class="type">Mode</span> </code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>The <code>Mode</code> is used to determine whether this is a <code>linear</code> or <code>radial</code> <code>Gradient</code>.</p>
 
 </div>
 <div class="discussion">
-    <html><body><p>NB: <a href="Gradient"><code>Gradient</code></a> coordinates are global and are not relative to the rendered
+    <p>NB: <code>Gradient</code> coordinates are global and are not relative to the rendered
 object's coordinates.</p>
- </body></html>
+
 </div>
 <section id="relationships">
     <h2 hidden>Relationships</h2>
         
         <h3>Member Of</h3>
 <dl>
-    <dt class="class"><code><a href="Gradient">Gradient</a></code></dt>
+    <dt class="class"><code><a href="/Igis/Gradient">Gradient</a></code></dt>
 <dd><p>A <code>Gradient</code> is used to create a <code>FillStyle</code> for filling various objects.</p>
 </dd>
 </dl>
@@ -61,21 +62,25 @@ object's coordinates.</p>
     <section id="enumeration cases">
         <h2>Enumeration Cases</h2>
 
-        <div role="article" class="enumeration" id="gradient.mode.linear">
+        <div role="article" class="case" id="gradient.mode.linear">
     <h3>
         <code>linear</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">linear</span>(<span class="variable">start</span>: <a href="Point"><span class="type">Point</span></a>, <span class="variable">end</span>: <a href="Point"><span class="type">Point</span></a>)</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">case</span> <span class="variable">linear</span>(<span class="variable">start</span>:<span class="type">Point</span>, <span class="variable">end</span>:<span class="type">Point</span>)</code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Creates a gradient along the line connecting the two given coordinates</p>
 
 </div>
 </div>
-<div role="article" class="enumeration" id="gradient.mode.radial">
+<div role="article" class="case" id="gradient.mode.radial">
     <h3>
         <code>radial</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">radial</span>(<span class="variable">center1</span>: <a href="Point"><span class="type">Point</span></a>, <span class="variable">radius1</span>: <span class="type">Double</span>, <span class="variable">center2</span>: <a href="Point"><span class="type">Point</span></a>, <span class="variable">radius2</span>: <span class="type">Double</span>)</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">case</span> <span class="variable">radial</span>(<span class="variable">center1</span>:<span class="type">Point</span>, <span class="variable">radius1</span>:<span class="type">Double</span>, <span class="variable">center2</span>:<span class="type">Point</span>, <span class="variable">radius2</span>:<span class="type">Double</span>)</code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Creates a radial gradient using the size and coordnates of two circles</p>
 
@@ -90,7 +95,7 @@ object's coordinates.</p>
 
     <footer>
         <p>
-    Generated on <time datetime="2020-05-01T17:05:03-0500">May 1, 2020</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.2</span>.
+    Generated on <time datetime="2021-05-05T17:43:32-0500">May 5, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.6</span>.
 </p>
     </footer>
 </body>

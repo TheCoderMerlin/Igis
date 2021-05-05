@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Igis - Canvas</title>
-    <base href="/Igis/"/>
-    <link rel="stylesheet" type="text/css" href="all.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/Igis/all.css" media="all" />
 </head>
 <body>
     <header>
@@ -27,7 +26,7 @@
     <nav>
         <div class="wrapper">
             <h2>On This Page</h2>
-            <ol><li><a href="#properties">Properties</a><ul><li class="property"><a href="#canvas.canvasid">canvas​Id</a></li><li class="property"><a href="#canvas.canvassize">canvas​Size</a></li><li class="property"><a href="#canvas.windowsize">window​Size</a></li></ul></li><li><a href="#methods">Methods</a><ul><li class="method"><a href="#canvas.render(_:)">render(_:​)</a></li><li class="method"><a href="#canvas.render(_:)">render(_:​)</a></li><li class="method"><a href="#canvas.setup(_:)">setup(_:​)</a></li><li class="method"><a href="#canvas.setup(_:)">setup(_:​)</a></li><li class="method"><a href="#canvas.canvassetsize(size:)">canvas​Set​Size(size:​)</a></li></ul></li></ol>
+            <ol><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#canvas.canvasid">canvas​Id</a></li><li class="variable"><a href="#canvas.canvassize">canvas​Size</a></li><li class="variable"><a href="#canvas.windowsize">window​Size</a></li></ul></li><li><a href="#methods">Methods</a><ul><li class="function"><a href="#canvas.render(_:)">render(_:​)</a></li><li class="function"><a href="#canvas.render(_:)">render(_:​)</a></li><li class="function"><a href="#canvas.setup(_:)">setup(_:​)</a></li><li class="function"><a href="#canvas.setup(_:)">setup(_:​)</a></li><li class="function"><a href="#canvas.canvassetsize(size:)">canvas​Set​Size(size:​)</a></li><li class="function"><a href="#canvas.displaystatistics(_:)">display​Statistics(_:​)</a></li></ul></li></ol>
         </div>
     </nav>
 
@@ -38,62 +37,88 @@
     <code class="name">Canvas</code>
 </h1>
 
-<html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">class</span> <span class="type">Canvas</span></code></pre></body></html>
+<div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">class</span> <span class="type">Canvas</span> </code></pre>
+</div>
 
     <section id="properties">
         <h2>Properties</h2>
 
-        <div role="article" class="class" id="canvas.canvasid">
+        <div role="article" class="variable" id="canvas.canvasid">
     <h3>
         <code>canvas​Id</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">canvasId</span>: <span class="type">Int</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">canvasId</span> : <span class="type">Int</span></code></pre>
 </div>
-<div role="article" class="class" id="canvas.canvassize">
+</div>
+<div role="article" class="variable" id="canvas.canvassize">
     <h3>
         <code>canvas​Size</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">canvasSize</span>: <a href="Size"><span class="type">Size</span></a>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">private</span>(<span class="variable">set</span>) <span class="keyword">var</span> <span class="variable">canvasSize</span> : <span class="type">Size</span>? = <span class="keyword">nil</span></code></pre>
 </div>
-<div role="article" class="class" id="canvas.windowsize">
+</div>
+<div role="article" class="variable" id="canvas.windowsize">
     <h3>
         <code>window​Size</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">windowSize</span>: <a href="Size"><span class="type">Size</span></a>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">private</span>(<span class="variable">set</span>) <span class="keyword">var</span> <span class="variable">windowSize</span> : <span class="type">Size</span>? = <span class="keyword">nil</span></code></pre>
+</div>
 </div>
     </section>
     <section id="methods">
         <h2>Methods</h2>
 
-        <div role="article" class="class" id="canvas.render(_:)">
+        <div role="article" class="function" id="canvas.render(_:)">
     <h3>
         <code>render(_:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">render</span>(<span class="keyword">_</span> <span class="variable">canvasObjects</span>: [<a href="CanvasObject"><span class="type">CanvasObject</span></a>])</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">render</span>(<span class="keyword">_</span> <span class="variable">canvasObjects</span>:[<span class="type">CanvasObject</span>]) </code></pre>
 </div>
-<div role="article" class="class" id="canvas.render(_:)">
+</div>
+<div role="article" class="function" id="canvas.render(_:)">
     <h3>
         <code>render(_:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">render</span>(<span class="keyword">_</span> <span class="variable">canvasObjects</span>: <a href="CanvasObject"><span class="type">CanvasObject</span></a>)</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">render</span>(<span class="keyword">_</span> <span class="variable">canvasObjects</span>:<span class="type">CanvasObject</span>...) </code></pre>
 </div>
-<div role="article" class="class" id="canvas.setup(_:)">
+</div>
+<div role="article" class="function" id="canvas.setup(_:)">
     <h3>
         <code>setup(_:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">setup</span>(<span class="keyword">_</span> <span class="variable">canvasIdentifiedObjects</span>: [<a href="CanvasIdentifiedObject"><span class="type">CanvasIdentifiedObject</span></a>])</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">setup</span>(<span class="keyword">_</span> <span class="variable">canvasIdentifiedObjects</span>:[<span class="type">CanvasIdentifiedObject</span>]) </code></pre>
 </div>
-<div role="article" class="class" id="canvas.setup(_:)">
+</div>
+<div role="article" class="function" id="canvas.setup(_:)">
     <h3>
         <code>setup(_:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">setup</span>(<span class="keyword">_</span> <span class="variable">canvasIdentifiedObjects</span>: <a href="CanvasIdentifiedObject"><span class="type">CanvasIdentifiedObject</span></a>)</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">setup</span>(<span class="keyword">_</span> <span class="variable">canvasIdentifiedObjects</span>:<span class="type">CanvasIdentifiedObject</span>...) </code></pre>
 </div>
-<div role="article" class="class" id="canvas.canvassetsize(size:)">
+</div>
+<div role="article" class="function" id="canvas.canvassetsize(size:)">
     <h3>
         <code>canvas​Set​Size(size:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">canvasSetSize</span>(<span class="variable">size</span>: <a href="Size"><span class="type">Size</span></a>)</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">canvasSetSize</span>(<span class="variable">size</span>:<span class="type">Size</span>) </code></pre>
+</div>
+</div>
+<div role="article" class="function" id="canvas.displaystatistics(_:)">
+    <h3>
+        <code>display​Statistics(_:​)</code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">displayStatistics</span>(<span class="keyword">_</span> <span class="variable">displayStatistics</span>:<span class="type">Bool</span> = <span class="keyword">true</span>) </code></pre>
+</div>
 </div>
     </section>
 
@@ -104,7 +129,7 @@
 
     <footer>
         <p>
-    Generated on <time datetime="2020-05-01T17:05:03-0500">May 1, 2020</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.2</span>.
+    Generated on <time datetime="2021-05-05T17:43:32-0500">May 5, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.6</span>.
 </p>
     </footer>
 </body>
