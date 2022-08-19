@@ -195,6 +195,12 @@ public final class Color {
         style = name.rawValue
     }
 
+    public init(_ hexString: String) {
+        precondition(hexString.starts(with: "#"), "hexString '\(hexString)' must start with a #")
+
+        style = hexString
+    }
+
     // Calculates a new Color of certain percentage between this Color and another
     /// - Parameters:
     ///   - target: The target Color to which to calculate the new Color between
