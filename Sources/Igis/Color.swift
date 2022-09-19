@@ -196,7 +196,8 @@ public final class Color {
     }
 
     public init(_ hexString: String) {
-        precondition(hexString.starts(with: "#"), "hexString '\(hexString)' must start with a #")
+        precondition(hexString.range(of: #"#[A-F0-9]{6}"#, options: .regularExpression) != nil, // matches to check if input is in the range of [#000000, #FFFFFF]
+                     "Color(hexString) does not allow hexString `\(hexString)` Color(hexString) only allows the range of ['#000000', '#FFFFFF']")
 
         style = hexString
     }
